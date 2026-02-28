@@ -1,19 +1,23 @@
+from modules.identity import HULIIdentity
+from modules.commands import processar_comando
+
+
 def iniciar():
+    identidade = HULIIdentity()
+    print(identidade.apresentar())
     print("H.U.L.I iniciado.")
     print("Aguardando comando...")
 
     while True:
         comando = input("Você: ")
 
-        if comando.lower() == "sair":
+        resposta = processar_comando(comando)
+
+        if resposta == "ENCERRAR":
             print("H.U.L.I: Encerrando operações. Até logo, Rony.")
             break
 
-        elif comando.lower() == "status":
-            print("H.U.L.I: Sistemas operacionais funcionando normalmente.")
-
-        else:
-            print("H.U.L.I: Comando não reconhecido.")
+        print(f"H.U.L.I: {resposta}")
 
 
 if __name__ == "__main__":

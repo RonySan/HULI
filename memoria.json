@@ -2,46 +2,73 @@
     {
         "conteudo": "ligar para cliente",
         "data": "28/02/2026",
-        "hora": "16:36:47"
+        "hora": "16:36:47",
+        "categoria": "geral"
     },
     {
         "conteudo": "precisa contar piada as 13",
         "data": "28/02/2026",
-        "hora": "16:36:52"
+        "hora": "16:36:52",
+        "categoria": "geral"
     },
     {
         "conteudo": "revisar contrato",
         "data": "28/02/2026",
-        "hora": "16:37:02"
+        "hora": "16:37:02",
+        "categoria": "geral"
     },
     {
         "conteudo": "preciso revisar o contrato amanhã",
         "data": "28/02/2026",
-        "hora": "16:37:11"
+        "hora": "16:37:11",
+        "categoria": "geral"
     },
     {
         "conteudo": "amanha tem festa as 20horas",
         "data": "28/02/2026",
-        "hora": "16:38:13"
+        "hora": "16:38:13",
+        "categoria": "geral"
     },
     {
         "conteudo": "na agenda que tem reuniao de conselho da 28",
         "data": "01/03/2026",
-        "hora": "10:41:16"
+        "hora": "10:41:16",
+        "categoria": "geral"
     },
     {
         "conteudo": "ligar pro pedro amanha",
         "data": "01/03/2026",
-        "hora": "10:41:47"
+        "hora": "10:41:47",
+        "categoria": "geral"
     },
     {
         "conteudo": "pra comprar pao",
         "data": "01/03/2026",
-        "hora": "11:08:43"
+        "hora": "11:08:43",
+        "categoria": "geral"
     },
     {
         "conteudo": "da reuniao hoje as 15",
         "data": "01/03/2026",
-        "hora": "11:16:12"
+        "hora": "11:16:12",
+        "categoria": "geral"
+    },
+    {
+        "categoria": "agenda",
+        "conteudo": "na agenda que tem reunioa de concelho dia 28",
+        "data": "04/03/2026",
+        "hora": "16:58:06"
+    },
+    {
+        "categoria": "geral",
+        "conteudo": "que preciso ligar pro joao",
+        "data": "04/03/2026",
+        "hora": "16:58:21"
+    },
+    {
+        "categoria": "ideias",
+        "conteudo": "ideia huli precisamos de uma versao mais dinamica de voce",
+        "data": "04/03/2026",
+        "hora": "17:22:31"
     }
 ]

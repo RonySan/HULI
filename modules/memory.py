@@ -20,13 +20,21 @@ class HULIMemory:
         else:
             self.memorias = []
 
-    def salvar(self, conteudo):
+        # Compatibilidade: registros antigos podem não ter "categoria"
         for item in self.memorias:
-            if item["conteudo"] == conteudo:
+            if isinstance(item, dict) and "categoria" not in item:
+                item["categoria"] = "geral"
+
+    def salvar(self, conteudo, categoria="geral"):
+        # Evita duplicado baseado no conteúdo + categoria
+        for item in self.memorias:
+            if item.get("conteudo") == conteudo and item.get("categoria", "geral") == categoria:
                 return
 
         agora = datetime.now()
+
         nova_memoria = {
+            "categoria": categoria,
             "conteudo": conteudo,
             "data": agora.strftime("%d/%m/%Y"),
             "hora": agora.strftime("%H:%M:%S")
@@ -39,6 +47,12 @@ class HULIMemory:
         if not self.memorias:
             return "Ainda não tenho memórias registradas."
         return self.memorias
+
+    def listar_por_categoria(self, categoria):
+        filtradas = [m for m in self.memorias if m.get("categoria", "geral") == categoria]
+        if not filtradas:
+            return f"Não tenho registros na categoria '{categoria}'."
+        return filtradas
 
     def _salvar_arquivo(self):
         with open(self.arquivo, "w", encoding="utf-8") as f:

@@ -70,5 +70,38 @@
         "conteudo": "ideia huli precisamos de uma versao mais dinamica de voce",
         "data": "04/03/2026",
         "hora": "17:22:31"
+    },
+    {
+        "id": "1cbe862d-88be-43f8-b502-0f582eae0ff6",
+        "categoria": "lembretes",
+        "conteudo": "testar lembrete",
+        "quando": "2026-03-05 21:50:00",
+        "executado": false,
+        "data": "04/03/2026",
+        "hora": "22:01:01"
+    },
+    {
+        "id": "efd46e69-1295-41b4-be82-ddc8a9d261e9",
+        "categoria": "lembretes",
+        "conteudo": "testar lembrete",
+        "quando": "2026-03-04 22:03:00",
+        "executado": true,
+        "data": "04/03/2026",
+        "hora": "22:02:10"
+    },
+    {
+        "id": "b96a72d0-5999-4202-a4ff-13eab58d0e86",
+        "categoria": "lembretes",
+        "conteudo": "que preciso fazer uma ligacao",
+        "quando": "2026-03-04 22:13:00",
+        "executado": true,
+        "data": "04/03/2026",
+        "hora": "22:12:29"
+    },
+    {
+        "categoria": "geral",
+        "conteudo": "pra mim que preciso atialiar voce",
+        "data": "04/03/2026",
+        "hora": "22:30:20"
     }
 ]

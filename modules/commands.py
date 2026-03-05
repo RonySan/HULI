@@ -4,10 +4,12 @@ from datetime import datetime, timedelta
 from modules.ai import responder_ia
 from modules.personality import HULIPersonality
 from modules.memory import HULIMemory
+from modules.ai import responder_ia, tem_internet
 
 memoria = HULIMemory()
 historico_conversa: list[dict] = []
 MAX_HIST = 12  
+MODO_RESPOSTA = "normal"  # "simples" | "normal" | "detalhado"
 
 
 # -------------------------
@@ -134,6 +136,54 @@ def processar_comando(comando: str):
 
     if comando == "status":
         return f"{base} Sistemas operacionais funcionando normalmente."
+
+    # -------------------------
+    # Modos de resposta
+    # -------------------------
+    global MODO_RESPOSTA
+
+    if comando in ["modo simples", "modo fácil", "modo facil"]:
+        MODO_RESPOSTA = "simples"
+        return f"{base} Modo de resposta ajustado para: SIMPLES."
+
+    if comando in ["modo normal", "modo padrão", "modo padrao"]:
+        MODO_RESPOSTA = "normal"
+        return f"{base} Modo de resposta ajustado para: NORMAL."
+
+    if comando in ["modo detalhado", "modo completo", "modo avançado", "modo avancado"]:
+        MODO_RESPOSTA = "detalhado"
+        return f"{base} Modo de resposta ajustado para: DETALHADO."
+
+    if comando in ["modo atual", "qual modo", "qual o modo"]:
+        return f"{base} Modo atual: {MODO_RESPOSTA.upper()}."
+
+    # -------------------------
+    # Status IA (online/offline)
+    # -------------------------
+    if comando in ["status ia", "status da ia", "modo ia", "online ou offline"]:
+        
+        tem_net = tem_internet()
+        tem_key = bool(os.getenv("OPENAI_API_KEY"))
+
+        status = []
+        status.append("🌐 INTERNET: OK" if tem_net else "🌐 INTERNET: NÃO")
+        status.append("🔑 OPENAI_API_KEY: OK" if tem_key else "🔑 OPENAI_API_KEY: NÃO")
+
+        return f"{base} " + " | ".join(status) + " | (ONLINE depende de cota na OpenAI)"
+
+    # -------------------------
+    # Resumir conversa (contexto)
+    # -------------------------
+    if comando in ["resumir conversa", "resumo da conversa", "resumir chat"]:
+        if not historico_conversa:
+            return f"{base} Ainda não temos conversa suficiente para resumir."
+        pedido = (
+            "Resuma nossa conversa recente em tópicos curtos (máx 8 linhas). "
+            "Depois liste 3 próximos passos recomendados."
+        )
+        return responder_ia(pedido, historico=historico_conversa, modo="normal")
+
+
 
     # ---------
     # Ajuda
@@ -301,7 +351,7 @@ def processar_comando(comando: str):
 
     # atualiza histórico (só se veio algo)
     if resposta_ia:
-        historico_conversa.append({"role": "user", "content": comando})
+        resposta_ia = responder_ia(comando, historico=historico_conversa, modo=MODO_RESPOSTA)
         historico_conversa.append({"role": "assistant", "content": resposta_ia})
 
         # corta para não crescer infinito

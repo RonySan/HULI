@@ -11,7 +11,7 @@ def tem_internet() -> bool:
         return False
 
 
-def responder_openai(pergunta: str, historico: list[dict] | None = None) -> str | None:
+def responder_openai(pergunta: str, historico: list[dict] | None = None, modo: str = "normal") -> str | None:
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         return None
@@ -22,9 +22,25 @@ def responder_openai(pergunta: str, historico: list[dict] | None = None) -> str 
             "Content-Type": "application/json",
         }
 
-        mensagens = [{"role": "system", "content": "Você é H.U.L.I (Humano Único Leal Inteligente), assistente pessoal do Rony. Responda em PT-BR."}]
+        instr_modo = _instrucoes_modo(modo)
+
+        mensagens = [
+            {
+                "role": "system",
+                "content": (
+                    "Você é H.U.L.I (Humano Único Leal Inteligente), assistente pessoal do Rony.\n"
+                    "Regras fixas:\n"
+                    "- Responda SEMPRE em português do Brasil.\n"
+                    "- Estilo Jarvis/HULI: educada, leal, com leve humor.\n"
+                    "- Se não souber, diga que não tem certeza.\n"
+                    f"- MODO: {instr_modo}\n"
+                ),
+            }
+        ]
+
         if historico:
             mensagens.extend(historico)
+
         mensagens.append({"role": "user", "content": pergunta})
 
         data = {
@@ -40,7 +56,6 @@ def responder_openai(pergunta: str, historico: list[dict] | None = None) -> str 
         )
 
         if r.status_code != 200:
-            # salva erro para diagnóstico (ex.: 429 quota)
             try:
                 with open("debug_openai.log", "a", encoding="utf-8") as f:
                     f.write("\n--- OPENAI FAIL ---\n")
@@ -57,15 +72,10 @@ def responder_openai(pergunta: str, historico: list[dict] | None = None) -> str 
         return None
 
 
-def responder_ollama(pergunta: str, historico: list[dict] | None = None) -> str | None:
-    """
-    OFFLINE (Ollama) com:
-    - PT-BR
-    - estilo Jarvis/HULI
-    - contexto da conversa (histórico)
-    - menos alucinação
-    """
+def responder_ollama(pergunta: str, historico: list[dict] | None = None, modo: str = "normal") -> str | None:
     try:
+        instr_modo = _instrucoes_modo(modo)
+
         sistema = (
             "Você é H.U.L.I (Humano Único Leal Inteligente), assistente pessoal do Rony.\n"
             "Regras:\n"
@@ -75,14 +85,13 @@ def responder_ollama(pergunta: str, historico: list[dict] | None = None) -> str 
             "4) Se não tiver certeza, diga que não tem certeza e sugira como verificar.\n"
             "5) Não invente fatos.\n"
             "6) Se a pergunta for ambígua, peça 1 detalhe.\n"
-            "7) Se o usuário pedir 'simples', responda em 1 ou 2 frases.\n"
+            f"7) MODO: {instr_modo}\n"
         )
 
         contexto_txt = ""
         if historico:
-            # transforma o histórico em texto pro modelo manter contexto
             linhas = []
-            for m in historico[-10:]:  # mantém só as últimas 10 mensagens pra não ficar enorme
+            for m in historico[-10:]:
                 role = "Rony" if m.get("role") == "user" else "H.U.L.I"
                 linhas.append(f"{role}: {m.get('content','')}")
             contexto_txt = "\n".join(linhas)
@@ -110,19 +119,25 @@ def responder_ollama(pergunta: str, historico: list[dict] | None = None) -> str 
         return saida.strip()
 
     except Exception:
-        return None
+        return None 
+
+def _instrucoes_modo(modo: str) -> str:
+    modo = (modo or "normal").strip().lower()
+    if modo == "simples":
+        return "Responda de forma simples, em 1 a 2 frases, sem termos técnicos."
+    if modo == "detalhado":
+        return "Responda de forma detalhada, com passos, exemplos e observações úteis."
+    return "Responda no modo normal: claro, objetivo, com detalhes moderados."
 
 
-def responder_ia(pergunta: str, historico: list[dict] | None = None) -> str:
-    # ONLINE primeiro
+def responder_ia(pergunta: str, historico: list[dict] | None = None, modo: str = "normal") -> str:
     if tem_internet():
-        r = responder_openai(pergunta, historico=historico)
+        r = responder_openai(pergunta, historico=historico, modo=modo)
         if r:
             return "🌐 ONLINE | " + r
 
-    # OFFLINE por último
-    r = responder_ollama(pergunta, historico=historico)
+    r = responder_ollama(pergunta, historico=historico, modo=modo)
     if r:
         return "🖥️ OFFLINE | " + r
 
-    return "⚠️ Ainda estou sem acesso ao modo ONLINE e OFFLINE agora. Tenta reformular 🙂"  
+    return "⚠️ Ainda estou sem acesso ao modo ONLINE e OFFLINE agora. Tenta reformular 🙂"

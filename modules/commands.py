@@ -2,6 +2,7 @@ import re
 import random
 from datetime import datetime, timedelta
 
+from modules.ai import responder_ia
 from modules.personality import HULIPersonality
 from modules.memory import HULIMemory
 
@@ -53,15 +54,6 @@ def extrair_horario(comando: str):
 # -------------------------
 # Frases dinâmicas (intenção)
 # -------------------------
-RESP_OK = [
-    "Certo.",
-    "Fechado.",
-    "Entendido.",
-    "Beleza.",
-    "Perfeito.",
-    "Pode deixar.",
-]
-
 RESP_OK_CHEFE = [
     "Fechado, chefe 😎",
     "Entendido, chefe.",
@@ -77,18 +69,18 @@ RESP_AGRADECER = [
     "Disponível e operante ✅",
 ]
 
-RESP_FALLBACK = [
-    "Entendi. Quer que eu anote isso ou você quer uma ação específica?",
-    "Certo. Você quer que eu registre isso como tarefa, agenda ou ideia?",
-    "Ok. Me diz o que você quer que eu faça com isso.",
-    "Posso ajudar melhor se você reformular em uma frase curta 🙂",
-]
-
 RESP_RISO = [
     "😂",
     "kkk beleza 😄",
     "Boa 😄",
     "Aí sim 😎",
+]
+
+RESP_FALLBACK = [
+    "Entendi. Quer que eu anote isso ou você quer uma ação específica?",
+    "Certo. Você quer que eu registre isso como tarefa, agenda ou ideia?",
+    "Ok. Me diz o que você quer que eu faça com isso.",
+    "Posso ajudar melhor se você reformular em uma frase curta 🙂",
 ]
 
 
@@ -99,7 +91,6 @@ def processar_comando(comando: str):
     personalidade = HULIPersonality()
     comando = normalizar_texto(comando)
 
-    # não responde nada se for ENTER vazio
     if not comando:
         return ""
 
@@ -114,14 +105,7 @@ def processar_comando(comando: str):
     if comando in ["ok", "blz", "beleza", "fechado", "entendi", "certo", "perfeito"]:
         return f"{base} {escolher(RESP_OK_CHEFE)}"
 
-    if any(frase in comando for frase in [
-        "obrigado",
-        "obrigada",
-        "valeu",
-        "vlw",
-        "obg",
-        "obriado",  # typo comum
-    ]):
+    if any(frase in comando for frase in ["obrigado", "obrigada", "valeu", "vlw", "obg", "obriado"]):
         return f"{base} {escolher(RESP_AGRADECER)}"
 
     if comando in ["oi", "ola", "olá", "eai", "bom dia", "boa tarde", "boa noite"]:
@@ -130,42 +114,54 @@ def processar_comando(comando: str):
     if any(frase in comando for frase in ["quem e voce", "quem voce e", "quem e a huli", "quem é a huli"]):
         return "Eu sou H.U.L.I. Humano Único Leal Inteligente. Seu parceiro digital."
 
-    if any(frase in comando for frase in [
-        "voce esta bem",
-        "tudo bem",
-        "como voce ta",
-        "como voce esta",
-        "voce ta bem"
-    ]):
+    if any(frase in comando for frase in ["voce esta bem", "tudo bem", "como voce ta", "como voce esta", "voce ta bem"]):
         return f"{base} Estou bem sim, Rony. Operando 100%. E você, como está?"
 
-    if any(frase in comando for frase in [
-        "estou otimo",
-        "to otimo",
-        "to bem",
-        "tudo certo",
-        "tranquilo",
-        "suave"
-    ]):
+    if any(frase in comando for frase in ["estou otimo", "to otimo", "to bem", "tudo certo", "tranquilo", "suave"]):
         return f"{base} Boa! Quer que eu organize suas prioridades de hoje?"
 
     # ---------
     # Sistema: hora / data / status
     # ---------
-    if any(frase in comando for frase in [
-        "hora", "horas", "que horas", "que horas sao", "qual a hora", "qual e a hora", "horario"
-    ]):
+    if any(frase in comando for frase in ["hora", "horas", "que horas", "que horas sao", "qual a hora", "qual e a hora", "horario"]):
         agora = datetime.now()
         return f"{base} Agora são {agora.strftime('%H:%M:%S')}."
 
-    if any(frase in comando for frase in [
-        "que dia e hoje", "qual o dia de hoje", "data de hoje", "que data e hoje"
-    ]):
+    if any(frase in comando for frase in ["que dia e hoje", "qual o dia de hoje", "data de hoje", "que data e hoje"]):
         hoje = datetime.now()
         return f"{base} Hoje é {hoje.strftime('%d/%m/%Y')}."
 
     if comando == "status":
         return f"{base} Sistemas operacionais funcionando normalmente."
+
+    # ---------
+    # Ajuda
+    # ---------
+    if comando in ["ajuda", "help", "socorro", "o que voce faz", "o que você faz"]:
+        return (
+            "Eu posso ajudar com várias coisas, Rony:\n\n"
+            "📅 Organização\n"
+            "• anota na agenda reunião amanhã\n"
+            "• anota tarefa pagar conta\n"
+            "• anota ideia criar sistema novo\n\n"
+            "⏰ Lembretes\n"
+            "• me lembra às 18:30 ligar pro João\n"
+            "• me lembra às 22 testar lembrete\n\n"
+            "📋 Consultar informações\n"
+            "• mostra agenda\n"
+            "• mostra tarefas\n"
+            "• mostra ideias\n"
+            "• o que voce lembra\n\n"
+            "🕒 Sistema\n"
+            "• horas\n"
+            "• que dia é hoje\n"
+            "• status\n\n"
+            "💬 Conversa\n"
+            "• oi\n"
+            "• como voce esta\n"
+            "• quem e voce\n\n"
+            "Se quiser registrar algo é só falar naturalmente 😎"
+        )
 
     # ---------
     # Lembretes: limpeza
@@ -209,7 +205,7 @@ def processar_comando(comando: str):
         return resposta
 
     # ---------
-    # Lembrete com horário (padrão: "me lembra às 22:10 ...")
+    # Lembrete com horário
     # ---------
     if comando.startswith("me lembra"):
         h, mi = extrair_horario(comando)
@@ -240,26 +236,12 @@ def processar_comando(comando: str):
     # Anotações / memórias (sem horário)
     # ---------
     if any(comando.startswith(g) for g in [
-        "lembrar que",
-        "lembra de",
-        "preciso lembrar de",
-        "anota",
-        "anote",
-        "guarda isso",
-        "guardar",
-        "me lembre",
-        "me lembrar",
+        "lembrar que", "lembra de", "preciso lembrar de", "anota", "anote",
+        "guarda isso", "guardar", "me lembre", "me lembrar",
     ]):
         gatilhos = [
-            "lembrar que",
-            "lembra de",
-            "preciso lembrar de",
-            "anota",
-            "anote",
-            "guarda isso",
-            "guardar",
-            "me lembre",
-            "me lembrar",
+            "lembrar que", "lembra de", "preciso lembrar de", "anota", "anote",
+            "guarda isso", "guardar", "me lembre", "me lembrar",
         ]
 
         conteudo = ""
@@ -285,7 +267,7 @@ def processar_comando(comando: str):
     # ---------
     # Listar tudo
     # ---------
-    if comando in ["o que voce lembra", "o que voce lembra"]:
+    if comando in ["o que voce lembra"]:
         lembrancas = memoria.listar()
         if isinstance(lembrancas, str):
             return lembrancas
@@ -302,10 +284,15 @@ def processar_comando(comando: str):
                 )
         return resposta
 
+    # Sair
     if comando == "sair":
         return "ENCERRAR"
 
     # ---------
-    # Fallback inteligente (dinâmico)
+    # IA (fallback final)
     # ---------
+    resposta_ia = responder_ia(comando)
+    if resposta_ia:
+        return resposta_ia
+
     return f"{base} {escolher(RESP_FALLBACK)}"

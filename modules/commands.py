@@ -1,12 +1,13 @@
 import re
 import random
 from datetime import datetime, timedelta
-
 from modules.ai import responder_ia
 from modules.personality import HULIPersonality
 from modules.memory import HULIMemory
 
 memoria = HULIMemory()
+historico_conversa: list[dict] = []
+MAX_HIST = 12  
 
 
 # -------------------------
@@ -287,12 +288,24 @@ def processar_comando(comando: str):
     # Sair
     if comando == "sair":
         return "ENCERRAR"
+    
+        # Reset do contexto (memória da conversa da sessão)
+    if comando in ["limpar contexto", "reset conversa", "reiniciar conversa"]:
+        historico_conversa.clear()
+        return f"{base} Contexto da conversa limpo. Pode falar do zero."
 
+        # ---------
+    # Fallback inteligente com CONTEXTO (memória da conversa)
     # ---------
-    # IA (fallback final)
-    # ---------
-    resposta_ia = responder_ia(comando)
+    resposta_ia = responder_ia(comando, historico=historico_conversa)
+
+    # atualiza histórico (só se veio algo)
     if resposta_ia:
-        return resposta_ia
+        historico_conversa.append({"role": "user", "content": comando})
+        historico_conversa.append({"role": "assistant", "content": resposta_ia})
 
-    return f"{base} {escolher(RESP_FALLBACK)}"
+        # corta para não crescer infinito
+        if len(historico_conversa) > MAX_HIST:
+            historico_conversa[:] = historico_conversa[-MAX_HIST:]
+
+    return resposta_ia

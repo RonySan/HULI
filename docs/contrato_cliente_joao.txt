@@ -1,0 +1,5 @@
+Contrato Cliente João
+
+Multa por cancelamento: 20% do valor restante do contrato.
+Prazo de pagamento: 5 dias úteis.
+Serviços: manutenção predial e suporte técnico.

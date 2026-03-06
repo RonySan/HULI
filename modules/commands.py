@@ -1,10 +1,13 @@
 import re
+import os   
 import random
 from datetime import datetime, timedelta
 from modules.ai import responder_ia
 from modules.personality import HULIPersonality
 from modules.memory import HULIMemory
 from modules.ai import responder_ia, tem_internet
+from modules.docs import buscar_docs
+from modules.ai import tem_internet
 
 memoria = HULIMemory()
 historico_conversa: list[dict] = []
@@ -137,6 +140,11 @@ def processar_comando(comando: str):
     if comando == "status":
         return f"{base} Sistemas operacionais funcionando normalmente."
 
+    elif comando in ["status ia", "status da ia", "modo ia"]:
+        tem_key = bool(os.getenv("OPENAI_API_KEY"))
+        modo = "ONLINE disponível" if tem_key and tem_internet() else "OFFLINE"
+        return f"{base} Status IA: {modo}."
+
     # -------------------------
     # Modos de resposta
     # -------------------------
@@ -156,6 +164,28 @@ def processar_comando(comando: str):
 
     if comando in ["modo atual", "qual modo", "qual o modo"]:
         return f"{base} Modo atual: {MODO_RESPOSTA.upper()}."
+
+    # -------------------------
+    # Buscar nos documentos
+    # -------------------------
+    if comando.startswith("buscar docs"):
+        termo = comando.replace("buscar docs", "").strip()
+
+        if not termo:
+            return f"{base} Diga o que você quer buscar nos documentos."
+
+        resultados = buscar_docs(termo)
+
+        if not resultados:
+            return f"{base} Não encontrei nada sobre '{termo}' nos documentos."
+
+        resposta = "Encontrei isto nos documentos:\n"
+
+        for r in resultados:
+            resposta += f"- {r}\n"
+
+        return resposta
+
 
     # -------------------------
     # Status IA (online/offline)

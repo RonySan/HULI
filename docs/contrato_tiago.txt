@@ -1,0 +1,5 @@
+Contrato Cliente tiago
+
+Multa por cancelamento: 50% do valor restante do contrato.
+Prazo de pagamento: 8 dias úteis.
+Serviços: manutenção predial e suporte técnico.

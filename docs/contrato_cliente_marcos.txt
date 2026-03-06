@@ -1,0 +1,6 @@
+Contrato Cliente Marcos
+
+Multa por cancelamento: 35% do valor restante do contrato.
+Prazo de pagamento: 7 dias úteis.
+Serviços: manutenção elétrica, suporte técnico e monitoramento.
+Responsável: Marcos Silva

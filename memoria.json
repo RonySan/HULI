@@ -76,7 +76,7 @@
         "categoria": "lembretes",
         "conteudo": "testar lembrete",
         "quando": "2026-03-05 21:50:00",
-        "executado": false,
+        "executado": true,
         "data": "04/03/2026",
         "hora": "22:01:01"
     },
@@ -112,5 +112,23 @@
         "executado": true,
         "data": "04/03/2026",
         "hora": "22:36:49"
+    },
+    {
+        "id": "2356e0a8-579e-4362-af67-974fd3982039",
+        "categoria": "lembretes",
+        "conteudo": "de ir no senhor eduardo amanha",
+        "quando": "2026-03-06 14:00:00",
+        "executado": false,
+        "data": "05/03/2026",
+        "hora": "21:45:36"
+    },
+    {
+        "id": "24862c32-6d09-4af5-80e5-5ae3f9134a00",
+        "categoria": "lembretes",
+        "conteudo": "de ir no senhor washiton amanha",
+        "quando": "2026-03-06 13:00:00",
+        "executado": false,
+        "data": "05/03/2026",
+        "hora": "21:45:47"
     }
 ]

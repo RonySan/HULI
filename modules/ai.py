@@ -2,6 +2,8 @@ import os
 import subprocess
 import requests
 
+from modules.docs import buscar_docs
+
 
 def tem_internet() -> bool:
     try:
@@ -9,6 +11,26 @@ def tem_internet() -> bool:
         return True
     except Exception:
         return False
+
+
+def _instrucoes_modo(modo: str) -> str:
+    modo = (modo or "normal").strip().lower()
+    if modo == "simples":
+        return "Responda de forma simples, em 1 a 2 frases, sem termos técnicos."
+    if modo == "detalhado":
+        return "Responda de forma detalhada, com passos, exemplos e observações úteis."
+    return "Responda no modo normal: claro, objetivo, com detalhes moderados."
+
+
+def buscar_contexto_docs(pergunta: str) -> str:
+    trechos = buscar_docs(pergunta, limite=6)
+    if not trechos:
+        return ""
+
+    contexto = "TRECHOS ENCONTRADOS NOS DOCUMENTOS (use como fonte):\n"
+    for t in trechos:
+        contexto += f"- {t}\n"
+    return contexto
 
 
 def responder_openai(pergunta: str, historico: list[dict] | None = None, modo: str = "normal") -> str | None:
@@ -33,6 +55,9 @@ def responder_openai(pergunta: str, historico: list[dict] | None = None, modo: s
                     "- Responda SEMPRE em português do Brasil.\n"
                     "- Estilo Jarvis/HULI: educada, leal, com leve humor.\n"
                     "- Se não souber, diga que não tem certeza.\n"
+                    "- Se houver trechos de documentos na pergunta, use esses trechos como fonte.\n"
+                    "- Se a resposta estiver nos trechos, cite o arquivo e o valor.\n"
+                    "- Não faça perguntas de volta se a resposta já estiver nos trechos.\n"
                     f"- MODO: {instr_modo}\n"
                 ),
             }
@@ -84,8 +109,10 @@ def responder_ollama(pergunta: str, historico: list[dict] | None = None, modo: s
             "3) Seja direta e útil.\n"
             "4) Se não tiver certeza, diga que não tem certeza e sugira como verificar.\n"
             "5) Não invente fatos.\n"
-            "6) Se a pergunta for ambígua, peça 1 detalhe.\n"
-            f"7) MODO: {instr_modo}\n"
+            "6) Se houver trechos de documentos, use-os como fonte principal.\n"
+            "7) Se a resposta estiver nos trechos, cite o arquivo e o valor.\n"
+            "8) Não faça perguntas de volta se os trechos já responderem.\n"
+            f"9) MODO: {instr_modo}\n"
         )
 
         contexto_txt = ""
@@ -93,11 +120,11 @@ def responder_ollama(pergunta: str, historico: list[dict] | None = None, modo: s
             linhas = []
             for m in historico[-10:]:
                 role = "Rony" if m.get("role") == "user" else "H.U.L.I"
-                linhas.append(f"{role}: {m.get('content','')}")
+                linhas.append(f"{role}: {m.get('content', '')}")
             contexto_txt = "\n".join(linhas)
 
         prompt = (
-            f"{sistema}\n"
+            f"{sistema}\n\n"
             f"Contexto recente da conversa (se houver):\n{contexto_txt}\n\n"
             f"Pergunta do Rony: {pergunta}\n"
             f"Resposta da H.U.L.I:"
@@ -116,21 +143,42 @@ def responder_ollama(pergunta: str, historico: list[dict] | None = None, modo: s
         saida = (resultado.stdout or "").strip()
         if not saida:
             return None
+
         return saida.strip()
 
     except Exception:
-        return None 
+        return None
 
-def _instrucoes_modo(modo: str) -> str:
-    modo = (modo or "normal").strip().lower()
-    if modo == "simples":
-        return "Responda de forma simples, em 1 a 2 frases, sem termos técnicos."
-    if modo == "detalhado":
-        return "Responda de forma detalhada, com passos, exemplos e observações úteis."
-    return "Responda no modo normal: claro, objetivo, com detalhes moderados."
+def deve_usar_docs(pergunta: str) -> bool:
+    p = (pergunta or "").lower()
 
+    palavras_chave = [
+        "contrato", "cliente", "multa", "cancelamento", "prazo", "pagamento",
+        "serviço", "servicos", "valor", "orçamento", "orcamento",
+        "proposta", "cláusula", "clausula", "assinado", "vigência", "vigencia"
+    ]
+
+    # se mencionar algo muito de documento/negócio, usa docs
+    return any(k in p for k in palavras_chave)
 
 def responder_ia(pergunta: str, historico: list[dict] | None = None, modo: str = "normal") -> str:
+    contexto_docs = buscar_contexto_docs(pergunta) if deve_usar_docs(pergunta) else ""
+
+    if contexto_docs:
+        pergunta = (
+        "Você vai responder usando APENAS os trechos abaixo.\n"
+        "Regras:\n"
+        "1) Se a resposta estiver nos trechos, responda DIRETO.\n"
+        "2) NÃO peça desculpas.\n"
+        "3) NÃO pergunte nada de volta.\n"
+        "4) Sempre cite o arquivo.\n"
+        "Formato obrigatório:\n"
+        "Resposta: <resposta curta>\n"
+        "Fonte: <arquivo> — <trecho>\n\n"
+        f"{contexto_docs}\n"
+        f"PERGUNTA: {pergunta}"
+    )
+
     if tem_internet():
         r = responder_openai(pergunta, historico=historico, modo=modo)
         if r:

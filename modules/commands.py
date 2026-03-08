@@ -1,18 +1,18 @@
 import re
-import os   
+import os
 import random
 from datetime import datetime, timedelta
-from modules.ai import responder_ia
+
+from modules.ai import responder_ia, tem_internet
 from modules.personality import HULIPersonality
 from modules.memory import HULIMemory
-from modules.ai import responder_ia, tem_internet
 from modules.docs import buscar_docs
-from modules.ai import tem_internet
+from modules.actions import abrir_programa, aprender_programa
 
 memoria = HULIMemory()
 historico_conversa: list[dict] = []
-MAX_HIST = 12  
-MODO_RESPOSTA = "normal"  # "simples" | "normal" | "detalhado"
+MAX_HIST = 12
+MODO_RESPOSTA = "normal"  # simples | normal | detalhado
 
 
 # -------------------------
@@ -20,7 +20,6 @@ MODO_RESPOSTA = "normal"  # "simples" | "normal" | "detalhado"
 # -------------------------
 def normalizar_texto(texto: str) -> str:
     texto = texto.lower()
-    # mantém ":" para horários 18:30
     texto = re.sub(r"[^\w\sáàâãéêíóôõúç:]", " ", texto)
     texto = re.sub(r"\s+", " ", texto).strip()
     return texto
@@ -31,7 +30,6 @@ def escolher(lista):
 
 
 def extrair_horario(comando: str):
-    # 18:30
     m = re.search(r"\b(\d{1,2}):(\d{2})\b", comando)
     if m:
         h = int(m.group(1))
@@ -39,7 +37,6 @@ def extrair_horario(comando: str):
         if 0 <= h <= 23 and 0 <= mi <= 59:
             return h, mi
 
-    # 20h30 ou 20h
     m = re.search(r"\b(\d{1,2})h(\d{2})?\b", comando)
     if m:
         h = int(m.group(1))
@@ -47,7 +44,6 @@ def extrair_horario(comando: str):
         if 0 <= h <= 23 and 0 <= mi <= 59:
             return h, mi
 
-    # às 18 / as 18
     m = re.search(r"\b(?:as|às)\s*(\d{1,2})\b", comando)
     if m:
         h = int(m.group(1))
@@ -58,7 +54,7 @@ def extrair_horario(comando: str):
 
 
 # -------------------------
-# Frases dinâmicas (intenção)
+# Frases dinâmicas
 # -------------------------
 RESP_OK_CHEFE = [
     "Fechado, chefe 😎",
@@ -82,19 +78,15 @@ RESP_RISO = [
     "Aí sim 😎",
 ]
 
-RESP_FALLBACK = [
-    "Entendi. Quer que eu anote isso ou você quer uma ação específica?",
-    "Certo. Você quer que eu registre isso como tarefa, agenda ou ideia?",
-    "Ok. Me diz o que você quer que eu faça com isso.",
-    "Posso ajudar melhor se você reformular em uma frase curta 🙂",
-]
-
 
 # -------------------------
 # Núcleo
 # -------------------------
 def processar_comando(comando: str):
+    global MODO_RESPOSTA
+
     personalidade = HULIPersonality()
+    comando_original = comando.strip()
     comando = normalizar_texto(comando)
 
     if not comando:
@@ -127,7 +119,37 @@ def processar_comando(comando: str):
         return f"{base} Boa! Quer que eu organize suas prioridades de hoje?"
 
     # ---------
-    # Sistema: hora / data / status
+    # Aprender programa
+    # ---------
+    if comando.startswith("aprender programa"):
+        try:
+            texto = comando_original.replace("aprender programa", "", 1).strip()
+
+            if " em " not in texto.lower():
+                return f"{base} Use assim: aprender programa paint em C:\\Windows\\System32\\mspaint.exe"
+
+            nome, caminho = texto.split(" em ", 1)
+            nome = nome.strip().lower()
+            caminho = caminho.strip()
+
+            if not nome or not caminho:
+                return f"{base} Preciso do nome e do caminho do programa."
+
+            return f"{base} {aprender_programa(nome, caminho)}"
+        except Exception:
+            return f"{base} Não consegui aprender esse programa."
+
+    # ---------
+    # Abrir programas
+    # ---------
+    if comando.startswith("abrir "):
+        nome = comando.replace("abrir ", "").strip()
+        r = abrir_programa(nome)
+        if r:
+            return f"{base} {r}"
+
+    # ---------
+    # Sistema
     # ---------
     if any(frase in comando for frase in ["hora", "horas", "que horas", "que horas sao", "qual a hora", "qual e a hora", "horario"]):
         agora = datetime.now()
@@ -140,16 +162,17 @@ def processar_comando(comando: str):
     if comando == "status":
         return f"{base} Sistemas operacionais funcionando normalmente."
 
-    elif comando in ["status ia", "status da ia", "modo ia"]:
+    if comando in ["status ia", "status da ia", "modo ia", "online ou offline"]:
+        tem_net = tem_internet()
         tem_key = bool(os.getenv("OPENAI_API_KEY"))
-        modo = "ONLINE disponível" if tem_key and tem_internet() else "OFFLINE"
-        return f"{base} Status IA: {modo}."
+        status = []
+        status.append("🌐 INTERNET: OK" if tem_net else "🌐 INTERNET: NÃO")
+        status.append("🔑 OPENAI_API_KEY: OK" if tem_key else "🔑 OPENAI_API_KEY: NÃO")
+        return f"{base} " + " | ".join(status) + " | (ONLINE depende de cota na OpenAI)"
 
-    # -------------------------
-    # Modos de resposta
-    # -------------------------
-    global MODO_RESPOSTA
-
+    # ---------
+    # Modos
+    # ---------
     if comando in ["modo simples", "modo fácil", "modo facil"]:
         MODO_RESPOSTA = "simples"
         return f"{base} Modo de resposta ajustado para: SIMPLES."
@@ -165,9 +188,9 @@ def processar_comando(comando: str):
     if comando in ["modo atual", "qual modo", "qual o modo"]:
         return f"{base} Modo atual: {MODO_RESPOSTA.upper()}."
 
-    # -------------------------
-    # Buscar nos documentos
-    # -------------------------
+    # ---------
+    # Buscar documentos
+    # ---------
     if comando.startswith("buscar docs"):
         termo = comando.replace("buscar docs", "").strip()
 
@@ -180,40 +203,22 @@ def processar_comando(comando: str):
             return f"{base} Não encontrei nada sobre '{termo}' nos documentos."
 
         resposta = "Encontrei isto nos documentos:\n"
-
         for r in resultados:
             resposta += f"- {r}\n"
-
         return resposta
 
-
-    # -------------------------
-    # Status IA (online/offline)
-    # -------------------------
-    if comando in ["status ia", "status da ia", "modo ia", "online ou offline"]:
-        
-        tem_net = tem_internet()
-        tem_key = bool(os.getenv("OPENAI_API_KEY"))
-
-        status = []
-        status.append("🌐 INTERNET: OK" if tem_net else "🌐 INTERNET: NÃO")
-        status.append("🔑 OPENAI_API_KEY: OK" if tem_key else "🔑 OPENAI_API_KEY: NÃO")
-
-        return f"{base} " + " | ".join(status) + " | (ONLINE depende de cota na OpenAI)"
-
-    # -------------------------
-    # Resumir conversa (contexto)
-    # -------------------------
+    # ---------
+    # Resumir conversa
+    # ---------
     if comando in ["resumir conversa", "resumo da conversa", "resumir chat"]:
         if not historico_conversa:
             return f"{base} Ainda não temos conversa suficiente para resumir."
+
         pedido = (
             "Resuma nossa conversa recente em tópicos curtos (máx 8 linhas). "
             "Depois liste 3 próximos passos recomendados."
         )
         return responder_ia(pedido, historico=historico_conversa, modo="normal")
-
-
 
     # ---------
     # Ajuda
@@ -232,11 +237,16 @@ def processar_comando(comando: str):
             "• mostra agenda\n"
             "• mostra tarefas\n"
             "• mostra ideias\n"
-            "• o que voce lembra\n\n"
+            "• o que voce lembra\n"
+            "• buscar docs multa\n\n"
             "🕒 Sistema\n"
             "• horas\n"
             "• que dia é hoje\n"
-            "• status\n\n"
+            "• status\n"
+            "• status ia\n\n"
+            "💻 Ações\n"
+            "• abrir chrome\n"
+            "• aprender programa paint em C:\\Windows\\System32\\mspaint.exe\n\n"
             "💬 Conversa\n"
             "• oi\n"
             "• como voce esta\n"
@@ -314,7 +324,7 @@ def processar_comando(comando: str):
         return f"{base} Esse lembrete já está registrado."
 
     # ---------
-    # Anotações / memórias (sem horário)
+    # Anotações / memórias
     # ---------
     if any(comando.startswith(g) for g in [
         "lembrar que", "lembra de", "preciso lembrar de", "anota", "anote",
@@ -365,26 +375,28 @@ def processar_comando(comando: str):
                 )
         return resposta
 
-    # Sair
-    if comando == "sair":
-        return "ENCERRAR"
-    
-        # Reset do contexto (memória da conversa da sessão)
+    # ---------
+    # Limpar contexto
+    # ---------
     if comando in ["limpar contexto", "reset conversa", "reiniciar conversa"]:
         historico_conversa.clear()
         return f"{base} Contexto da conversa limpo. Pode falar do zero."
 
-        # ---------
-    # Fallback inteligente com CONTEXTO (memória da conversa)
     # ---------
-    resposta_ia = responder_ia(comando, historico=historico_conversa)
+    # Sair
+    # ---------
+    if comando == "sair":
+        return "ENCERRAR"
 
-    # atualiza histórico (só se veio algo)
+    # ---------
+    # Fallback IA com contexto
+    # ---------
+    resposta_ia = responder_ia(comando, historico=historico_conversa, modo=MODO_RESPOSTA)
+
     if resposta_ia:
-        resposta_ia = responder_ia(comando, historico=historico_conversa, modo=MODO_RESPOSTA)
+        historico_conversa.append({"role": "user", "content": comando})
         historico_conversa.append({"role": "assistant", "content": resposta_ia})
 
-        # corta para não crescer infinito
         if len(historico_conversa) > MAX_HIST:
             historico_conversa[:] = historico_conversa[-MAX_HIST:]
 

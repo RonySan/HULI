@@ -118,7 +118,7 @@
         "categoria": "lembretes",
         "conteudo": "de ir no senhor eduardo amanha",
         "quando": "2026-03-06 14:00:00",
-        "executado": false,
+        "executado": true,
         "data": "05/03/2026",
         "hora": "21:45:36"
     },
@@ -127,7 +127,7 @@
         "categoria": "lembretes",
         "conteudo": "de ir no senhor washiton amanha",
         "quando": "2026-03-06 13:00:00",
-        "executado": false,
+        "executado": true,
         "data": "05/03/2026",
         "hora": "21:45:47"
     }

@@ -2,7 +2,8 @@ import re
 import os
 import random
 from datetime import datetime, timedelta
-
+from modules.knowledge import aprender, buscar
+from modules.knowledge import aprender, buscar, listar_tudo
 from modules.ai import responder_ia, tem_internet
 from modules.personality import HULIPersonality
 from modules.memory import HULIMemory
@@ -374,6 +375,56 @@ def processar_comando(comando: str):
                     f"(Registrado em {item['data']} às {item['hora']})\n"
                 )
         return resposta
+    # -------------------------
+# APRENDER INFORMAÇÃO
+# -------------------------
+    if comando.startswith("aprenda que"):
+        texto = comando.replace("aprenda que", "").strip()
+
+        if not texto:
+            return "O que você quer que eu aprenda?"
+
+        # tenta separar com padrões naturais
+        gatilhos = [
+            " prefere ",
+            " gosta de ",
+            " usa ",
+            " trabalha com ",
+            " paga ",
+            " vence ",
+            " tem ",
+            " é ",
+            " e "
+        ]
+
+        chave = None
+        valor = None
+
+        for gatilho in gatilhos:
+            if gatilho in texto:
+                parte1, parte2 = texto.split(gatilho, 1)
+                chave = parte1.strip()
+                valor = (gatilho.strip() + " " + parte2.strip()).strip()
+                break
+
+        if not chave or not valor:
+            return "Não entendi o que devo aprender."
+
+        aprender(chave, valor)
+        return f"Entendido. Aprendi que {chave} {valor}."
+    
+    # -------------------------
+    # CONSULTAR MEMÓRIA
+    # -------------------------
+    if comando.startswith("o que voce sabe sobre"):
+        chave = comando.replace("o que voce sabe sobre", "").strip()
+
+        valor = buscar(chave)
+
+        if valor:
+            return f"Eu sei que {chave} é {valor}."
+
+        return "Ainda não sei nada sobre isso."
 
     # ---------
     # Limpar contexto
@@ -381,6 +432,74 @@ def processar_comando(comando: str):
     if comando in ["limpar contexto", "reset conversa", "reiniciar conversa"]:
         historico_conversa.clear()
         return f"{base} Contexto da conversa limpo. Pode falar do zero."
+    
+    # -------------------------
+    # Aprender informação
+    # -------------------------
+    if comando.startswith("aprenda que"):
+        texto = comando.replace("aprenda que", "").strip()
+
+        if not texto:
+            return f"{base} O que você quer que eu aprenda?"
+
+        gatilhos = [
+            " prefere ",
+            " gosta de ",
+            " usa ",
+            " trabalha com ",
+            " paga ",
+            " vence ",
+            " tem ",
+            " é ",
+            " e "
+        ]
+
+        chave = None
+        valor = None
+
+        for gatilho in gatilhos:
+            if gatilho in texto:
+                parte1, parte2 = texto.split(gatilho, 1)
+                chave = parte1.strip()
+                valor = (gatilho.strip() + " " + parte2.strip()).strip()
+                break
+
+        if not chave or not valor:
+            return f"{base} Não entendi o que devo aprender."
+
+        aprender(chave, valor)
+        return f"{base} Entendido. Aprendi que {chave} {valor}."
+    
+    # -------------------------
+    # Consultar memória permanente
+    # -------------------------
+    if comando.startswith("o que voce sabe sobre"):
+        chave = comando.replace("o que voce sabe sobre", "").strip()
+
+        if not chave:
+            return f"{base} Sobre o que você quer saber?"
+
+        valor = buscar(chave)
+
+        if valor:
+            return f"{base} Eu sei que {chave} {valor}."
+
+        return f"{base} Ainda não sei nada sobre isso."
+    
+    # -------------------------
+    # Listar conhecimento
+    # -------------------------
+    if comando in ["o que voce aprendeu", "mostra conhecimento", "listar conhecimento"]:
+        dados = listar_tudo()
+
+        if not dados:
+            return f"{base} Ainda não aprendi nada na memória permanente."
+
+        resposta = "Isto é o que eu aprendi:\n"
+        for chave, valor in dados.items():
+            resposta += f"- {chave} {valor}\n"
+
+        return resposta
 
     # ---------
     # Sair

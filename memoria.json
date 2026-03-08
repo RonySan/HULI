@@ -130,5 +130,14 @@
         "executado": true,
         "data": "05/03/2026",
         "hora": "21:45:47"
+    },
+    {
+        "id": "dbd3f375-1d15-4eb9-bc80-53e5e048e821",
+        "categoria": "lembretes",
+        "conteudo": "de tomar o remedio",
+        "quando": "2026-03-08 11:16:00",
+        "executado": true,
+        "data": "08/03/2026",
+        "hora": "11:14:44"
     }
 ]

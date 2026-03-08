@@ -35,31 +35,99 @@ def buscar_contexto_docs(pergunta: str) -> str:
 # -------------------------
 # DECISÃO DE MOTOR
 # -------------------------
+# def decidir_motor(pergunta: str, tem_docs: bool = False) -> str:
+#     p = (pergunta or "").lower()
+
+#     palavras_docs = [
+#         "contrato", "cliente", "multa", "cancelamento", "prazo", "pagamento",
+#         "serviço", "servicos", "valor", "orçamento", "orcamento",
+#         "proposta", "cláusula", "clausula", "assinado", "vigência", "vigencia"
+#     ]
+
+#     palavras_online = [
+#         "hoje", "agora", "atual", "atualmente", "última", "ultimo", "último",
+#         "notícia", "noticia", "preço", "preco", "cotação", "cotacao",
+#         "clima", "tempo", "presidente", "governo", "dólar", "dolar"
+#     ]
+
+#     if any(k in p for k in palavras_docs) and tem_docs:
+#         return "docs"
+
+#     if any(k in p for k in palavras_online):
+#         return "online"
+
+#     if len(p.split()) > 18:
+#         return "online"
+
+#     return "offline"
+
 def decidir_motor(pergunta: str, tem_docs: bool = False) -> str:
-    p = (pergunta or "").lower()
+    try:
+        prompt = f"""
+            Você é um classificador de rotas de um sistema de IA.
 
-    palavras_docs = [
-        "contrato", "cliente", "multa", "cancelamento", "prazo", "pagamento",
-        "serviço", "servicos", "valor", "orçamento", "orcamento",
-        "proposta", "cláusula", "clausula", "assinado", "vigência", "vigencia"
-    ]
+            Sua tarefa é decidir QUAL MOTOR deve responder a pergunta.
 
-    palavras_online = [
-        "hoje", "agora", "atual", "atualmente", "última", "ultimo", "último",
-        "notícia", "noticia", "preço", "preco", "cotação", "cotacao",
-        "clima", "tempo", "presidente", "governo", "dólar", "dolar"
-    ]
+            Responda APENAS com uma dessas palavras:
+            - offline
+            - online
+            - docs
 
-    if any(k in p for k in palavras_docs) and tem_docs:
-        return "docs"
+            Critérios:
 
-    if any(k in p for k in palavras_online):
-        return "online"
+            offline:
+            - perguntas gerais
+            - conhecimento comum
+            - explicações conceituais
+            - programação
+            - matemática
+            - história
+            - ciência
+            - coisas que um modelo treinado normalmente sabe
 
-    if len(p.split()) > 18:
-        return "online"
+            online:
+            - informações atuais
+            - notícias
+            - clima
+            - cotação de moedas
+            - eventos recentes
+            - coisas que podem ter mudado recentemente
 
-    return "offline"
+            docs:
+            - perguntas sobre contratos
+            - documentos enviados
+            - cláusulas
+            - arquivos do usuário
+            - informações internas
+
+            Pergunta:
+            {pergunta}
+
+            Resposta (apenas uma palavra):
+            """
+
+        comando = ["ollama", "run", "llama3.1:8b", prompt]
+
+        resultado = subprocess.run(
+            comando,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+
+        resposta = (resultado.stdout or "").strip().lower()
+
+        if "docs" in resposta and tem_docs:
+            return "docs"
+
+        if "online" in resposta:
+            return "online"
+
+        return "offline"
+
+    except Exception:
+        return "offline"
 
 
 # -------------------------
@@ -133,25 +201,20 @@ def responder_openai(pergunta: str, historico=None, modo="normal", usar_docs=Fal
 def responder_ollama(pergunta: str, historico=None, modo="normal", usar_docs=False):
     try:
         if usar_docs:
-            prompt = f"""
-Você é H.U.L.I, assistente pessoal do Rony.
+                prompt = f"""
+    Você é H.U.L.I, assistente pessoal do Rony.
 
-Regras:
-- Responda sempre em português do Brasil.
-- Use APENAS os trechos fornecidos.
-- Se a resposta estiver nos trechos, responda direto.
-- NÃO peça desculpas.
-- NÃO faça perguntas de volta.
-- Sempre use este formato:
+    Regras:
+    - Responda sempre em português do Brasil.
+    - Seja clara, útil e objetiva.
+    - Seja amigável e natural.
+    - Não invente fatos quando não tiver certeza.
 
-Resposta: <resposta curta>
-Fonte: <arquivo> — <trecho>
+    Pergunta:
+    {pergunta}
 
-Pergunta:
-{pergunta}
-
-Resposta:
-"""
+    Resposta:
+    """
         else:
             prompt = f"""
 Você é H.U.L.I, assistente pessoal do Rony.

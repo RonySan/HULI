@@ -1,17 +1,15 @@
-import re
 import os
+import re
 import random
 from datetime import datetime, timedelta
-from modules.knowledge import aprender, buscar
-from modules.knowledge import aprender, buscar, listar_tudo
-from modules.ai import responder_ia, tem_internet
-from modules.personality import HULIPersonality
-from modules.memory import HULIMemory
-from modules.docs import buscar_docs
-from modules.actions import abrir_programa, aprender_programa
+
 from modules.ai import responder_ia, tem_internet, extrair_conhecimento
 from modules.aliases import ALIASES_APPS
+from modules.docs import buscar_docs
+from modules.knowledge import aprender, buscar, listar_tudo
+from modules.memory import HULIMemory
 from modules.pc_control import abrir_programa, listar_programas, abrir_site, pesquisar_web
+from modules.personality import HULIPersonality
 from modules.routines import executar_rotina
 from modules.system_control import (
     desligar_pc,
@@ -19,6 +17,8 @@ from modules.system_control import (
     bloquear_pc,
     cancelar_desligamento,
 )
+from modules.actions import aprender_programa
+
 
 memoria = HULIMemory()
 historico_conversa: list[dict] = []
@@ -64,6 +64,17 @@ def extrair_horario(comando: str):
     return None, None
 
 
+def limpar_palavra_ativacao(comando: str) -> str:
+    if comando.startswith("huli "):
+        comando = comando.replace("huli ", "", 1).strip()
+
+    # limpeza leve de artigos/preposições comuns
+    for termo in [" o ", " a ", " no ", " na ", " do ", " da "]:
+        comando = comando.replace(termo, " ")
+
+    return re.sub(r"\s+", " ", comando).strip()
+
+
 # -------------------------
 # Frases dinâmicas
 # -------------------------
@@ -89,6 +100,7 @@ RESP_RISO = [
     "Aí sim 😎",
 ]
 
+
 # -------------------------
 # Núcleo
 # -------------------------
@@ -98,26 +110,16 @@ def processar_comando(comando: str):
     personalidade = HULIPersonality()
     comando_original = comando.strip()
     comando = normalizar_texto(comando)
-
-    # remove a palavra de ativação no começo
-    if comando.startswith("huli "):
-        # limpar palavras comuns
-        comando = comando.replace("o ", "")
-        comando = comando.replace("a ", "")
-        comando = comando.replace("no ", "")
-        comando = comando.replace("na ", "")
-        comando = comando.replace("do ", "")
-        comando = comando.replace("da ", "")
-        comando = comando.replace("huli ", "", 1).strip()
+    comando = limpar_palavra_ativacao(comando)
 
     if not comando:
         return ""
 
     base = personalidade.gerar_resposta_base()
 
-    # ---------
+    # -------------------------
     # Conversa dinâmica
-    # ---------
+    # -------------------------
     if any(x in comando for x in ["kkk", "haha", "rs", "kakak", "lol"]):
         return escolher(RESP_RISO)
 
@@ -138,115 +140,10 @@ def processar_comando(comando: str):
 
     if any(frase in comando for frase in ["estou otimo", "to otimo", "to bem", "tudo certo", "tranquilo", "suave"]):
         return f"{base} Boa! Quer que eu organize suas prioridades de hoje?"
-    
-    # ---------
-    # Rotinas
-    # ---------
-    if comando.startswith("abrir "):
 
-        nome_rotina = comando.replace("abrir ", "", 1).strip()
-
-        ok_rotina, resposta_rotina = executar_rotina(nome_rotina, abrir_programa)
-
-        if ok_rotina:
-            return resposta_rotina
-
-    # ---------
-    # Pesquisa na web
-    # ---------
-    if comando.startswith("pesquisar "):
-        termo = comando.replace("pesquisar ", "", 1).strip()
-        ok, resposta_web = pesquisar_web(termo)
-        return resposta_web
-
-    if comando.startswith("procurar "):
-        termo = comando.replace("procurar ", "", 1).strip()
-        ok, resposta_web = pesquisar_web(termo)
-        return resposta_web
-
-    # ---------
-    # Abrir sites rápidos
-    # ---------
-    if comando.startswith("abrir "):
-        nome_destino = comando.replace("abrir ", "", 1).strip()
-
-        # tenta abrir site conhecido primeiro
-        ok_site, resposta_site = abrir_site(nome_destino)
-        if ok_site:
-            return resposta_site
-
-    # ---------
-    # Aprender programa
-    # ---------
-    if comando.startswith("aprender programa"):
-        try:
-            texto = comando_original.replace("aprender programa", "", 1).strip()
-
-            if " em " not in texto.lower():
-                return f"{base} Use assim: aprender programa paint em C:\\Windows\\System32\\mspaint.exe"
-
-            nome, caminho = texto.split(" em ", 1)
-            nome = nome.strip().lower()
-            caminho = caminho.strip()
-
-            if not nome or not caminho:
-                return f"{base} Preciso do nome e do caminho do programa."
-
-            return f"{base} {aprender_programa(nome, caminho)}"
-        except Exception:
-            return f"{base} Não consegui aprender esse programa."
-
-    # ---------
-    # Controle do PC (abrir programas)
-    # ---------
-    if comando.startswith(("abrir ", "abri ", "abre ")):
-        
-        # remove o verbo
-        nome_programa = comando.replace("abrir ", "")
-        nome_programa = nome_programa.replace("abri ", "")
-        nome_programa = nome_programa.replace("abre ", "")
-        nome_programa = nome_programa.strip()
-
-        # abrir algo no navegador
-        if "navegador" in comando:
-
-            if "github" in comando:
-                ok, resp = abrir_site("github")
-                return resp
-
-            if "youtube" in comando:
-                ok, resp = abrir_site("youtube")
-                return resp
-
-            if "gmail" in comando:
-                ok, resp = abrir_site("gmail")
-                return resp
-
-            if "chatgpt" in comando:
-                ok, resp = abrir_site("chatgpt")
-                return resp
-
-        # aliases especiais
-        if "navegador" in nome_programa:
-
-            if "edge" in nome_programa:
-                nome_programa = "edge"
-
-            elif "chrome" in nome_programa:
-                nome_programa = "chrome"
-
-            else:
-                nome_programa = "chrome"
-
-        if nome_programa in ALIASES_APPS:
-            nome_programa = ALIASES_APPS[nome_programa]
-
-        ok, resposta_pc = abrir_programa(nome_programa)
-
-        return resposta_pc
-    # ---------
-    # Sistema
-    # ---------
+    # -------------------------
+    # Sistema / status / modos
+    # -------------------------
     if any(frase in comando for frase in ["hora", "horas", "que horas", "que horas sao", "qual a hora", "qual e a hora", "horario"]):
         agora = datetime.now()
         return f"{base} Agora são {agora.strftime('%H:%M:%S')}."
@@ -266,9 +163,6 @@ def processar_comando(comando: str):
         status.append("🔑 OPENAI_API_KEY: OK" if tem_key else "🔑 OPENAI_API_KEY: NÃO")
         return f"{base} " + " | ".join(status) + " | (ONLINE depende de cota na OpenAI)"
 
-    # ---------
-    # Modos
-    # ---------
     if comando in ["modo simples", "modo fácil", "modo facil"]:
         MODO_RESPOSTA = "simples"
         return f"{base} Modo de resposta ajustado para: SIMPLES."
@@ -284,9 +178,56 @@ def processar_comando(comando: str):
     if comando in ["modo atual", "qual modo", "qual o modo"]:
         return f"{base} Modo atual: {MODO_RESPOSTA.upper()}."
 
-    # ---------
-    # Buscar documentos
-    # ---------
+    if comando in ["limpar contexto", "reset conversa", "reiniciar conversa"]:
+        historico_conversa.clear()
+        return f"{base} Contexto da conversa limpo. Pode falar do zero."
+
+    # -------------------------
+    # Rotinas
+    # -------------------------
+    if comando.startswith("abrir "):
+        nome_rotina = comando.replace("abrir ", "", 1).strip()
+        ok_rotina, resposta_rotina = executar_rotina(nome_rotina, abrir_programa)
+        if ok_rotina:
+            return resposta_rotina
+
+    # -------------------------
+    # Web / pesquisa / sites
+    # -------------------------
+    if comando.startswith("pesquisar "):
+        termo = comando.replace("pesquisar ", "", 1).strip()
+        _, resposta_web = pesquisar_web(termo)
+        return resposta_web
+
+    if comando.startswith("procurar "):
+        termo = comando.replace("procurar ", "", 1).strip()
+        _, resposta_web = pesquisar_web(termo)
+        return resposta_web
+
+    if comando.startswith("abrir "):
+        nome_destino = comando.replace("abrir ", "", 1).strip()
+        ok_site, resposta_site = abrir_site(nome_destino)
+        if ok_site:
+            return resposta_site
+
+    # abrir algo no navegador
+    if "navegador" in comando:
+        if "github" in comando:
+            _, resp = abrir_site("github")
+            return resp
+        if "youtube" in comando:
+            _, resp = abrir_site("youtube")
+            return resp
+        if "gmail" in comando:
+            _, resp = abrir_site("gmail")
+            return resp
+        if "chatgpt" in comando:
+            _, resp = abrir_site("chatgpt")
+            return resp
+
+    # -------------------------
+    # Documentos
+    # -------------------------
     if comando.startswith("buscar docs"):
         termo = comando.replace("buscar docs", "").strip()
 
@@ -303,22 +244,9 @@ def processar_comando(comando: str):
             resposta += f"- {r}\n"
         return resposta
 
-    # ---------
-    # Resumir conversa
-    # ---------
-    if comando in ["resumir conversa", "resumo da conversa", "resumir chat"]:
-        if not historico_conversa:
-            return f"{base} Ainda não temos conversa suficiente para resumir."
-
-        pedido = (
-            "Resuma nossa conversa recente em tópicos curtos (máx 8 linhas). "
-            "Depois liste 3 próximos passos recomendados."
-        )
-        return responder_ia(pedido, historico=historico_conversa, modo="normal")
-
-    # ---------
+    # -------------------------
     # Ajuda
-    # ---------
+    # -------------------------
     if comando in ["ajuda", "help", "socorro", "o que voce faz", "o que você faz"]:
         return (
             "Eu posso ajudar com várias coisas, Rony:\n\n"
@@ -342,6 +270,7 @@ def processar_comando(comando: str):
             "• status ia\n\n"
             "💻 Ações\n"
             "• abrir chrome\n"
+            "• listar programas\n"
             "• aprender programa paint em C:\\Windows\\System32\\mspaint.exe\n\n"
             "💬 Conversa\n"
             "• oi\n"
@@ -350,9 +279,9 @@ def processar_comando(comando: str):
             "Se quiser registrar algo é só falar naturalmente 😎"
         )
 
-    # ---------
-    # Lembretes: limpeza
-    # ---------
+    # -------------------------
+    # Lembretes
+    # -------------------------
     if comando in ["apagar lembretes", "limpar todos os lembretes"]:
         memoria.apagar_lembretes()
         return f"{base} Ok. Apaguei todos os lembretes."
@@ -361,9 +290,34 @@ def processar_comando(comando: str):
         memoria.limpar_lembretes_executados()
         return f"{base} Ok. Limpei os lembretes executados."
 
-    # ---------
-    # Mostrar categorias
-    # ---------
+    if comando.startswith("me lembra"):
+        h, mi = extrair_horario(comando)
+        if h is None:
+            return f"{base} Me diga o horário, exemplo: 'me lembra às 18:30 comprar pão'."
+
+        conteudo = comando.replace("me lembra", "").strip()
+        conteudo = re.sub(r"\b(?:as|às)\s*\d{1,2}(:\d{2})?\b", "", conteudo).strip()
+        conteudo = re.sub(r"\b\d{1,2}:\d{2}\b", "", conteudo).strip()
+        conteudo = re.sub(r"\b\d{1,2}h(\d{2})?\b", "", conteudo).strip()
+        conteudo = re.sub(r"^:\d{2}\s*", "", conteudo).strip()
+        conteudo = conteudo.lstrip("que ").strip()
+
+        if not conteudo:
+            return f"{base} Certo. O que você quer que eu te lembre?"
+
+        agora = datetime.now()
+        quando = agora.replace(hour=h, minute=mi, second=0, microsecond=0)
+        if quando <= agora:
+            quando = quando + timedelta(days=1)
+
+        ok = memoria.salvar_lembrete(conteudo, quando)
+        if ok:
+            return f"{base} {escolher(RESP_OK_CHEFE)} Lembrete registrado para {quando.strftime('%d/%m/%Y %H:%M')}."
+        return f"{base} Esse lembrete já está registrado."
+
+    # -------------------------
+    # Memória categorizada
+    # -------------------------
     if comando in ["mostra agenda", "mostrar agenda"]:
         itens = memoria.listar_por_categoria("agenda")
         if isinstance(itens, str):
@@ -391,37 +345,6 @@ def processar_comando(comando: str):
             resposta += f"{i}. {item['conteudo']} ({item['data']} {item['hora']})\n"
         return resposta
 
-    # ---------
-    # Lembrete com horário
-    # ---------
-    if comando.startswith("me lembra"):
-        h, mi = extrair_horario(comando)
-        if h is None:
-            return f"{base} Me diga o horário, exemplo: 'me lembra às 18:30 comprar pão'."
-
-        conteudo = comando.replace("me lembra", "").strip()
-        conteudo = re.sub(r"\b(?:as|às)\s*\d{1,2}(:\d{2})?\b", "", conteudo).strip()
-        conteudo = re.sub(r"\b\d{1,2}:\d{2}\b", "", conteudo).strip()
-        conteudo = re.sub(r"\b\d{1,2}h(\d{2})?\b", "", conteudo).strip()
-        conteudo = re.sub(r"^:\d{2}\s*", "", conteudo).strip()
-        conteudo = conteudo.lstrip("que ").strip()
-
-        if not conteudo:
-            return f"{base} Certo. O que você quer que eu te lembre?"
-
-        agora = datetime.now()
-        quando = agora.replace(hour=h, minute=mi, second=0, microsecond=0)
-        if quando <= agora:
-            quando = quando + timedelta(days=1)
-
-        ok = memoria.salvar_lembrete(conteudo, quando)
-        if ok:
-            return f"{base} {escolher(RESP_OK_CHEFE)} Lembrete registrado para {quando.strftime('%d/%m/%Y %H:%M')}."
-        return f"{base} Esse lembrete já está registrado."
-
-    # ---------
-    # Anotações / memórias
-    # ---------
     if any(comando.startswith(g) for g in [
         "lembrar que", "lembra de", "preciso lembrar de", "anota", "anote",
         "guarda isso", "guardar", "me lembre", "me lembrar",
@@ -451,9 +374,6 @@ def processar_comando(comando: str):
         memoria.salvar(conteudo, categoria=categoria)
         return f"{base} Informação armazenada com sucesso."
 
-    # ---------
-    # Listar tudo
-    # ---------
     if comando in ["o que voce lembra"]:
         lembrancas = memoria.listar()
         if isinstance(lembrancas, str):
@@ -466,70 +386,13 @@ def processar_comando(comando: str):
                 resposta += f"{i}. [lembrete]{status} {item['conteudo']} (quando: {item.get('quando')})\n"
             else:
                 resposta += (
-                    f"{i}. [{item.get('categoria','geral')}] {item['conteudo']} "
+                    f"{i}. [{item.get('categoria', 'geral')}] {item['conteudo']} "
                     f"(Registrado em {item['data']} às {item['hora']})\n"
                 )
         return resposta
+
     # -------------------------
-# APRENDER INFORMAÇÃO
-# -------------------------
-    if comando.startswith("aprenda que"):
-        texto = comando.replace("aprenda que", "").strip()
-
-        if not texto:
-            return "O que você quer que eu aprenda?"
-
-        # tenta separar com padrões naturais
-        gatilhos = [
-            " prefere ",
-            " gosta de ",
-            " usa ",
-            " trabalha com ",
-            " paga ",
-            " vence ",
-            " tem ",
-            " é ",
-            " e "
-        ]
-
-        chave = None
-        valor = None
-
-        for gatilho in gatilhos:
-            if gatilho in texto:
-                parte1, parte2 = texto.split(gatilho, 1)
-                chave = parte1.strip()
-                valor = (gatilho.strip() + " " + parte2.strip()).strip()
-                break
-
-        if not chave or not valor:
-            return "Não entendi o que devo aprender."
-
-        aprender(chave, valor)
-        return f"Entendido. Aprendi que {chave} {valor}."
-    
-    # -------------------------
-    # CONSULTAR MEMÓRIA
-    # -------------------------
-    if comando.startswith("o que voce sabe sobre"):
-        chave = comando.replace("o que voce sabe sobre", "").strip()
-
-        valor = buscar(chave)
-
-        if valor:
-            return f"Eu sei que {chave} é {valor}."
-
-        return "Ainda não sei nada sobre isso."
-
-    # ---------
-    # Limpar contexto
-    # ---------
-    if comando in ["limpar contexto", "reset conversa", "reiniciar conversa"]:
-        historico_conversa.clear()
-        return f"{base} Contexto da conversa limpo. Pode falar do zero."
-    
-    # -------------------------
-    # Aprender informação
+    # Conhecimento permanente
     # -------------------------
     if comando.startswith("aprenda que"):
         texto = comando.replace("aprenda que", "").strip()
@@ -546,7 +409,7 @@ def processar_comando(comando: str):
             " vence ",
             " tem ",
             " é ",
-            " e "
+            " e ",
         ]
 
         chave = None
@@ -564,10 +427,7 @@ def processar_comando(comando: str):
 
         aprender(chave, valor)
         return f"{base} Entendido. Aprendi que {chave} {valor}."
-    
-    # -------------------------
-    # Consultar memória permanente
-    # -------------------------
+
     if comando.startswith("o que voce sabe sobre"):
         chave = comando.replace("o que voce sabe sobre", "").strip()
 
@@ -580,10 +440,7 @@ def processar_comando(comando: str):
             return f"{base} Eu sei que {chave} {valor}."
 
         return f"{base} Ainda não sei nada sobre isso."
-    
-    # -------------------------
-    # Listar conhecimento
-    # -------------------------
+
     if comando in ["o que voce aprendeu", "mostra conhecimento", "listar conhecimento"]:
         dados = listar_tudo()
 
@@ -595,16 +452,32 @@ def processar_comando(comando: str):
             resposta += f"- {chave} {valor}\n"
 
         return resposta
-    
-    # ---------
-    # Controle do PC
-    # ---------
-    if comando.startswith("abrir "):
-        nome_programa = comando.replace("abrir ", "", 1).strip()
-        ok, resposta_pc = abrir_programa(nome_programa)
-        return resposta_pc
 
-    if comando in ["listar programas", "listar apps", "quais programas voce conhece"]:
+    # -------------------------
+    # Aprender programa manualmente
+    # -------------------------
+    if comando.startswith("aprender programa"):
+        try:
+            texto = comando_original.replace("aprender programa", "", 1).strip()
+
+            if " em " not in texto.lower():
+                return f"{base} Use assim: aprender programa paint em C:\\Windows\\System32\\mspaint.exe"
+
+            nome, caminho = texto.split(" em ", 1)
+            nome = nome.strip().lower()
+            caminho = caminho.strip()
+
+            if not nome or not caminho:
+                return f"{base} Preciso do nome e do caminho do programa."
+
+            return f"{base} {aprender_programa(nome, caminho)}"
+        except Exception:
+            return f"{base} Não consegui aprender esse programa."
+
+    # -------------------------
+    # Controle do PC
+    # -------------------------
+    if comando in ["listar programas", "listar apps", "quais programas voce conhece", "lista programas"]:
         programas = listar_programas()
         if not programas:
             return "Não encontrei programas no Menu Iniciar."
@@ -616,9 +489,30 @@ def processar_comando(comando: str):
         if len(programas) > 30:
             resposta += f"\nMostrando 30 de {len(programas)} programas."
         return resposta
-    # ---------
+
+    if comando.startswith(("abrir ", "abri ", "abre ")):
+        nome_programa = comando.replace("abrir ", "")
+        nome_programa = nome_programa.replace("abri ", "")
+        nome_programa = nome_programa.replace("abre ", "")
+        nome_programa = nome_programa.strip()
+
+        if "navegador" in nome_programa:
+            if "edge" in nome_programa:
+                nome_programa = "edge"
+            elif "chrome" in nome_programa:
+                nome_programa = "chrome"
+            else:
+                nome_programa = "chrome"
+
+        if nome_programa in ALIASES_APPS:
+            nome_programa = ALIASES_APPS[nome_programa]
+
+        _, resposta_pc = abrir_programa(nome_programa)
+        return resposta_pc
+
+    # -------------------------
     # Controle do sistema
-    # ---------
+    # -------------------------
     if comando in ["desligar pc", "desligar computador", "desligar o pc", "desligar o computador"]:
         return desligar_pc()
 
@@ -631,15 +525,15 @@ def processar_comando(comando: str):
     if comando in ["cancelar desligamento", "cancelar reinicio", "cancelar reinício"]:
         return cancelar_desligamento()
 
-    # ---------
+    # -------------------------
     # Sair
-    # ---------
+    # -------------------------
     if comando == "sair":
         return "ENCERRAR"
 
-        # ---------
+    # -------------------------
     # Fallback IA com contexto
-    # ---------
+    # -------------------------
     resposta_ia = responder_ia(comando, historico=historico_conversa, modo=MODO_RESPOSTA)
 
     if resposta_ia:

@@ -5,6 +5,7 @@ from datetime import datetime
 from modules.identity import HULIIdentity
 from modules.commands import processar_comando
 from modules.memory import HULIMemory
+from modules.voice import ouvir, falar
 
 
 def monitor_lembretes(stop_event: threading.Event):
@@ -27,8 +28,9 @@ def monitor_lembretes(stop_event: threading.Event):
                     continue
 
                 if agora >= quando_dt and not lembrete.get("executado", False):
-                    # impressão "bonita" sem bagunçar tanto o prompt
-                    print(f"\n\nH.U.L.I: 🔔 Rony, lembrete: {lembrete['conteudo']}\n")
+                    texto = f"Rony, lembrete: {lembrete['conteudo']}"
+                    print(f"\nH.U.L.I: 🔔 {texto}\n")
+                    falar(texto)
                     memoria.marcar_lembrete_executado(lembrete.get("id"))
                     print("Aguardando comando...\n")
         except Exception:
@@ -41,6 +43,8 @@ def iniciar():
     identidade = HULIIdentity()
 
     print(identidade.apresentar())
+    falar(identidade.apresentar())
+
     print("H.U.L.I iniciado.")
     print("Aguardando comando...")
 
@@ -49,11 +53,22 @@ def iniciar():
     t.start()
 
     while True:
-        comando = input("Você: ")
+        modo = input("Digite [1] texto ou [2] voz: ").strip()
+
+        if modo == "2":
+            comando = ouvir()
+            if not comando:
+                print("H.U.L.I: Não consegui entender.")
+                falar("Não consegui entender.")
+                continue
+        else:
+            comando = input("Você: ").strip().lower()
+
         resposta = processar_comando(comando)
 
         if resposta == "ENCERRAR":
             print("H.U.L.I: Encerrando operações. Até logo, Rony.")
+            falar("Encerrando operações. Até logo, Rony.")
             stop_event.set()
             break
 
@@ -61,6 +76,7 @@ def iniciar():
             continue
 
         print(f"H.U.L.I: {resposta}")
+        falar(resposta)
 
 
 if __name__ == "__main__":

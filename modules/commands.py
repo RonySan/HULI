@@ -13,6 +13,12 @@ from modules.ai import responder_ia, tem_internet, extrair_conhecimento
 from modules.aliases import ALIASES_APPS
 from modules.pc_control import abrir_programa, listar_programas, abrir_site, pesquisar_web
 from modules.routines import executar_rotina
+from modules.system_control import (
+    desligar_pc,
+    reiniciar_pc,
+    bloquear_pc,
+    cancelar_desligamento,
+)
 
 memoria = HULIMemory()
 historico_conversa: list[dict] = []
@@ -610,6 +616,20 @@ def processar_comando(comando: str):
         if len(programas) > 30:
             resposta += f"\nMostrando 30 de {len(programas)} programas."
         return resposta
+    # ---------
+    # Controle do sistema
+    # ---------
+    if comando in ["desligar pc", "desligar computador", "desligar o pc", "desligar o computador"]:
+        return desligar_pc()
+
+    if comando in ["reiniciar pc", "reiniciar computador", "reiniciar o pc", "reiniciar o computador"]:
+        return reiniciar_pc()
+
+    if comando in ["bloquear pc", "bloquear computador", "bloquear o pc", "bloquear o computador"]:
+        return bloquear_pc()
+
+    if comando in ["cancelar desligamento", "cancelar reinicio", "cancelar reinício"]:
+        return cancelar_desligamento()
 
     # ---------
     # Sair

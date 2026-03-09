@@ -12,6 +12,7 @@ from modules.actions import abrir_programa, aprender_programa
 from modules.ai import responder_ia, tem_internet, extrair_conhecimento
 from modules.aliases import ALIASES_APPS
 from modules.pc_control import abrir_programa, listar_programas, abrir_site, pesquisar_web
+from modules.routines import executar_rotina
 
 memoria = HULIMemory()
 historico_conversa: list[dict] = []
@@ -94,6 +95,13 @@ def processar_comando(comando: str):
 
     # remove a palavra de ativação no começo
     if comando.startswith("huli "):
+        # limpar palavras comuns
+        comando = comando.replace("o ", "")
+        comando = comando.replace("a ", "")
+        comando = comando.replace("no ", "")
+        comando = comando.replace("na ", "")
+        comando = comando.replace("do ", "")
+        comando = comando.replace("da ", "")
         comando = comando.replace("huli ", "", 1).strip()
 
     if not comando:
@@ -125,6 +133,18 @@ def processar_comando(comando: str):
     if any(frase in comando for frase in ["estou otimo", "to otimo", "to bem", "tudo certo", "tranquilo", "suave"]):
         return f"{base} Boa! Quer que eu organize suas prioridades de hoje?"
     
+    # ---------
+    # Rotinas
+    # ---------
+    if comando.startswith("abrir "):
+
+        nome_rotina = comando.replace("abrir ", "", 1).strip()
+
+        ok_rotina, resposta_rotina = executar_rotina(nome_rotina, abrir_programa)
+
+        if ok_rotina:
+            return resposta_rotina
+
     # ---------
     # Pesquisa na web
     # ---------
@@ -180,6 +200,25 @@ def processar_comando(comando: str):
         nome_programa = nome_programa.replace("abri ", "")
         nome_programa = nome_programa.replace("abre ", "")
         nome_programa = nome_programa.strip()
+
+        # abrir algo no navegador
+        if "navegador" in comando:
+
+            if "github" in comando:
+                ok, resp = abrir_site("github")
+                return resp
+
+            if "youtube" in comando:
+                ok, resp = abrir_site("youtube")
+                return resp
+
+            if "gmail" in comando:
+                ok, resp = abrir_site("gmail")
+                return resp
+
+            if "chatgpt" in comando:
+                ok, resp = abrir_site("chatgpt")
+                return resp
 
         # aliases especiais
         if "navegador" in nome_programa:

@@ -312,3 +312,96 @@ def responder_ia(pergunta: str, historico=None, modo="normal"):
             return "🌐 ONLINE | " + r
 
     return "⚠️ Ainda estou sem acesso aos motores de IA."
+def extrair_conhecimento(pergunta: str) -> dict | None:
+    """
+    Tenta identificar se a frase do usuário contém um fato útil para memória.
+    Retorna:
+    {"chave": "...", "valor": "..."}
+    ou None
+    """
+
+    api_key = os.getenv("OPENAI_API_KEY")
+
+    prompt = f"""
+Analise a frase abaixo e diga se ela contém uma informação útil e duradoura para memória de assistente pessoal.
+
+Exemplos de coisas úteis:
+- preferências de clientes
+- datas habituais
+- formas de pagamento
+- relações importantes
+- informações pessoais/profissionais úteis
+
+Se NÃO for útil para memória, responda apenas:
+NAO
+
+Se FOR útil, responda APENAS neste formato JSON:
+{{"chave":"...","valor":"..."}}
+
+Frase:
+{pergunta}
+"""
+
+    # tenta ONLINE primeiro
+    if api_key and tem_internet():
+        try:
+            headers = {
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            }
+
+            data = {
+                "model": "gpt-4o-mini",
+                "messages": [
+                    {"role": "system", "content": "Você extrai memória estruturada para um assistente."},
+                    {"role": "user", "content": prompt},
+                ],
+            }
+
+            r = requests.post(
+                "https://api.openai.com/v1/chat/completions",
+                headers=headers,
+                json=data,
+                timeout=15,
+            )
+
+            if r.status_code == 200:
+                j = r.json()
+                texto = j["choices"][0]["message"]["content"].strip()
+
+                if texto.upper() == "NAO":
+                    return None
+
+                import json
+                try:
+                    return json.loads(texto)
+                except Exception:
+                    return None
+        except Exception:
+            pass
+
+    # fallback OFFLINE simples por padrão
+    gatilhos = [
+        " prefere ",
+        " gosta de ",
+        " paga ",
+        " vence ",
+        " usa ",
+        " trabalha com ",
+        " tem ",
+        " é ",
+        " e ",
+    ]
+
+    frase = pergunta.strip().lower()
+
+    for gatilho in gatilhos:
+        if gatilho in frase:
+            parte1, parte2 = frase.split(gatilho, 1)
+            chave = parte1.strip()
+            valor = (gatilho.strip() + " " + parte2.strip()).strip()
+
+            if chave and valor:
+                return {"chave": chave, "valor": valor}
+
+    return None

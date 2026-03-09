@@ -9,6 +9,9 @@ from modules.personality import HULIPersonality
 from modules.memory import HULIMemory
 from modules.docs import buscar_docs
 from modules.actions import abrir_programa, aprender_programa
+from modules.ai import responder_ia, tem_internet, extrair_conhecimento
+from modules.aliases import ALIASES_APPS
+from modules.pc_control import abrir_programa, listar_programas, abrir_site, pesquisar_web
 
 memoria = HULIMemory()
 historico_conversa: list[dict] = []
@@ -79,7 +82,6 @@ RESP_RISO = [
     "Aí sim 😎",
 ]
 
-
 # -------------------------
 # Núcleo
 # -------------------------
@@ -89,6 +91,10 @@ def processar_comando(comando: str):
     personalidade = HULIPersonality()
     comando_original = comando.strip()
     comando = normalizar_texto(comando)
+
+    # remove a palavra de ativação no começo
+    if comando.startswith("huli "):
+        comando = comando.replace("huli ", "", 1).strip()
 
     if not comando:
         return ""
@@ -118,6 +124,30 @@ def processar_comando(comando: str):
 
     if any(frase in comando for frase in ["estou otimo", "to otimo", "to bem", "tudo certo", "tranquilo", "suave"]):
         return f"{base} Boa! Quer que eu organize suas prioridades de hoje?"
+    
+    # ---------
+    # Pesquisa na web
+    # ---------
+    if comando.startswith("pesquisar "):
+        termo = comando.replace("pesquisar ", "", 1).strip()
+        ok, resposta_web = pesquisar_web(termo)
+        return resposta_web
+
+    if comando.startswith("procurar "):
+        termo = comando.replace("procurar ", "", 1).strip()
+        ok, resposta_web = pesquisar_web(termo)
+        return resposta_web
+
+    # ---------
+    # Abrir sites rápidos
+    # ---------
+    if comando.startswith("abrir "):
+        nome_destino = comando.replace("abrir ", "", 1).strip()
+
+        # tenta abrir site conhecido primeiro
+        ok_site, resposta_site = abrir_site(nome_destino)
+        if ok_site:
+            return resposta_site
 
     # ---------
     # Aprender programa
@@ -141,14 +171,34 @@ def processar_comando(comando: str):
             return f"{base} Não consegui aprender esse programa."
 
     # ---------
-    # Abrir programas
+    # Controle do PC (abrir programas)
     # ---------
-    if comando.startswith("abrir "):
-        nome = comando.replace("abrir ", "").strip()
-        r = abrir_programa(nome)
-        if r:
-            return f"{base} {r}"
+    if comando.startswith(("abrir ", "abri ", "abre ")):
+        
+        # remove o verbo
+        nome_programa = comando.replace("abrir ", "")
+        nome_programa = nome_programa.replace("abri ", "")
+        nome_programa = nome_programa.replace("abre ", "")
+        nome_programa = nome_programa.strip()
 
+        # aliases especiais
+        if "navegador" in nome_programa:
+
+            if "edge" in nome_programa:
+                nome_programa = "edge"
+
+            elif "chrome" in nome_programa:
+                nome_programa = "chrome"
+
+            else:
+                nome_programa = "chrome"
+
+        if nome_programa in ALIASES_APPS:
+            nome_programa = ALIASES_APPS[nome_programa]
+
+        ok, resposta_pc = abrir_programa(nome_programa)
+
+        return resposta_pc
     # ---------
     # Sistema
     # ---------
@@ -500,6 +550,27 @@ def processar_comando(comando: str):
             resposta += f"- {chave} {valor}\n"
 
         return resposta
+    
+    # ---------
+    # Controle do PC
+    # ---------
+    if comando.startswith("abrir "):
+        nome_programa = comando.replace("abrir ", "", 1).strip()
+        ok, resposta_pc = abrir_programa(nome_programa)
+        return resposta_pc
+
+    if comando in ["listar programas", "listar apps", "quais programas voce conhece"]:
+        programas = listar_programas()
+        if not programas:
+            return "Não encontrei programas no Menu Iniciar."
+
+        resposta = "Programas encontrados:\n"
+        for i, nome in enumerate(programas[:30], 1):
+            resposta += f"{i}. {nome}\n"
+
+        if len(programas) > 30:
+            resposta += f"\nMostrando 30 de {len(programas)} programas."
+        return resposta
 
     # ---------
     # Sair
@@ -507,7 +578,7 @@ def processar_comando(comando: str):
     if comando == "sair":
         return "ENCERRAR"
 
-    # ---------
+        # ---------
     # Fallback IA com contexto
     # ---------
     resposta_ia = responder_ia(comando, historico=historico_conversa, modo=MODO_RESPOSTA)
@@ -518,5 +589,20 @@ def processar_comando(comando: str):
 
         if len(historico_conversa) > MAX_HIST:
             historico_conversa[:] = historico_conversa[-MAX_HIST:]
+
+    # -------------------------
+    # Aprendizado automático
+    # -------------------------
+    try:
+        memoria_extraida = extrair_conhecimento(comando)
+
+        if memoria_extraida:
+            chave = memoria_extraida.get("chave", "").strip()
+            valor = memoria_extraida.get("valor", "").strip()
+
+            if chave and valor:
+                aprender(chave, valor)
+    except Exception:
+        pass
 
     return resposta_ia

@@ -4,5 +4,10 @@
     "bloco de notas": "notepad.exe",
     "notepad": "notepad.exe",
     "calculadora": "calc.exe",
-    "paint": "mspaint"
+    "paint": "mspaint",
+    "edge": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+    "excel": "C:\\Program Files\\Microsoft Office\\root\\Office16\\excel.exe",
+    "word": "C:\\Program Files\\Microsoft Office\\root\\Office16\\winword.exe",
+    "midia play": "C:\\Program Files\\Windows Media Player\\wmplayer.exe",
+    "terminal git": "C:\\Program Files\\Git\\git-bash.exe"
 }

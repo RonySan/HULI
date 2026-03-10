@@ -477,7 +477,14 @@ def processar_comando(comando: str):
     # -------------------------
     # Controle do PC
     # -------------------------
-    if comando in ["listar programas", "listar apps", "quais programas voce conhece", "lista programas"]:
+    if comando in [
+        "listar programas",
+        "listar programa",
+        "listar apps",
+        "quais programas voce conhece",
+        "lista programas",
+        "lista programa",
+        ]:
         programas = listar_programas()
         if not programas:
             return "Não encontrei programas no Menu Iniciar."

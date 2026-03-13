@@ -5,7 +5,11 @@ from datetime import datetime
 from modules.identity import HULIIdentity
 from modules.commands import processar_comando
 from modules.memory import HULIMemory
-from modules.voice import ouvir, falar
+from modules.voice import falar
+from modules.voice_listener import ouvir_um_comando
+
+
+encerrar_programa = False
 
 
 def monitor_lembretes(stop_event: threading.Event):
@@ -32,11 +36,38 @@ def monitor_lembretes(stop_event: threading.Event):
                     print(f"\nH.U.L.I: 🔔 {texto}\n")
                     falar(texto)
                     memoria.marcar_lembrete_executado(lembrete.get("id"))
-                    print("Aguardando comando...\n")
+
         except Exception:
             pass
 
         time.sleep(1)
+
+
+def executar_comando(comando: str):
+    global encerrar_programa
+
+    if not comando:
+        return
+
+    comando_limpo = comando.strip().lower()
+
+    if comando_limpo in ["sair", "encerrar", "fechar huli"]:
+        print("H.U.L.I: Encerrando operações. Até logo, Rony.")
+        falar("Encerrando operações. Até logo, Rony.")
+        encerrar_programa = True
+        return
+
+    resposta = processar_comando(comando)
+
+    if resposta == "ENCERRAR":
+        print("H.U.L.I: Encerrando operações. Até logo, Rony.")
+        falar("Encerrando operações. Até logo, Rony.")
+        encerrar_programa = True
+        return
+
+    if resposta:
+        print(f"H.U.L.I: {resposta}")
+        falar(resposta)
 
 
 def iniciar():
@@ -46,37 +77,49 @@ def iniciar():
     falar(identidade.apresentar())
 
     print("H.U.L.I iniciado.")
-    print("Aguardando comando...")
+    print("Modo seguro ativado: teclado + voz manual.")
+    print("Comandos:")
+    print(" - digite normalmente para usar teclado")
+    print(" - digite 'voz' para falar um comando")
+    print(" - digite 'sair' para encerrar\n")
 
     stop_event = threading.Event()
-    t = threading.Thread(target=monitor_lembretes, args=(stop_event,), daemon=True)
-    t.start()
 
-    while True:
-        modo = input("Digite [1] texto ou [2] voz: ").strip()
+    t_lembretes = threading.Thread(
+        target=monitor_lembretes,
+        args=(stop_event,),
+        daemon=True
+    )
+    t_lembretes.start()
 
-        if modo == "2":
-            comando = ouvir()
+    while not encerrar_programa:
+        try:
+            comando = input("Você: ").strip()
+
             if not comando:
-                print("H.U.L.I: Não consegui entender.")
-                falar("Não consegui entender.")
                 continue
-        else:
-            comando = input("Você: ").strip().lower()
 
-        resposta = processar_comando(comando)
+            if comando.lower() == "voz":
+                print("🎤 Fale agora...")
+                comando_voz = ouvir_um_comando()
 
-        if resposta == "ENCERRAR":
-            print("H.U.L.I: Encerrando operações. Até logo, Rony.")
-            falar("Encerrando operações. Até logo, Rony.")
-            stop_event.set()
+                if not comando_voz:
+                    print("H.U.L.I: Não consegui entender o comando de voz.")
+                    falar("Não consegui entender o comando de voz.")
+                    continue
+
+                print(f"Você disse: {comando_voz}")
+                executar_comando(comando_voz)
+                continue
+
+            executar_comando(comando)
+
+        except (KeyboardInterrupt, EOFError):
+            print("\nH.U.L.I: Encerrando pelo teclado.")
+            falar("Encerrando pelo teclado.")
             break
 
-        if resposta == "":
-            continue
-
-        print(f"H.U.L.I: {resposta}")
-        falar(resposta)
+    stop_event.set()
 
 
 if __name__ == "__main__":

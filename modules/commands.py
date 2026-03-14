@@ -9,6 +9,7 @@ from modules.docs import buscar_docs
 from modules.knowledge import aprender, buscar, listar_tudo
 from modules.memory import HULIMemory
 from modules.personality import HULIPersonality
+from modules.scheduler import adicionar_agendamento, listar_agendamentos, remover_agendamento
 from modules.routines import (
     executar_rotina,
     listar_rotinas,
@@ -678,6 +679,44 @@ def processar_comando(comando: str):
 
     if comando in ["cancelar desligamento", "cancelar reinicio", "cancelar reinício"]:
         return cancelar_desligamento()
+    # -------------------------
+    # Agendamentos
+    # -------------------------
+    if comando.startswith("agendar rotina ") and " às " in comando:
+        try:
+            texto = comando.replace("agendar rotina ", "", 1)
+            nome, horario = texto.split(" às ", 1)
+            return f"{base} {adicionar_agendamento('rotina', nome.strip(), horario.strip())}"
+        except Exception:
+            return f"{base} Não consegui criar o agendamento da rotina."
+
+    if comando.startswith("agendar comando ") and " às " in comando:
+        try:
+            texto = comando.replace("agendar comando ", "", 1)
+            nome, horario = texto.split(" às ", 1)
+            return f"{base} {adicionar_agendamento('comando', nome.strip(), horario.strip())}"
+        except Exception:
+            return f"{base} Não consegui criar o agendamento do comando."
+
+    if comando in ["listar agendamentos", "mostrar agendamentos"]:
+        itens = listar_agendamentos()
+
+        if not itens:
+            return f"{base} Não existem agendamentos cadastrados."
+
+        resposta = "Agendamentos:\n"
+        for item in itens:
+            resposta += f"{item['id']}. [{item['tipo']}] {item['valor']} às {item['horario']}\n"
+        return resposta
+
+    if comando.startswith("remover agendamento "):
+        try:
+            agendamento_id = int(comando.replace("remover agendamento ", "", 1).strip())
+            ok, resposta = remover_agendamento(agendamento_id)
+            return f"{base} {resposta}"
+        except Exception:
+            return f"{base} Não consegui remover o agendamento."
+
 
     # -------------------------
     # Sair

@@ -7,6 +7,7 @@ from modules.commands import processar_comando
 from modules.memory import HULIMemory
 from modules.voice import falar
 from modules.voice_listener import ouvir_um_comando
+from modules.scheduler import verificar_agendamentos
 
 
 encerrar_programa = False
@@ -70,6 +71,16 @@ def executar_comando(comando: str):
         falar(resposta)
 
 
+def executar_agendamento(tipo: str, valor: str):
+    if tipo == "rotina":
+        print(f"\nH.U.L.I: ⏰ Executando rotina agendada: {valor}")
+        executar_comando(f"abrir {valor}")
+
+    elif tipo == "comando":
+        print(f"\nH.U.L.I: ⏰ Executando comando agendado: {valor}")
+        executar_comando(valor)
+
+
 def iniciar():
     identidade = HULIIdentity()
 
@@ -93,6 +104,8 @@ def iniciar():
     t_lembretes.start()
 
     while not encerrar_programa:
+        verificar_agendamentos(executar_agendamento)
+
         try:
             comando = input("Você: ").strip()
 

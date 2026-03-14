@@ -1,1 +1,50 @@
-[]
+[
+    {
+        "id": 1,
+        "tipo": "rotina",
+        "valor": "trabalho",
+        "horario": "18 49",
+        "executado_hoje": false,
+        "ultima_data": ""
+    },
+    {
+        "id": 2,
+        "tipo": "rotina",
+        "valor": "trabalho",
+        "horario": "18:49",
+        "executado_hoje": false,
+        "ultima_data": ""
+    },
+    {
+        "id": 3,
+        "tipo": "rotina",
+        "valor": "trabalho",
+        "horario": "18:49",
+        "executado_hoje": false,
+        "ultima_data": ""
+    },
+    {
+        "id": 4,
+        "tipo": "rotina",
+        "valor": "trabalho",
+        "horario": "18:49",
+        "executado_hoje": false,
+        "ultima_data": ""
+    },
+    {
+        "id": 5,
+        "tipo": "rotina",
+        "valor": "trabalho",
+        "horario": "19:03",
+        "executado_hoje": false,
+        "ultima_data": ""
+    },
+    {
+        "id": 6,
+        "tipo": "rotina",
+        "valor": "trabalho",
+        "horario": "19:30",
+        "executado_hoje": false,
+        "ultima_data": ""
+    }
+]

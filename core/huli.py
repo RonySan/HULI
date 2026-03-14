@@ -12,6 +12,14 @@ from modules.scheduler import verificar_agendamentos
 
 encerrar_programa = False
 
+def monitor_agendamentos(stop_event):
+    while not stop_event.is_set():
+        try:
+            verificar_agendamentos(executar_agendamento)
+        except Exception:
+            pass
+
+        time.sleep(30)  # verifica a cada 30 segundos
 
 def monitor_lembretes(stop_event: threading.Event):
     memoria = HULIMemory()
@@ -42,6 +50,12 @@ def monitor_lembretes(stop_event: threading.Event):
             pass
 
         time.sleep(1)
+        t_agendamentos = threading.Thread(
+        target=monitor_agendamentos,
+        args=(stop_event,),
+        daemon=True
+    )
+    t_agendamentos.start()
 
 
 def executar_comando(comando: str):

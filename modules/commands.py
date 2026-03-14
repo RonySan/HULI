@@ -679,26 +679,40 @@ def processar_comando(comando: str):
 
     if comando in ["cancelar desligamento", "cancelar reinicio", "cancelar reinício"]:
         return cancelar_desligamento()
-    # -------------------------
+       # -------------------------
     # Agendamentos
     # -------------------------
-    if comando.startswith("agendar rotina ") and " às " in comando:
+    if comando.startswith("agendar rotina ") and (" às " in comando or " as " in comando):
         try:
             texto = comando.replace("agendar rotina ", "", 1)
-            nome, horario = texto.split(" às ", 1)
-            return f"{base} {adicionar_agendamento('rotina', nome.strip(), horario.strip())}"
+
+            if " às " in texto:
+                nome, horario = texto.split(" às ", 1)
+            else:
+                nome, horario = texto.split(" as ", 1)
+
+            horario = horario.strip().replace(" ", ":")
+
+            return f"{base} {adicionar_agendamento('rotina', nome.strip(), horario)}"
         except Exception:
             return f"{base} Não consegui criar o agendamento da rotina."
 
-    if comando.startswith("agendar comando ") and " às " in comando:
+    if comando.startswith("agendar comando ") and (" às " in comando or " as " in comando):
         try:
             texto = comando.replace("agendar comando ", "", 1)
-            nome, horario = texto.split(" às ", 1)
-            return f"{base} {adicionar_agendamento('comando', nome.strip(), horario.strip())}"
+
+            if " às " in texto:
+                nome, horario = texto.split(" às ", 1)
+            else:
+                nome, horario = texto.split(" as ", 1)
+
+            horario = horario.strip().replace(" ", ":")
+
+            return f"{base} {adicionar_agendamento('comando', nome.strip(), horario)}"
         except Exception:
             return f"{base} Não consegui criar o agendamento do comando."
 
-    if comando in ["listar agendamentos", "mostrar agendamentos"]:
+    if comando in ["listar agendamentos", "listar agendamento", "mostrar agendamentos", "mostrar agendamento"]:
         itens = listar_agendamentos()
 
         if not itens:
@@ -716,7 +730,6 @@ def processar_comando(comando: str):
             return f"{base} {resposta}"
         except Exception:
             return f"{base} Não consegui remover o agendamento."
-
 
     # -------------------------
     # Sair

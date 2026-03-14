@@ -21,7 +21,7 @@ def salvar_agendamentos(dados):
         json.dump(dados, f, indent=4, ensure_ascii=False)
 
 
-def adicionar_agendamento(tipo: str, valor: str, horario: str):
+def adicionar_agendamento(tipo: str, valor: str, horario: str, recorrencia: str = "uma vez"):
     agendamentos = carregar_agendamentos()
 
     novo = {
@@ -29,14 +29,14 @@ def adicionar_agendamento(tipo: str, valor: str, horario: str):
         "tipo": tipo,
         "valor": valor,
         "horario": horario,
-        "executado_hoje": False,
-        "ultima_data": ""
+        "recorrencia": recorrencia,
+        "ultima_execucao": ""
     }
 
     agendamentos.append(novo)
     salvar_agendamentos(agendamentos)
 
-    return f"Agendamento criado: {tipo} '{valor}' às {horario}."
+    return f"Agendamento criado: {tipo} '{valor}' às {horario} ({recorrencia})."
 
 
 def listar_agendamentos():
@@ -50,7 +50,6 @@ def remover_agendamento(agendamento_id: int):
     if len(novos) == len(agendamentos):
         return False, f"Não encontrei o agendamento {agendamento_id}."
 
-    # reorganiza IDs
     for i, item in enumerate(novos, 1):
         item["id"] = i
 
@@ -58,22 +57,50 @@ def remover_agendamento(agendamento_id: int):
     return True, f"Agendamento {agendamento_id} removido com sucesso."
 
 
+def recorrencia_valida_hoje(recorrencia: str, agora: datetime) -> bool:
+    dia_semana = agora.weekday()  # 0=segunda ... 6=domingo
+
+    if recorrencia == "uma vez":
+        return True
+    if recorrencia == "todo dia":
+        return True
+    if recorrencia == "segunda a sexta":
+        return dia_semana <= 4
+    if recorrencia == "fim de semana":
+        return dia_semana >= 5
+
+    return False
+
+
 def verificar_agendamentos(executar_callback):
     agendamentos = carregar_agendamentos()
     agora = datetime.now()
-    data_hoje = agora.strftime("%Y-%m-%d")
+    data_hora_atual = agora.strftime("%Y-%m-%d %H:%M")
     hora_atual = agora.strftime("%H:%M")
 
     alterado = False
+    novos_agendamentos = []
 
     for item in agendamentos:
         horario = item.get("horario", "")
-        ultima_data = item.get("ultima_data", "")
+        recorrencia = item.get("recorrencia", "uma vez")
+        ultima_execucao = item.get("ultima_execucao", "")
 
-        if horario == hora_atual and ultima_data != data_hoje:
+        if (
+            horario == hora_atual
+            and ultima_execucao != data_hora_atual
+            and recorrencia_valida_hoje(recorrencia, agora)
+        ):
             executar_callback(item["tipo"], item["valor"])
-            item["ultima_data"] = data_hoje
+            item["ultima_execucao"] = data_hora_atual
             alterado = True
 
+            if recorrencia == "uma vez":
+                continue
+
+        novos_agendamentos.append(item)
+
     if alterado:
-        salvar_agendamentos(agendamentos)
+        for i, item in enumerate(novos_agendamentos, 1):
+            item["id"] = i
+        salvar_agendamentos(novos_agendamentos)

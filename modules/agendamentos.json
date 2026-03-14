@@ -43,8 +43,16 @@
         "id": 6,
         "tipo": "rotina",
         "valor": "trabalho",
-        "horario": "19:30",
-        "executado_hoje": false,
-        "ultima_data": ""
+        "horario": "08:00",
+        "recorrencia": "todo dia",
+        "ultima_execucao": ""
+    },
+    {
+        "id": 7,
+        "tipo": "rotina",
+        "valor": "estudo segunda sexta",
+        "horario": "19:00",
+        "recorrencia": "uma vez",
+        "ultima_execucao": ""
     }
 ]

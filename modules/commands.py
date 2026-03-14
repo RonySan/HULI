@@ -679,9 +679,45 @@ def processar_comando(comando: str):
 
     if comando in ["cancelar desligamento", "cancelar reinicio", "cancelar reinício"]:
         return cancelar_desligamento()
-       # -------------------------
+    # -------------------------
     # Agendamentos
     # -------------------------
+    if comando.startswith("agendar rotina ") and " todo dia às " in comando:
+        try:
+            texto = comando.replace("agendar rotina ", "", 1)
+            nome, horario = texto.split(" todo dia às ", 1)
+            horario = horario.strip().replace(" ", ":")
+            return f"{base} {adicionar_agendamento('rotina', nome.strip(), horario, 'todo dia')}"
+        except Exception:
+            return f"{base} Não consegui criar o agendamento da rotina."
+
+    if comando.startswith("agendar rotina ") and " segunda a sexta às " in comando:
+        try:
+            texto = comando.replace("agendar rotina ", "", 1)
+            nome, horario = texto.split(" segunda a sexta às ", 1)
+            horario = horario.strip().replace(" ", ":")
+            return f"{base} {adicionar_agendamento('rotina', nome.strip(), horario, 'segunda a sexta')}"
+        except Exception:
+            return f"{base} Não consegui criar o agendamento da rotina."
+
+    if comando.startswith("agendar comando ") and " todo dia às " in comando:
+        try:
+            texto = comando.replace("agendar comando ", "", 1)
+            nome, horario = texto.split(" todo dia às ", 1)
+            horario = horario.strip().replace(" ", ":")
+            return f"{base} {adicionar_agendamento('comando', nome.strip(), horario, 'todo dia')}"
+        except Exception:
+            return f"{base} Não consegui criar o agendamento do comando."
+
+    if comando.startswith("agendar comando ") and " segunda a sexta às " in comando:
+        try:
+            texto = comando.replace("agendar comando ", "", 1)
+            nome, horario = texto.split(" segunda a sexta às ", 1)
+            horario = horario.strip().replace(" ", ":")
+            return f"{base} {adicionar_agendamento('comando', nome.strip(), horario, 'segunda a sexta')}"
+        except Exception:
+            return f"{base} Não consegui criar o agendamento do comando."
+
     if comando.startswith("agendar rotina ") and (" às " in comando or " as " in comando):
         try:
             texto = comando.replace("agendar rotina ", "", 1)
@@ -692,8 +728,7 @@ def processar_comando(comando: str):
                 nome, horario = texto.split(" as ", 1)
 
             horario = horario.strip().replace(" ", ":")
-
-            return f"{base} {adicionar_agendamento('rotina', nome.strip(), horario)}"
+            return f"{base} {adicionar_agendamento('rotina', nome.strip(), horario, 'uma vez')}"
         except Exception:
             return f"{base} Não consegui criar o agendamento da rotina."
 
@@ -707,8 +742,7 @@ def processar_comando(comando: str):
                 nome, horario = texto.split(" as ", 1)
 
             horario = horario.strip().replace(" ", ":")
-
-            return f"{base} {adicionar_agendamento('comando', nome.strip(), horario)}"
+            return f"{base} {adicionar_agendamento('comando', nome.strip(), horario, 'uma vez')}"
         except Exception:
             return f"{base} Não consegui criar o agendamento do comando."
 
@@ -720,7 +754,7 @@ def processar_comando(comando: str):
 
         resposta = "Agendamentos:\n"
         for item in itens:
-            resposta += f"{item['id']}. [{item['tipo']}] {item['valor']} às {item['horario']}\n"
+            resposta += f"{item['id']}. [{item['tipo']}] {item['valor']} às {item['horario']} ({item.get('recorrencia', 'uma vez')})\n"
         return resposta
 
     if comando.startswith("remover agendamento "):
@@ -730,7 +764,6 @@ def processar_comando(comando: str):
             return f"{base} {resposta}"
         except Exception:
             return f"{base} Não consegui remover o agendamento."
-
     # -------------------------
     # Sair
     # -------------------------

@@ -1,0 +1,58 @@
+{
+    "trabalho": [
+        {
+            "tipo": "programa",
+            "valor": "vscode"
+        },
+        {
+            "tipo": "programa",
+            "valor": "chrome"
+        },
+        {
+            "tipo": "site",
+            "valor": "github"
+        },
+        {
+            "tipo": "site",
+            "valor": "gmail"
+        }
+    ],
+    "estudo": [
+        {
+            "tipo": "site",
+            "valor": "youtube"
+        },
+        {
+            "tipo": "site",
+            "valor": "chatgpt"
+        },
+        {
+            "tipo": "programa",
+            "valor": "vscode"
+        }
+    ],
+    "projeto huli": [
+        {
+            "tipo": "programa",
+            "valor": "vscode"
+        },
+        {
+            "tipo": "programa",
+            "valor": "powershell"
+        },
+        {
+            "tipo": "site",
+            "valor": "github"
+        }
+    ],
+    "documentos": [
+        {
+            "tipo": "arquivo",
+            "valor": "C:\\HULI\\docs\\manual.pdf"
+        },
+        {
+            "tipo": "arquivo",
+            "valor": "C:\\HULI\\docs\\planejamento.docx"
+        }
+    ]
+}

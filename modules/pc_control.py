@@ -127,3 +127,32 @@ def pesquisar_web(termo: str):
     url = f"https://www.google.com/search?q={query}"
     webbrowser.open(url)
     return True, f"Pesquisando por: {termo}"
+
+
+def abrir_pasta(caminho: str):
+    try:
+        if not os.path.exists(caminho):
+            return False, f"Não encontrei a pasta '{caminho}'."
+
+        os.startfile(caminho)
+        return True, f"Abrindo pasta: {caminho}"
+    except Exception:
+        return False, f"Não consegui abrir a pasta '{caminho}'."
+
+
+def executar_comando_terminal(comando: str):
+    try:
+        subprocess.Popen(comando, shell=True)
+        return True, f"Executando comando: {comando}"
+    except Exception:
+        return False, "Não consegui executar o comando."
+    
+def abrir_arquivo(caminho: str):
+    try:
+        if not os.path.exists(caminho):
+            return False, f"Não encontrei o arquivo '{caminho}'."
+
+        os.startfile(caminho)
+        return True, f"Abrindo arquivo: {caminho}"
+    except Exception:
+        return False, f"Não consegui abrir o arquivo '{caminho}'."

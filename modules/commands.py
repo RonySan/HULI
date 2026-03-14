@@ -2,15 +2,30 @@ import os
 import re
 import random
 from datetime import datetime, timedelta
-
+from modules.nlp import normalizar_comando_natural
 from modules.ai import responder_ia, tem_internet, extrair_conhecimento
 from modules.aliases import ALIASES_APPS
 from modules.docs import buscar_docs
 from modules.knowledge import aprender, buscar, listar_tudo
 from modules.memory import HULIMemory
-from modules.pc_control import abrir_programa, listar_programas, abrir_site, pesquisar_web
 from modules.personality import HULIPersonality
-from modules.routines import executar_rotina
+from modules.routines import (
+    executar_rotina,
+    listar_rotinas,
+    criar_rotina,
+    mostrar_rotina,
+    adicionar_item_rotina,
+    remover_item_rotina,
+)
+from modules.pc_control import (
+    abrir_programa,
+    listar_programas,
+    abrir_site,
+    pesquisar_web,
+    abrir_pasta,
+    executar_comando_terminal,
+    abrir_arquivo,
+)
 from modules.system_control import (
     desligar_pc,
     reiniciar_pc,
@@ -65,11 +80,13 @@ def extrair_horario(comando: str):
 
 
 def limpar_palavra_ativacao(comando: str) -> str:
+    comando = normalizar_comando_natural(comando)
+
     if comando.startswith("huli "):
         comando = comando.replace("huli ", "", 1).strip()
 
-    # limpeza leve de artigos/preposições comuns
-    for termo in [" o ", " a ", " no ", " na ", " do ", " da "]:
+    # limpeza leve sem quebrar comandos importantes
+    for termo in [" o ", " a "]:
         comando = comando.replace(termo, " ")
 
     return re.sub(r"\s+", " ", comando).strip()
@@ -118,7 +135,13 @@ def processar_comando(comando: str):
     base = personalidade.gerar_resposta_base()
 
     # -------------------------
-    # Conversa dinâmica
+    # Resumo da conversa
+    if comando in ["resumir conversa", "resumo da conversa"]:
+        if not historico_conversa:
+            return f"{base} Não há conversa suficiente para resumir."
+        resumo = responder_ia("Resuma a conversa até agora.", historico=historico_conversa, modo="simples")
+        return f"{base} {resumo}"
+    # Conversa dinâmicaI
     # -------------------------
     if any(x in comando for x in ["kkk", "haha", "rs", "kakak", "lol"]):
         return escolher(RESP_RISO)
@@ -182,15 +205,72 @@ def processar_comando(comando: str):
         historico_conversa.clear()
         return f"{base} Contexto da conversa limpo. Pode falar do zero."
 
-    # -------------------------
+       # -------------------------
     # Rotinas
     # -------------------------
+    if comando in ["listar rotinas", "mostra rotinas", "quais rotinas existem"]:
+        rotinas = listar_rotinas()
+
+        if not rotinas:
+            return f"{base} Ainda não existem rotinas cadastradas."
+
+        resposta = "Rotinas disponíveis:\n"
+        for i, nome in enumerate(rotinas, 1):
+            resposta += f"{i}. {nome}\n"
+        return resposta
+
+    if comando.startswith("mostrar rotina"):
+        nome = comando.replace("mostrar rotina", "", 1).strip()
+
+        if not nome:
+            return f"{base} Diga o nome da rotina."
+
+        ok, resposta = mostrar_rotina(nome)
+        return f"{base} {resposta}"
+
+    if comando.startswith("criar rotina"):
+        try:
+            texto = comando.replace("criar rotina", "", 1).strip()
+
+            if "com" not in texto:
+                return f"{base} Use assim: criar rotina trabalho com chrome, vscode"
+
+            nome, itens = texto.split("com", 1)
+            nome = nome.strip()
+            itens = [x.strip() for x in itens.split(",")]
+
+            return f"{base} {criar_rotina(nome, itens)}"
+        except Exception:
+            return f"{base} Não consegui criar a rotina."
+
+    if comando.startswith("adicionar ") and " na rotina " in comando:
+        texto = comando.replace("adicionar ", "", 1)
+        item, nome = texto.split(" na rotina ", 1)
+
+        ok, resposta = adicionar_item_rotina(nome.strip(), item.strip())
+        return f"{base} {resposta}"
+
+    if comando.startswith("remover ") and " da rotina " in comando:
+        texto = comando.replace("remover ", "", 1)
+        item, nome = texto.split(" da rotina ", 1)
+
+        ok, resposta = remover_item_rotina(nome.strip(), item.strip())
+        return f"{base} {resposta}"
+
     if comando.startswith("abrir "):
         nome_rotina = comando.replace("abrir ", "", 1).strip()
-        ok_rotina, resposta_rotina = executar_rotina(nome_rotina, abrir_programa)
-        if ok_rotina:
-            return resposta_rotina
 
+        ok_rotina, resposta_rotina = executar_rotina(
+            nome_rotina,
+            abrir_programa,
+            abrir_site,
+            abrir_pasta,
+            executar_comando_terminal,
+            abrir_arquivo
+        )
+
+        if ok_rotina:
+            return f"{base} {resposta_rotina}"
     # -------------------------
     # Web / pesquisa / sites
     # -------------------------
@@ -249,35 +329,102 @@ def processar_comando(comando: str):
     # -------------------------
     if comando in ["ajuda", "help", "socorro", "o que voce faz", "o que você faz"]:
         return (
-            "Eu posso ajudar com várias coisas, Rony:\n\n"
-            "📅 Organização\n"
-            "• anota na agenda reunião amanhã\n"
-            "• anota tarefa pagar conta\n"
-            "• anota ideia criar sistema novo\n\n"
-            "⏰ Lembretes\n"
-            "• me lembra às 18:30 ligar pro João\n"
-            "• me lembra às 22 testar lembrete\n\n"
-            "📋 Consultar informações\n"
-            "• mostra agenda\n"
-            "• mostra tarefas\n"
-            "• mostra ideias\n"
-            "• o que voce lembra\n"
-            "• buscar docs multa\n\n"
-            "🕒 Sistema\n"
-            "• horas\n"
-            "• que dia é hoje\n"
-            "• status\n"
-            "• status ia\n\n"
-            "💻 Ações\n"
-            "• abrir chrome\n"
-            "• listar programas\n"
-            "• aprender programa paint em C:\\Windows\\System32\\mspaint.exe\n\n"
-            "💬 Conversa\n"
-            "• oi\n"
-            "• como voce esta\n"
-            "• quem e voce\n\n"
-            "Se quiser registrar algo é só falar naturalmente 😎"
-        )
+        "Eu posso ajudar com várias coisas, Rony:\n\n"
+
+        "💬 CONVERSA\n"
+        "• oi\n"
+        "• como voce esta\n"
+        "• quem e voce\n"
+        "• ajuda\n\n"
+
+        "🕒 SISTEMA\n"
+        "• horas\n"
+        "• que dia e hoje\n"
+        "• status\n"
+        "• status ia\n"
+        "• modo simples\n"
+        "• modo normal\n"
+        "• modo detalhado\n"
+        "• modo atual\n"
+        "• limpar contexto\n"
+        "• resumir conversa\n\n"
+
+        "📝 MEMÓRIA E ORGANIZAÇÃO\n"
+        "• anota comprar pão\n"
+        "• anota na agenda reunião amanhã\n"
+        "• anota tarefa pagar conta\n"
+        "• anota ideia criar sistema novo\n"
+        "• mostra agenda\n"
+        "• mostra tarefas\n"
+        "• mostra ideias\n"
+        "• o que voce lembra\n\n"
+
+        "⏰ LEMBRETES\n"
+        "• me lembra às 18:30 ligar pro João\n"
+        "• me lembra às 22 estudar\n"
+        "• apagar lembretes\n"
+        "• limpar lembretes executados\n\n"
+
+        "🧠 CONHECIMENTO PERMANENTE\n"
+        "• aprenda que meu cliente principal é a empresa XPTO\n"
+        "• o que voce sabe sobre meu cliente principal\n"
+        "• o que voce aprendeu\n"
+        "• listar conhecimento\n\n"
+
+        "📂 DOCUMENTOS\n"
+        "• buscar docs multa\n"
+        "• buscar docs contrato\n\n"
+
+        "💻 PROGRAMAS E COMPUTADOR\n"
+        "• listar programas\n"
+        "• abrir navegador\n"
+        "• abrir edge\n"
+        "• abrir chrome\n"
+        "• abrir vscode\n"
+        "• abrir github\n"
+        "• abrir gmail\n"
+        "• abrir youtube\n"
+        "• aprender programa paint em C:\\Windows\\System32\\mspaint.exe\n\n"
+
+        "🧭 COMANDOS NATURAIS\n"
+        "• pode abrir o navegador pra mim\n"
+        "• abre meu github\n"
+        "• que horas são agora\n"
+        "• me mostra os programas\n"
+        "• pode abrir o vscode\n"
+        "• me ajuda\n\n"
+
+        "🌐 PESQUISA E WEB\n"
+        "• pesquisar dolar hoje\n"
+        "• procurar clima em sao paulo\n"
+        "• abrir github\n"
+        "• abrir gmail\n"
+        "• abrir youtube\n"
+        "• abrir chatgpt\n\n"
+
+        "⚙️ CONTROLE DO SISTEMA\n"
+        "• bloquear computador\n"
+        "• reiniciar computador\n"
+        "• desligar computador\n"
+        "• cancelar desligamento\n\n"
+
+        "🚀 ROTINAS\n"
+        "• abrir trabalho\n"
+        "• abrir estudo\n"
+        "• abrir projeto huli\n\n"
+
+        "🎤 VOZ\n"
+        "• digite: voz\n"
+        "• depois fale o comando\n"
+        "• exemplo: abrir navegador\n\n"
+
+        "🚪 ENCERRAR\n"
+        "• sair\n"
+        "• encerrar\n\n"
+
+        "Se quiser, eu também posso executar comandos locais, responder perguntas, "
+        "usar IA online/offline e falar com você por voz 😎"
+    )
 
     # -------------------------
     # Lembretes

@@ -5,6 +5,19 @@ import webbrowser
 
 ARQUIVO_ROTINAS = os.path.join(os.path.dirname(__file__), "rotinas.json")
 
+def apagar_rotina(nome):
+    rotinas = carregar_rotinas()
+
+    nome = nome.lower()
+
+    if nome not in rotinas:
+        return False, f"Não encontrei a rotina '{nome}'."
+
+    del rotinas[nome]
+
+    salvar_rotinas(rotinas)
+
+    return True, f"Rotina '{nome}' removida."
 
 def carregar_rotinas():
     if not os.path.exists(ARQUIVO_ROTINAS):

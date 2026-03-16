@@ -9,8 +9,10 @@ from modules.docs import buscar_docs
 from modules.knowledge import aprender, buscar, listar_tudo
 from modules.memory import HULIMemory
 from modules.personality import HULIPersonality
+from modules.backup import criar_backup
 from modules.scheduler import adicionar_agendamento, listar_agendamentos, remover_agendamento
 from modules.routines import (
+    apagar_rotina,
     executar_rotina,
     listar_rotinas,
     criar_rotina,
@@ -783,6 +785,15 @@ def processar_comando(comando: str):
             return f"{base} {resposta}"
         except Exception:
             return f"{base} Não consegui remover o agendamento."
+        
+    if comando.startswith("apagar rotina "):
+        nome = comando.replace("apagar rotina ", "").strip()
+        ok, resposta = apagar_rotina(nome)
+
+        return resposta
+    
+    if comando in ["criar backup", "backup"]:
+        return criar_backup()
     # -------------------------
     # Sair
     # -------------------------

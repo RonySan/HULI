@@ -8,6 +8,7 @@ from modules.memory import HULIMemory
 from modules.voice import falar
 from modules.voice_listener import ouvir_um_comando
 from modules.scheduler import verificar_agendamentos
+from modules.history import registrar as registrar_historico
 
 
 encerrar_programa = False
@@ -60,6 +61,7 @@ def monitor_lembretes(stop_event: threading.Event):
 
 def executar_comando(comando: str):
     global encerrar_programa
+    registrar_historico(comando)
 
     if not comando:
         return

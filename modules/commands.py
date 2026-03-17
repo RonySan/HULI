@@ -11,6 +11,8 @@ from modules.memory import HULIMemory
 from modules.personality import HULIPersonality
 from modules.backup import criar_backup
 from modules.scheduler import adicionar_agendamento, listar_agendamentos, remover_agendamento
+from modules.system_monitor import status_sistema
+from modules.history import listar as listar_historico
 
 from modules.custom_commands import (
     criar_comando_personalizado,
@@ -152,12 +154,16 @@ def processar_comando(comando: str):
 
     # -------------------------
     # Resumo da conversa
+    # -------------------------
     if comando in ["resumir conversa", "resumo da conversa"]:
         if not historico_conversa:
             return f"{base} Não há conversa suficiente para resumir."
         resumo = responder_ia("Resuma a conversa até agora.", historico=historico_conversa, modo="simples")
         return f"{base} {resumo}"
+    
+    # -------------------------
     # Conversa dinâmicaI
+    # -------------------------
     # -------------------------
     if any(x in comando for x in ["kkk", "haha", "rs", "kakak", "lol"]):
         return escolher(RESP_RISO)
@@ -179,6 +185,26 @@ def processar_comando(comando: str):
 
     if any(frase in comando for frase in ["estou otimo", "to otimo", "to bem", "tudo certo", "tranquilo", "suave"]):
         return f"{base} Boa! Quer que eu organize suas prioridades de hoje?"
+    
+    
+    if comando in ["status sistema", "diagnostico", "diagnóstico"]:
+
+        return status_sistema()
+
+
+    if comando in ["historico", "histórico de comandos"]:
+
+        hist = listar_historico()
+
+        if not hist:
+            return "Nenhum comando registrado."
+
+        resposta = "Histórico recente:\n"
+
+        for c in hist[-10:]:
+            resposta += f"- {c}\n"
+
+        return resposta
 
     # -------------------------
     # Sistema / status / modos

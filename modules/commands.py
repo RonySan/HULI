@@ -44,6 +44,18 @@ from modules.system_control import (
     bloquear_pc,
     cancelar_desligamento,
 )
+from modules.automation import (
+    clicar,
+    duplo_clique,
+    clique_direito,
+    mover_mouse,
+    digitar_texto,
+    pressionar_tecla,
+    pressionar_atalho,
+    rolar,
+    posicao_mouse,
+)
+
 from modules.actions import aprender_programa
 
 
@@ -471,6 +483,17 @@ def processar_comando(comando: str):
             "• me mostra os programas\n"
             "• pode abrir o vscode\n"
             "• me ajuda\n\n"
+            "🖱️ AUTOMAÇÃO DO PC\n"
+            "• clicar\n"
+            "• duplo clique\n"
+            "• clique direito\n"
+            "• mover mouse para 500 300\n"
+            "• posicao do mouse\n"
+            "• digitar ola mundo\n"
+            "• pressionar enter\n"
+            "• pressionar ctrl s\n"
+            "• rolar para baixo\n"
+            "• rolar para cima\n\n"
 
             "🎤 VOZ\n"
             "• digite: voz\n"
@@ -538,7 +561,7 @@ def processar_comando(comando: str):
 
     if comando in ["mostra tarefas", "mostrar tarefas"]:
         itens = memoria.listar_por_categoria("tarefas")
-        if isinstance(itens, str):
+        if isinstance(itens, str):jj
             return itens
         resposta = "Tarefas:\n"
         for i, item in enumerate(itens, 1):
@@ -878,6 +901,62 @@ def processar_comando(comando: str):
         for i, nome in enumerate(itens, 1):
             resposta += f"{i}. {nome}\n"
         return resposta
+    
+        # -------------------------
+    # Automação do PC
+    # -------------------------
+    if comando in ["clicar", "clique"]:
+        return clicar()
+
+    if comando in ["duplo clique", "clicar duas vezes"]:
+        return duplo_clique()
+
+    if comando in ["clique direito", "botao direito", "botão direito"]:
+        return clique_direito()
+
+    if comando in ["posicao do mouse", "posição do mouse", "onde esta o mouse", "onde está o mouse"]:
+        return posicao_mouse()
+
+    if comando.startswith("mover mouse para "):
+        try:
+            texto = comando.replace("mover mouse para ", "", 1).strip()
+            partes = texto.split()
+
+            if len(partes) != 2:
+                return f"{base} Use assim: mover mouse para 500 300"
+
+            x = int(partes[0])
+            y = int(partes[1])
+
+            return mover_mouse(x, y)
+        except Exception:
+            return f"{base} Não consegui mover o mouse."
+
+    if comando.startswith("digitar "):
+        texto = comando.replace("digitar ", "", 1).strip()
+
+        if not texto:
+            return f"{base} O que você quer que eu digite?"
+
+        return digitar_texto(texto)
+
+    if comando.startswith("pressionar "):
+        texto = comando.replace("pressionar ", "", 1).strip()
+
+        if not texto:
+            return f"{base} Qual tecla você quer pressionar?"
+
+        if " " in texto:
+            teclas = texto.split()
+            return pressionar_atalho(*teclas)
+
+        return pressionar_tecla(texto)
+
+    if comando in ["rolar para baixo", "scroll para baixo"]:
+        return rolar("baixo")
+
+    if comando in ["rolar para cima", "scroll para cima"]:
+        return rolar("cima")
 
     # -------------------------
     # Sair

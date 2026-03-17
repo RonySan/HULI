@@ -11,6 +11,13 @@ from modules.memory import HULIMemory
 from modules.personality import HULIPersonality
 from modules.backup import criar_backup
 from modules.scheduler import adicionar_agendamento, listar_agendamentos, remover_agendamento
+
+from modules.custom_commands import (
+    criar_comando_personalizado,
+    listar_comandos_personalizados,
+    apagar_comando_personalizado,
+    resolver_comando_personalizado,
+)
 from modules.routines import (
     apagar_rotina,
     executar_rotina,
@@ -88,7 +95,7 @@ def limpar_palavra_ativacao(comando: str) -> str:
     if comando.startswith("huli "):
         comando = comando.replace("huli ", "", 1).strip()
 
-    # limpeza leve sem quebrar comandos importantes
+# limpeza leve sem quebrar comandos importantes
     for termo in [" o ", " a "]:
         comando = comando.replace(termo, " ")
 
@@ -136,6 +143,12 @@ def processar_comando(comando: str):
         return ""
 
     base = personalidade.gerar_resposta_base()
+    # -------------------------
+    # Comandos personalizados (resolver antes de tudo)
+    # -------------------------
+    comando_personalizado = resolver_comando_personalizado(comando)
+    if comando_personalizado:
+        return processar_comando(comando_personalizado)
 
     # -------------------------
     # Resumo da conversa
@@ -208,7 +221,7 @@ def processar_comando(comando: str):
         historico_conversa.clear()
         return f"{base} Contexto da conversa limpo. Pode falar do zero."
 
-       # -------------------------
+    # -------------------------
     # Rotinas
     # -------------------------
     if comando in ["listar rotinas", "mostra rotinas", "quais rotinas existem"]:
@@ -274,6 +287,11 @@ def processar_comando(comando: str):
 
         if ok_rotina:
             return f"{base} {resposta_rotina}"
+        
+    if comando.startswith("apagar rotina "):
+        nome = comando.replace("apagar rotina ", "", 1).strip()
+        ok, resposta = apagar_rotina(nome)
+        return f"{base} {resposta}"
     # -------------------------
     # Web / pesquisa / sites
     # -------------------------
@@ -390,34 +408,17 @@ def processar_comando(comando: str):
             "• aprender programa paint em C:\\Windows\\System32\\mspaint.exe\n\n"
 
             "📁 PASTAS E ARQUIVOS\n"
-            "• abrir documentos\n"
             "• abrir projeto huli\n"
-            "• abrir uma rotina que contenha pasta\n"
-            "• abrir uma rotina que contenha arquivo\n\n"
+            "• abrir documentos\n\n"
 
             "🚀 ROTINAS\n"
             "• listar rotinas\n"
             "• mostrar rotina trabalho\n"
             "• criar rotina musica com chrome, youtube\n"
             "• abrir trabalho\n"
-            "• abrir estudo\n"
-            "• abrir projeto huli\n"
             "• adicionar youtube na rotina trabalho\n"
-            "• remover youtube da rotina trabalho\n\n"
-
-            "🌐 PESQUISA E WEB\n"
-            "• pesquisar dolar hoje\n"
-            "• procurar clima em sao paulo\n"
-            "• abrir github\n"
-            "• abrir gmail\n"
-            "• abrir youtube\n"
-            "• abrir chatgpt\n\n"
-
-            "⚙️ CONTROLE DO SISTEMA\n"
-            "• bloquear computador\n"
-            "• reiniciar computador\n"
-            "• desligar computador\n"
-            "• cancelar desligamento\n\n"
+            "• remover youtube da rotina trabalho\n"
+            "• apagar rotina estudo\n\n"
 
             "🗓️ AGENDAMENTOS\n"
             "• agendar rotina trabalho às 08:00\n"
@@ -426,6 +427,16 @@ def processar_comando(comando: str):
             "• agendar rotina estudo segunda a sexta às 19:00\n"
             "• listar agendamentos\n"
             "• remover agendamento 1\n\n"
+
+            "🧩 COMANDOS PERSONALIZADOS\n"
+            "• criar comando modo trabalho com abrir trabalho\n"
+            "• criar comando abrir meu projeto com abrir projeto huli\n"
+            "• listar comandos personalizados\n"
+            "• apagar comando modo trabalho\n\n"
+
+            "💾 BACKUP\n"
+            "• criar backup\n"
+            "• listar backups\n\n"
 
             "🧭 COMANDOS NATURAIS\n"
             "• pode abrir o navegador pra mim\n"
@@ -440,13 +451,16 @@ def processar_comando(comando: str):
             "• depois fale o comando\n"
             "• exemplo: abrir navegador\n\n"
 
+            "🖥️ PAINEL VISUAL\n"
+            "• rode: python huli_panel.py\n\n"
+
             "🚪 ENCERRAR\n"
             "• sair\n"
             "• encerrar\n\n"
 
             "Eu também posso executar comandos locais, responder perguntas, "
             "usar IA online/offline, falar com você por voz e evoluir com novas funções 😎"
-    )
+        )
 
     # -------------------------
     # Lembretes
@@ -794,6 +808,51 @@ def processar_comando(comando: str):
     
     if comando in ["criar backup", "backup"]:
         return criar_backup()
+    
+    # -------------------------
+    # Comandos personalizados
+    # -------------------------
+    if comando.startswith("criar comando ") and " com " in comando:
+        try:
+            texto = comando.replace("criar comando ", "", 1)
+            nome, acao = texto.split(" com ", 1)
+            return f"{base} {criar_comando_personalizado(nome.strip(), acao.strip())}"
+        except Exception:
+            return f"{base} Não consegui criar o comando personalizado."
+
+    if comando in ["listar comandos personalizados", "mostrar comandos personalizados"]:
+        dados = listar_comandos_personalizados()
+
+        if not dados:
+            return f"{base} Ainda não existem comandos personalizados cadastrados."
+
+        resposta = "Comandos personalizados:\n"
+        for nome, acao in dados.items():
+            resposta += f"- {nome} => {acao}\n"
+        return resposta
+
+    if comando.startswith("apagar comando "):
+        nome = comando.replace("apagar comando ", "", 1).strip()
+        ok, resposta = apagar_comando_personalizado(nome)
+        return f"{base} {resposta}"
+    
+    # -------------------------
+    # Backup
+    # -------------------------
+    if comando in ["criar backup", "backup"]:
+        return f"{base} {criar_backup()}"
+
+    if comando in ["listar backups", "mostrar backups"]:
+        itens = listar_backups()
+
+        if not itens:
+            return f"{base} Ainda não existem backups."
+
+        resposta = "Backups disponíveis:\n"
+        for i, nome in enumerate(itens, 1):
+            resposta += f"{i}. {nome}\n"
+        return resposta
+
     # -------------------------
     # Sair
     # -------------------------

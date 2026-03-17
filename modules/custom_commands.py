@@ -4,39 +4,45 @@ import os
 ARQUIVO = os.path.join(os.path.dirname(__file__), "custom_commands.json")
 
 
-def carregar():
+def carregar_comandos_personalizados():
     if not os.path.exists(ARQUIVO):
         return {}
 
-    with open(ARQUIVO, "r", encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        with open(ARQUIVO, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
 
 
-def salvar(dados):
+def salvar_comandos_personalizados(dados):
     with open(ARQUIVO, "w", encoding="utf-8") as f:
         json.dump(dados, f, indent=4, ensure_ascii=False)
 
 
-def criar_comando(nome, comando):
-    dados = carregar()
-
-    dados[nome.lower()] = comando.lower()
-
-    salvar(dados)
-
-    return f"Comando personalizado '{nome}' criado."
+def criar_comando_personalizado(nome: str, comando: str):
+    dados = carregar_comandos_personalizados()
+    dados[nome.lower().strip()] = comando.strip().lower()
+    salvar_comandos_personalizados(dados)
+    return f"Comando personalizado '{nome}' criado com sucesso."
 
 
-def executar_comando_personalizado(texto):
-    dados = carregar()
-
-    if texto.lower() in dados:
-        return dados[texto.lower()]
-
-    return None
+def listar_comandos_personalizados():
+    return carregar_comandos_personalizados()
 
 
-def listar_comandos():
-    dados = carregar()
+def apagar_comando_personalizado(nome: str):
+    dados = carregar_comandos_personalizados()
+    chave = nome.lower().strip()
 
-    return dados
+    if chave not in dados:
+        return False, f"Não encontrei o comando personalizado '{nome}'."
+
+    del dados[chave]
+    salvar_comandos_personalizados(dados)
+    return True, f"Comando personalizado '{nome}' removido com sucesso."
+
+
+def resolver_comando_personalizado(texto: str):
+    dados = carregar_comandos_personalizados()
+    return dados.get(texto.lower().strip())

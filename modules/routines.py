@@ -197,3 +197,15 @@ def remover_item_rotina(nome_rotina, item):
     salvar_rotinas(rotinas)
 
     return True, f"Item '{item}' removido da rotina '{nome}'."
+
+def apagar_rotina(nome):
+    rotinas = carregar_rotinas()
+    nome = nome.lower().strip()
+
+    if nome not in rotinas:
+        return False, f"Não encontrei a rotina '{nome}'."
+
+    del rotinas[nome]
+    salvar_rotinas(rotinas)
+
+    return True, f"Rotina '{nome}' removida com sucesso."

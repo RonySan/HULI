@@ -13,6 +13,7 @@ from modules.backup import criar_backup
 from modules.scheduler import adicionar_agendamento, listar_agendamentos, remover_agendamento
 from modules.system_monitor import status_sistema
 from modules.history import listar as listar_historico
+from modules.vision import screenshot, localizar_imagem, clicar_imagem, ler_tela
 
 from modules.custom_commands import (
     criar_comando_personalizado,
@@ -483,6 +484,7 @@ def processar_comando(comando: str):
             "• me mostra os programas\n"
             "• pode abrir o vscode\n"
             "• me ajuda\n\n"
+            
             "🖱️ AUTOMAÇÃO DO PC\n"
             "• clicar\n"
             "• duplo clique\n"
@@ -494,6 +496,12 @@ def processar_comando(comando: str):
             "• pressionar ctrl s\n"
             "• rolar para baixo\n"
             "• rolar para cima\n\n"
+
+            "👁️ VISÃO DA TELA"
+            "• tirar print"
+            "• procurar imagem botao.png"
+            "• clicar imagem botao.png"
+            "• ler tela"
 
             "🎤 VOZ\n"
             "• digite: voz\n"
@@ -561,7 +569,7 @@ def processar_comando(comando: str):
 
     if comando in ["mostra tarefas", "mostrar tarefas"]:
         itens = memoria.listar_por_categoria("tarefas")
-        if isinstance(itens, str):jj
+        if isinstance(itens, str):
             return itens
         resposta = "Tarefas:\n"
         for i, item in enumerate(itens, 1):
@@ -884,6 +892,28 @@ def processar_comando(comando: str):
         nome = comando.replace("apagar comando ", "", 1).strip()
         ok, resposta = apagar_comando_personalizado(nome)
         return f"{base} {resposta}"
+    
+        # -------------------------
+    # Visão da tela
+    # -------------------------
+
+    if comando in ["tirar print", "screenshot", "capturar tela"]:
+        return screenshot()
+
+    if comando.startswith("procurar imagem "):
+
+        caminho = comando.replace("procurar imagem ", "", 1).strip()
+
+        return localizar_imagem(caminho)
+
+    if comando.startswith("clicar imagem "):
+
+        caminho = comando.replace("clicar imagem ", "", 1).strip()
+
+        return clicar_imagem(caminho)
+
+    if comando in ["ler tela", "ler texto da tela"]:
+        return ler_tela()
     
     # -------------------------
     # Backup

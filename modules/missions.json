@@ -1,0 +1,16 @@
+{
+    "python": [
+        {
+            "acao": "abrir_site",
+            "valor": "google"
+        },
+        {
+            "acao": "digitar",
+            "valor": "python programação"
+        },
+        {
+            "acao": "tecla",
+            "valor": "enter"
+        }
+    ]
+}

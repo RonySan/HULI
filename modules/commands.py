@@ -14,6 +14,13 @@ from modules.scheduler import adicionar_agendamento, listar_agendamentos, remove
 from modules.system_monitor import status_sistema
 from modules.history import listar as listar_historico
 from modules.vision import screenshot, localizar_imagem, clicar_imagem, ler_tela
+from modules.vision_advanced import (
+    tirar_print,
+    ler_tela,
+    listar_textos_tela,
+    procurar_texto_na_tela,
+    clicar_texto_na_tela,
+)
 
 from modules.custom_commands import (
     criar_comando_personalizado,
@@ -55,6 +62,14 @@ from modules.automation import (
     pressionar_atalho,
     rolar,
     posicao_mouse,
+)
+from modules.missions import (
+    salvar_missao,
+    listar_missoes,
+    apagar_missao,
+    executar_missao_salva,
+    executar_missao_rapida,
+    criar_missao_pesquisa,
 )
 
 from modules.actions import aprender_programa
@@ -484,7 +499,7 @@ def processar_comando(comando: str):
             "• me mostra os programas\n"
             "• pode abrir o vscode\n"
             "• me ajuda\n\n"
-            
+
             "🖱️ AUTOMAÇÃO DO PC\n"
             "• clicar\n"
             "• duplo clique\n"
@@ -502,6 +517,20 @@ def processar_comando(comando: str):
             "• procurar imagem botao.png"
             "• clicar imagem botao.png"
             "• ler tela"
+            
+            "🚀 MISSÕES AUTOMÁTICAS\n"
+            "• missao pesquisar laravel\n"
+            "• missao abrir github\n"
+            "• missao clicar entrar\n\n"
+                    
+            "🚀 MISSÕES\n"
+            "• missao pesquisar python\n"
+            "• missao abrir github\n"
+            "• missao clicar entrar\n"
+            "• criar missao pesquisar python com pesquisa python\n"
+            "• listar missoes\n"
+            "• executar missao python\n"
+            "• apagar missao python\n\n"
 
             "🎤 VOZ\n"
             "• digite: voz\n"
@@ -932,7 +961,7 @@ def processar_comando(comando: str):
             resposta += f"{i}. {nome}\n"
         return resposta
     
-        # -------------------------
+    # -------------------------
     # Automação do PC
     # -------------------------
     if comando in ["clicar", "clique"]:
@@ -987,6 +1016,85 @@ def processar_comando(comando: str):
 
     if comando in ["rolar para cima", "scroll para cima"]:
         return rolar("cima")
+    
+
+
+    # -------------------------
+    # Visão avançada da tela
+    # -------------------------
+    if comando in ["tirar print", "screenshot", "capturar tela"]:
+        return tirar_print()
+
+    if comando in ["ler tela", "ler texto da tela"]:
+        return ler_tela()
+
+    if comando in ["listar textos da tela", "mostrar textos da tela"]:
+        return listar_textos_tela()
+
+    if comando.startswith("procurar texto "):
+        texto_alvo = comando.replace("procurar texto ", "", 1).strip()
+
+        if not texto_alvo:
+            return f"{base} Diga o texto que você quer procurar."
+
+        ok, resposta, _ = procurar_texto_na_tela(texto_alvo)
+        return resposta
+
+    if comando.startswith("clicar texto "):
+        texto_alvo = comando.replace("clicar texto ", "", 1).strip()
+
+        if not texto_alvo:
+            return f"{base} Diga o texto em que você quer clicar."
+
+        return clicar_texto_na_tela(texto_alvo)
+    
+    # -------------------------
+    # Missões
+    # -------------------------
+    if comando.startswith("missao "):
+        return executar_missao_rapida(comando)
+
+    if comando in ["listar missoes", "listar missões", "mostrar missoes", "mostrar missões"]:
+        itens = listar_missoes()
+
+        if not itens:
+            return f"{base} Ainda não existem missões salvas."
+
+        resposta = "Missões disponíveis:\n"
+        for i, nome in enumerate(itens, 1):
+            resposta += f"{i}. {nome}\n"
+        return resposta
+
+    if comando.startswith("executar missao ") or comando.startswith("executar missão "):
+        nome = (
+            comando.replace("executar missao ", "", 1)
+            .replace("executar missão ", "", 1)
+            .strip()
+        )
+        ok, resposta = executar_missao_salva(nome)
+        return f"{base} {resposta}"
+
+    if comando.startswith("apagar missao ") or comando.startswith("apagar missão "):
+        nome = (
+            comando.replace("apagar missao ", "", 1)
+            .replace("apagar missão ", "", 1)
+            .strip()
+        )
+        ok, resposta = apagar_missao(nome)
+        return f"{base} {resposta}"
+
+    if comando.startswith("criar missao pesquisar ") or comando.startswith("criar missão pesquisar "):
+        texto = (
+            comando.replace("criar missao pesquisar ", "", 1)
+            .replace("criar missão pesquisar ", "", 1)
+            .strip()
+        )
+
+        if " com " not in texto:
+            return f"{base} Use assim: criar missao pesquisar python com pesquisa python"
+
+        nome, termo = texto.split(" com ", 1)
+        return f"{base} {criar_missao_pesquisa(nome.strip(), termo.strip())}"
 
     # -------------------------
     # Sair

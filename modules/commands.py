@@ -15,6 +15,7 @@ from modules.backup import criar_backup, listar_backups
 from modules.scheduler import adicionar_agendamento, listar_agendamentos, remover_agendamento
 from modules.system_monitor import status_sistema
 from modules.history import listar as listar_historico
+from modules.intent_engine import interpretar_intencao
 
 from modules.vision import screenshot, localizar_imagem, clicar_imagem
 from modules.vision_advanced import (
@@ -133,10 +134,6 @@ def limpar_palavra_ativacao(comando: str) -> str:
     if comando.startswith("huli "):
         comando = comando.replace("huli ", "", 1).strip()
 
-    # limpeza leve sem quebrar comandos importantes
-    for termo in [" o ", " a "]:
-        comando = comando.replace(termo, " ")
-
     return re.sub(r"\s+", " ", comando).strip()
 
 
@@ -202,11 +199,51 @@ def processar_comando(comando: str):
             modo="simples"
         )
         return f"{base} {resumo}"
+    
+    # -------------------------
+    # Intenção natural
+    # -------------------------
+    intencao = interpretar_intencao(comando)
+    if intencao:
+        tipo = intencao.get("tipo")
+        valor = intencao.get("valor", "").strip()
+
+        if tipo == "site":
+            ok, resposta = abrir_site(valor)
+            if ok:
+                return resposta
+
+        elif tipo == "pesquisa":
+            _, resposta = pesquisar_web(valor)
+            return resposta
+
+        elif tipo == "abrir":
+            # tenta rotina primeiro
+            ok_rotina, resposta_rotina = executar_rotina(
+                valor,
+                abrir_programa,
+                abrir_site,
+                abrir_pasta,
+                executar_comando_terminal,
+                abrir_arquivo
+            )
+            if ok_rotina:
+                return f"{base} {resposta_rotina}"
+
+            # tenta site depois
+            ok_site, resposta_site = abrir_site(valor)
+            if ok_site:
+                return resposta_site
+
+            # tenta programa por último
+            _, resposta_pc = abrir_programa(valor)
+            return resposta_pc
+
 
     # -------------------------
     # Conversa dinâmica
     # -------------------------
-    if any(x in comando for x in ["kkk", "haha", "rs", "kakak", "lol"]):
+    if comando in ["kkk", "haha", "rs", "kakak", "lol"]:
         return escolher(RESP_RISO)
 
     if comando in ["ok", "blz", "beleza", "fechado", "entendi", "certo", "perfeito"]:
@@ -510,6 +547,14 @@ def processar_comando(comando: str):
             "• me mostra os programas\n"
             "• pode abrir o vscode\n"
             "• me ajuda\n\n"
+
+            "🧠 MISSÕES NATURAIS\n"
+            "• abra o google e pesquise python\n"
+            "• pesquise laravel\n"
+            "• abra o github\n"
+            "• abra o gmail\n"
+            "• abra o youtube\n"
+            "• abra o chatgpt\n\n"
 
             "🖱️ AUTOMAÇÃO DO PC\n"
             "• clicar\n"

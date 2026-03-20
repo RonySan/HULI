@@ -2,6 +2,7 @@ import os
 import re
 import random
 from datetime import datetime, timedelta
+
 from modules.nlp import normalizar_comando_natural
 from modules.ai import responder_ia, tem_internet, extrair_conhecimento
 from modules.aliases import ALIASES_APPS
@@ -9,11 +10,13 @@ from modules.docs import buscar_docs
 from modules.knowledge import aprender, buscar, listar_tudo
 from modules.memory import HULIMemory
 from modules.personality import HULIPersonality
-from modules.backup import criar_backup
+
+from modules.backup import criar_backup, listar_backups
 from modules.scheduler import adicionar_agendamento, listar_agendamentos, remover_agendamento
 from modules.system_monitor import status_sistema
 from modules.history import listar as listar_historico
-from modules.vision import screenshot, localizar_imagem, clicar_imagem, ler_tela
+
+from modules.vision import screenshot, localizar_imagem, clicar_imagem
 from modules.vision_advanced import (
     tirar_print,
     ler_tela,
@@ -28,6 +31,7 @@ from modules.custom_commands import (
     apagar_comando_personalizado,
     resolver_comando_personalizado,
 )
+
 from modules.routines import (
     apagar_rotina,
     executar_rotina,
@@ -37,6 +41,7 @@ from modules.routines import (
     adicionar_item_rotina,
     remover_item_rotina,
 )
+
 from modules.pc_control import (
     abrir_programa,
     listar_programas,
@@ -46,12 +51,14 @@ from modules.pc_control import (
     executar_comando_terminal,
     abrir_arquivo,
 )
+
 from modules.system_control import (
     desligar_pc,
     reiniciar_pc,
     bloquear_pc,
     cancelar_desligamento,
 )
+
 from modules.automation import (
     clicar,
     duplo_clique,
@@ -63,13 +70,14 @@ from modules.automation import (
     rolar,
     posicao_mouse,
 )
+
 from modules.missions import (
-    salvar_missao,
     listar_missoes,
     apagar_missao,
     executar_missao_salva,
     executar_missao_rapida,
     criar_missao_pesquisa,
+    criar_missao_simples,
 )
 
 from modules.actions import aprender_programa
@@ -125,7 +133,7 @@ def limpar_palavra_ativacao(comando: str) -> str:
     if comando.startswith("huli "):
         comando = comando.replace("huli ", "", 1).strip()
 
-# limpeza leve sem quebrar comandos importantes
+    # limpeza leve sem quebrar comandos importantes
     for termo in [" o ", " a "]:
         comando = comando.replace(termo, " ")
 
@@ -173,6 +181,7 @@ def processar_comando(comando: str):
         return ""
 
     base = personalidade.gerar_resposta_base()
+
     # -------------------------
     # Comandos personalizados (resolver antes de tudo)
     # -------------------------
@@ -186,12 +195,16 @@ def processar_comando(comando: str):
     if comando in ["resumir conversa", "resumo da conversa"]:
         if not historico_conversa:
             return f"{base} Não há conversa suficiente para resumir."
-        resumo = responder_ia("Resuma a conversa até agora.", historico=historico_conversa, modo="simples")
+
+        resumo = responder_ia(
+            "Resuma a conversa até agora.",
+            historico=historico_conversa,
+            modo="simples"
+        )
         return f"{base} {resumo}"
-    
+
     # -------------------------
-    # Conversa dinâmicaI
-    # -------------------------
+    # Conversa dinâmica
     # -------------------------
     if any(x in comando for x in ["kkk", "haha", "rs", "kakak", "lol"]):
         return escolher(RESP_RISO)
@@ -213,22 +226,20 @@ def processar_comando(comando: str):
 
     if any(frase in comando for frase in ["estou otimo", "to otimo", "to bem", "tudo certo", "tranquilo", "suave"]):
         return f"{base} Boa! Quer que eu organize suas prioridades de hoje?"
-    
-    
-    if comando in ["status sistema", "diagnostico", "diagnóstico"]:
 
+    # -------------------------
+    # Monitoramento / histórico
+    # -------------------------
+    if comando in ["status sistema", "diagnostico", "diagnóstico"]:
         return status_sistema()
 
-
     if comando in ["historico", "histórico de comandos"]:
-
         hist = listar_historico()
 
         if not hist:
             return "Nenhum comando registrado."
 
         resposta = "Histórico recente:\n"
-
         for c in hist[-10:]:
             resposta += f"- {c}\n"
 
@@ -327,6 +338,11 @@ def processar_comando(comando: str):
         ok, resposta = remover_item_rotina(nome.strip(), item.strip())
         return f"{base} {resposta}"
 
+    if comando.startswith("apagar rotina "):
+        nome = comando.replace("apagar rotina ", "", 1).strip()
+        ok, resposta = apagar_rotina(nome)
+        return f"{base} {resposta}"
+
     if comando.startswith("abrir "):
         nome_rotina = comando.replace("abrir ", "", 1).strip()
 
@@ -341,11 +357,7 @@ def processar_comando(comando: str):
 
         if ok_rotina:
             return f"{base} {resposta_rotina}"
-        
-    if comando.startswith("apagar rotina "):
-        nome = comando.replace("apagar rotina ", "", 1).strip()
-        ok, resposta = apagar_rotina(nome)
-        return f"{base} {resposta}"
+
     # -------------------------
     # Web / pesquisa / sites
     # -------------------------
@@ -365,7 +377,6 @@ def processar_comando(comando: str):
         if ok_site:
             return resposta_site
 
-    # abrir algo no navegador
     if "navegador" in comando:
         if "github" in comando:
             _, resp = abrir_site("github")
@@ -512,22 +523,21 @@ def processar_comando(comando: str):
             "• rolar para baixo\n"
             "• rolar para cima\n\n"
 
-            "👁️ VISÃO DA TELA"
-            "• tirar print"
-            "• procurar imagem botao.png"
-            "• clicar imagem botao.png"
-            "• ler tela"
-            
-            "🚀 MISSÕES AUTOMÁTICAS\n"
-            "• missao pesquisar laravel\n"
-            "• missao abrir github\n"
-            "• missao clicar entrar\n\n"
-                    
+            "👁️ VISÃO DA TELA\n"
+            "• tirar print\n"
+            "• procurar imagem botao.png\n"
+            "• clicar imagem botao.png\n"
+            "• ler tela\n"
+            "• listar textos da tela\n"
+            "• procurar texto entrar\n"
+            "• clicar texto entrar\n\n"
+
             "🚀 MISSÕES\n"
             "• missao pesquisar python\n"
             "• missao abrir github\n"
             "• missao clicar entrar\n"
             "• criar missao pesquisar python com pesquisa python\n"
+            "• criar missao abrir github rapido com abrir github\n"
             "• listar missoes\n"
             "• executar missao python\n"
             "• apagar missao python\n\n"
@@ -591,6 +601,7 @@ def processar_comando(comando: str):
         itens = memoria.listar_por_categoria("agenda")
         if isinstance(itens, str):
             return itens
+
         resposta = "Agenda:\n"
         for i, item in enumerate(itens, 1):
             resposta += f"{i}. {item['conteudo']} ({item['data']} {item['hora']})\n"
@@ -600,6 +611,7 @@ def processar_comando(comando: str):
         itens = memoria.listar_por_categoria("tarefas")
         if isinstance(itens, str):
             return itens
+
         resposta = "Tarefas:\n"
         for i, item in enumerate(itens, 1):
             resposta += f"{i}. {item['conteudo']} ({item['data']} {item['hora']})\n"
@@ -609,6 +621,7 @@ def processar_comando(comando: str):
         itens = memoria.listar_por_categoria("ideias")
         if isinstance(itens, str):
             return itens
+
         resposta = "Ideias:\n"
         for i, item in enumerate(itens, 1):
             resposta += f"{i}. {item['conteudo']} ({item['data']} {item['hora']})\n"
@@ -753,7 +766,7 @@ def processar_comando(comando: str):
         "quais programas voce conhece",
         "lista programas",
         "lista programa",
-        ]:
+    ]:
         programas = listar_programas()
         if not programas:
             return "Não encontrei programas no Menu Iniciar."
@@ -800,6 +813,7 @@ def processar_comando(comando: str):
 
     if comando in ["cancelar desligamento", "cancelar reinicio", "cancelar reinício"]:
         return cancelar_desligamento()
+
     # -------------------------
     # Agendamentos
     # -------------------------
@@ -885,16 +899,24 @@ def processar_comando(comando: str):
             return f"{base} {resposta}"
         except Exception:
             return f"{base} Não consegui remover o agendamento."
-        
-    if comando.startswith("apagar rotina "):
-        nome = comando.replace("apagar rotina ", "").strip()
-        ok, resposta = apagar_rotina(nome)
 
-        return resposta
-    
+    # -------------------------
+    # Backup
+    # -------------------------
     if comando in ["criar backup", "backup"]:
-        return criar_backup()
-    
+        return f"{base} {criar_backup()}"
+
+    if comando in ["listar backups", "mostrar backups"]:
+        itens = listar_backups()
+
+        if not itens:
+            return f"{base} Ainda não existem backups."
+
+        resposta = "Backups disponíveis:\n"
+        for i, nome in enumerate(itens, 1):
+            resposta += f"{i}. {nome}\n"
+        return resposta
+
     # -------------------------
     # Comandos personalizados
     # -------------------------
@@ -921,46 +943,21 @@ def processar_comando(comando: str):
         nome = comando.replace("apagar comando ", "", 1).strip()
         ok, resposta = apagar_comando_personalizado(nome)
         return f"{base} {resposta}"
-    
-        # -------------------------
-    # Visão da tela
-    # -------------------------
 
-    if comando in ["tirar print", "screenshot", "capturar tela"]:
+    # -------------------------
+    # Visão da tela (imagem)
+    # -------------------------
+    if comando in ["screenshot", "capturar tela imagem"]:
         return screenshot()
 
     if comando.startswith("procurar imagem "):
-
         caminho = comando.replace("procurar imagem ", "", 1).strip()
-
         return localizar_imagem(caminho)
 
     if comando.startswith("clicar imagem "):
-
         caminho = comando.replace("clicar imagem ", "", 1).strip()
-
         return clicar_imagem(caminho)
 
-    if comando in ["ler tela", "ler texto da tela"]:
-        return ler_tela()
-    
-    # -------------------------
-    # Backup
-    # -------------------------
-    if comando in ["criar backup", "backup"]:
-        return f"{base} {criar_backup()}"
-
-    if comando in ["listar backups", "mostrar backups"]:
-        itens = listar_backups()
-
-        if not itens:
-            return f"{base} Ainda não existem backups."
-
-        resposta = "Backups disponíveis:\n"
-        for i, nome in enumerate(itens, 1):
-            resposta += f"{i}. {nome}\n"
-        return resposta
-    
     # -------------------------
     # Automação do PC
     # -------------------------
@@ -1016,13 +1013,11 @@ def processar_comando(comando: str):
 
     if comando in ["rolar para cima", "scroll para cima"]:
         return rolar("cima")
-    
-
 
     # -------------------------
-    # Visão avançada da tela
+    # Visão avançada da tela (OCR)
     # -------------------------
-    if comando in ["tirar print", "screenshot", "capturar tela"]:
+    if comando in ["tirar print", "capturar tela", "ler tela print"]:
         return tirar_print()
 
     if comando in ["ler tela", "ler texto da tela"]:
@@ -1047,7 +1042,7 @@ def processar_comando(comando: str):
             return f"{base} Diga o texto em que você quer clicar."
 
         return clicar_texto_na_tela(texto_alvo)
-    
+
     # -------------------------
     # Missões
     # -------------------------
@@ -1095,6 +1090,14 @@ def processar_comando(comando: str):
 
         nome, termo = texto.split(" com ", 1)
         return f"{base} {criar_missao_pesquisa(nome.strip(), termo.strip())}"
+
+    if comando.startswith("criar missao ") and " com abrir " in comando:
+        try:
+            texto = comando.replace("criar missao ", "", 1)
+            nome, destino = texto.split(" com abrir ", 1)
+            return f"{base} {criar_missao_simples(nome.strip(), destino.strip())}"
+        except Exception:
+            return f"{base} Não consegui criar a missão."
 
     # -------------------------
     # Sair

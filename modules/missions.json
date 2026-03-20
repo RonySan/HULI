@@ -6,11 +6,17 @@
         },
         {
             "acao": "digitar",
-            "valor": "python programação"
+            "valor": "python automação"
         },
         {
             "acao": "tecla",
             "valor": "enter"
+        }
+    ],
+    "abrir github rapido": [
+        {
+            "acao": "abrir_site",
+            "valor": "github"
         }
     ]
 }

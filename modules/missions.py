@@ -127,3 +127,13 @@ def executar_missao_rapida(texto):
         return "Missão não reconhecida."
 
     return executar_passos(passos)
+
+def criar_missao_simples(nome, destino):
+    destino = destino.strip().lower()
+
+    if destino in ["github", "gmail", "youtube", "chatgpt", "google"]:
+        passos = [{"acao": "abrir_site", "valor": destino}]
+    else:
+        passos = [{"acao": "abrir_programa", "valor": destino}]
+
+    return salvar_missao(nome, passos)

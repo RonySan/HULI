@@ -16,7 +16,7 @@ from modules.scheduler import adicionar_agendamento, listar_agendamentos, remove
 from modules.system_monitor import status_sistema
 from modules.history import listar as listar_historico
 from modules.intent_engine import interpretar_intencao
-
+from modules.logger import ler_logs, limpar_logs, registrar_log
 from modules.vision import screenshot, localizar_imagem, clicar_imagem
 from modules.vision_advanced import (
     tirar_print,
@@ -241,6 +241,7 @@ def processar_comando(comando: str):
                 abrir_arquivo
             )
             if ok_rotina:
+                registrar_log("rotina", resposta_rotina)
                 return f"{base} {resposta_rotina}"
 
             # tenta site depois
@@ -617,6 +618,12 @@ def processar_comando(comando: str):
             "🖥️ PAINEL VISUAL\n"
             "• rode: python huli_panel.py\n\n"
 
+            "📜 LOGS\n"
+            "• mostrar logs\n"
+            "• limpar logs\n"
+            "• rode: python huli_panel.py\n"
+            "• use o botão Logs ao vivo no painel\n\n"
+
             "🚪 ENCERRAR\n"
             "• sair\n"
             "• encerrar\n\n"
@@ -971,7 +978,9 @@ def processar_comando(comando: str):
     # Backup
     # -------------------------
     if comando in ["criar backup", "backup"]:
-        return f"{base} {criar_backup()}"
+        resposta = criar_backup()
+        registrar_log("backup", resposta)
+        return f"{base} {resposta}"
 
     if comando in ["listar backups", "mostrar backups"]:
         itens = listar_backups()
@@ -1114,7 +1123,9 @@ def processar_comando(comando: str):
     # Missões
     # -------------------------
     if comando.startswith("missao "):
-        return executar_missao_rapida(comando)
+        resposta = executar_missao_rapida(comando)
+        registrar_log("missao", f"{comando} => {resposta}")
+        return resposta
 
     if comando in ["listar missoes", "listar missões", "mostrar missoes", "mostrar missões"]:
         itens = listar_missoes()
@@ -1165,6 +1176,25 @@ def processar_comando(comando: str):
             return f"{base} {criar_missao_simples(nome.strip(), destino.strip())}"
         except Exception:
             return f"{base} Não consegui criar a missão."
+        
+
+    # -------------------------
+    # Logs
+    # -------------------------
+    if comando in ["mostrar logs", "ver logs", "listar logs"]:
+        linhas = ler_logs(50)
+
+        if not linhas:
+            return f"{base} Ainda não existem logs."
+
+        resposta = "Logs recentes:\n"
+        for linha in linhas:
+            resposta += linha
+
+        return resposta
+
+    if comando in ["limpar logs", "apagar logs"]:
+        return f"{base} {limpar_logs()}"
 
     # -------------------------
     # Sair

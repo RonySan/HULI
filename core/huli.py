@@ -9,6 +9,8 @@ from modules.voice import falar
 from modules.voice_listener import ouvir_um_comando
 from modules.scheduler import verificar_agendamentos
 from modules.history import registrar as registrar_historico
+from modules.logger import registrar_log
+
 
 
 encerrar_programa = False
@@ -61,14 +63,15 @@ def monitor_lembretes(stop_event: threading.Event):
 
 def executar_comando(comando: str):
     global encerrar_programa
-    registrar_historico(comando)
 
     if not comando:
         return
 
     comando_limpo = comando.strip().lower()
+    registrar_log("comando", comando)
 
     if comando_limpo in ["sair", "encerrar", "fechar huli"]:
+        registrar_log("sistema", "Encerrando H.U.L.I por comando do usuário.")
         print("H.U.L.I: Encerrando operações. Até logo, Rony.")
         falar("Encerrando operações. Até logo, Rony.")
         encerrar_programa = True
@@ -77,22 +80,28 @@ def executar_comando(comando: str):
     resposta = processar_comando(comando)
 
     if resposta == "ENCERRAR":
+        registrar_log("sistema", "Encerrando H.U.L.I por retorno ENCERRAR.")
         print("H.U.L.I: Encerrando operações. Até logo, Rony.")
         falar("Encerrando operações. Até logo, Rony.")
         encerrar_programa = True
         return
 
     if resposta:
+        registrar_log("resposta", resposta)
         print(f"H.U.L.I: {resposta}")
         falar(resposta)
 
 
 def executar_agendamento(tipo: str, valor: str):
+    from modules.logger import registrar_log
+
     if tipo == "rotina":
+        registrar_log("agendamento", f"Executando rotina agendada: {valor}")
         print(f"\nH.U.L.I: ⏰ Executando rotina agendada: {valor}")
         executar_comando(f"abrir {valor}")
 
     elif tipo == "comando":
+        registrar_log("agendamento", f"Executando comando agendado: {valor}")
         print(f"\nH.U.L.I: ⏰ Executando comando agendado: {valor}")
         executar_comando(valor)
 

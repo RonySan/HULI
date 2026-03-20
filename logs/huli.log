@@ -1,0 +1,24 @@
+[2026-03-20 19:17:46] [COMANDO] mostrar logs
+[2026-03-20 19:17:46] [RESPOSTA] Logs recentes:
+[2026-03-20 19:17:46] [COMANDO] mostrar logs
+
+[2026-03-20 19:17:58] [COMANDO] missao abrir github
+[2026-03-20 19:18:00] [MISSAO] missao abrir github => Missão executada com sucesso.
+[2026-03-20 19:18:00] [RESPOSTA] Missão executada com sucesso.
+[2026-03-20 19:18:03] [COMANDO] criar backup
+[2026-03-20 19:18:03] [BACKUP] Backup criado com sucesso em: C:\HULI\backup\huli_backup_20260320_191803
+[2026-03-20 19:18:03] [RESPOSTA] Missão aceita. Backup criado com sucesso em: C:\HULI\backup\huli_backup_20260320_191803
+[2026-03-20 19:18:22] [COMANDO] mostrar logs
+[2026-03-20 19:18:22] [RESPOSTA] Logs recentes:
+[2026-03-20 19:17:46] [COMANDO] mostrar logs
+[2026-03-20 19:17:46] [RESPOSTA] Logs recentes:
+[2026-03-20 19:17:46] [COMANDO] mostrar logs
+
+[2026-03-20 19:17:58] [COMANDO] missao abrir github
+[2026-03-20 19:18:00] [MISSAO] missao abrir github => Missão executada com sucesso.
+[2026-03-20 19:18:00] [RESPOSTA] Missão executada com sucesso.
+[2026-03-20 19:18:03] [COMANDO] criar backup
+[2026-03-20 19:18:03] [BACKUP] Backup criado com sucesso em: C:\HULI\backup\huli_backup_20260320_191803
+[2026-03-20 19:18:03] [RESPOSTA] Missão aceita. Backup criado com sucesso em: C:\HULI\backup\huli_backup_20260320_191803
+[2026-03-20 19:18:22] [COMANDO] mostrar logs
+

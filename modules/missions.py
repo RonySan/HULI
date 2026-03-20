@@ -71,7 +71,7 @@ def executar_passos(passos):
 
         elif acao == "clicar_texto":
             clicar_texto_na_tela(valor)
-            time.sleep(1)
+            time.sleep(2)
 
     return "Missão executada com sucesso."
 
@@ -96,7 +96,18 @@ def criar_missao_pesquisa(nome, termo):
     return salvar_missao(nome, passos)
 
 
-def interpretar_missao_ia(texto):
+def criar_missao_simples(nome, destino):
+    destino = destino.strip().lower()
+
+    if destino in ["github", "gmail", "youtube", "chatgpt", "google", "netflix"]:
+        passos = [{"acao": "abrir_site", "valor": destino}]
+    else:
+        passos = [{"acao": "abrir_programa", "valor": destino}]
+
+    return salvar_missao(nome, passos)
+
+
+def interpretar_missao_rapida(texto):
     texto = texto.lower().strip()
 
     if texto.startswith("missao pesquisar "):
@@ -113,6 +124,15 @@ def interpretar_missao_ia(texto):
     if texto == "missao abrir gmail":
         return [{"acao": "abrir_site", "valor": "gmail"}]
 
+    if texto == "missao abrir youtube":
+        return [{"acao": "abrir_site", "valor": "youtube"}]
+
+    if texto == "missao abrir chatgpt":
+        return [{"acao": "abrir_site", "valor": "chatgpt"}]
+
+    if texto == "missao abrir netflix":
+        return [{"acao": "abrir_site", "valor": "netflix"}]
+
     if texto.startswith("missao clicar "):
         alvo = texto.replace("missao clicar ", "", 1).strip()
         return [{"acao": "clicar_texto", "valor": alvo}]
@@ -120,20 +140,59 @@ def interpretar_missao_ia(texto):
     return None
 
 
+def interpretar_missao_multietapa(texto):
+    texto = texto.lower().strip()
+
+    # normaliza vírgulas para facilitar
+    texto = texto.replace(",", "")
+
+    # google + pesquisa + clique
+    if texto.startswith("abra o google e pesquise ") and " e clique em " in texto:
+        resto = texto.replace("abra o google e pesquise ", "", 1)
+        termo, clique = resto.split(" e clique em ", 1)
+        return [
+            {"acao": "abrir_site", "valor": "google"},
+            {"acao": "digitar", "valor": termo.strip()},
+            {"acao": "tecla", "valor": "enter"},
+            {"acao": "clicar_texto", "valor": clique.strip()},
+        ]
+
+    # github/gmail/youtube/chatgpt/netflix + clique
+    gatilhos_site = {
+        "abra o github e clique em ": "github",
+        "abra o gmail e clique em ": "gmail",
+        "abra o youtube e clique em ": "youtube",
+        "abra o chatgpt e clique em ": "chatgpt",
+        "abra o netflix e clique em ": "netflix",
+    }
+
+    for gatilho, site in gatilhos_site.items():
+        if texto.startswith(gatilho):
+            alvo = texto.replace(gatilho, "", 1).strip()
+            return [
+                {"acao": "abrir_site", "valor": site},
+                {"acao": "clicar_texto", "valor": alvo},
+            ]
+
+    # youtube + pesquisar
+    if texto.startswith("abra o youtube e pesquise "):
+        termo = texto.replace("abra o youtube e pesquise ", "", 1).strip()
+        return [
+            {"acao": "abrir_site", "valor": "youtube"},
+            {"acao": "digitar", "valor": termo},
+            {"acao": "tecla", "valor": "enter"},
+        ]
+
+    return None
+
+
 def executar_missao_rapida(texto):
-    passos = interpretar_missao_ia(texto)
+    passos = interpretar_missao_multietapa(texto)
+
+    if not passos:
+        passos = interpretar_missao_rapida(texto)
 
     if not passos:
         return "Missão não reconhecida."
 
     return executar_passos(passos)
-
-def criar_missao_simples(nome, destino):
-    destino = destino.strip().lower()
-
-    if destino in ["github", "gmail", "youtube", "chatgpt", "google"]:
-        passos = [{"acao": "abrir_site", "valor": destino}]
-    else:
-        passos = [{"acao": "abrir_programa", "valor": destino}]
-
-    return salvar_missao(nome, passos)

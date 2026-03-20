@@ -185,6 +185,19 @@ def processar_comando(comando: str):
     comando_personalizado = resolver_comando_personalizado(comando)
     if comando_personalizado:
         return processar_comando(comando_personalizado)
+    
+    # -------------------------
+    # Missões naturais multietapas (prioridade alta)
+    # -------------------------
+    if (
+        " e clique em " in comando
+        or " e pesquise " in comando
+        or ", pesquise " in comando
+    ):
+        resposta_missao = executar_missao_rapida(comando)
+
+        if resposta_missao != "Missão não reconhecida.":
+            return resposta_missao
 
     # -------------------------
     # Resumo da conversa
@@ -580,12 +593,21 @@ def processar_comando(comando: str):
             "🚀 MISSÕES\n"
             "• missao pesquisar python\n"
             "• missao abrir github\n"
+            "• missao abrir gmail\n"
+            "• missao abrir youtube\n"
             "• missao clicar entrar\n"
             "• criar missao pesquisar python com pesquisa python\n"
             "• criar missao abrir github rapido com abrir github\n"
             "• listar missoes\n"
             "• executar missao python\n"
             "• apagar missao python\n\n"
+
+            "🧠 MISSÕES MULTIETAPAS\n"
+            "• abra o google, pesquise python e clique em imagens\n"
+            "• abra o google e pesquise laravel e clique em imagens\n"
+            "• abra o github e clique em entrar\n"
+            "• abra o gmail e clique em caixa de entrada\n"
+            "• abra o youtube e pesquise lo fi\n\n"
 
             "🎤 VOZ\n"
             "• digite: voz\n"

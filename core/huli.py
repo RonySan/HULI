@@ -1,7 +1,7 @@
 import time
 import threading
 from datetime import datetime
-
+from modules.habits import registrar_sequencia, sugerir_proximo
 from modules.identity import HULIIdentity
 from modules.commands import processar_comando
 from modules.memory import HULIMemory
@@ -12,8 +12,8 @@ from modules.history import registrar as registrar_historico
 from modules.logger import registrar_log
 
 
-
 encerrar_programa = False
+ultimo_comando = None
 
 def monitor_agendamentos(stop_event):
     while not stop_event.is_set():
@@ -62,7 +62,7 @@ def monitor_lembretes(stop_event: threading.Event):
 
 
 def executar_comando(comando: str):
-    global encerrar_programa
+    global encerrar_programa, ultimo_comando
 
     if not comando:
         return
@@ -90,6 +90,19 @@ def executar_comando(comando: str):
         registrar_log("resposta", resposta)
         print(f"H.U.L.I: {resposta}")
         falar(resposta)
+
+    # aprender sequência
+    registrar_sequencia(ultimo_comando, comando)
+
+    # sugerir próximo passo
+    sugestao = sugerir_proximo(comando)
+
+    if sugestao:
+        print(f"H.U.L.I: 💡 Você costuma fazer isso depois: '{sugestao}'. Quer que eu execute?")
+        falar(f"Você costuma fazer isso depois. Quer que eu execute?")
+
+    # atualizar histórico
+    ultimo_comando = comando
 
 
 def executar_agendamento(tipo: str, valor: str):

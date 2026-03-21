@@ -1,0 +1,21 @@
+{
+    "abrir netflix": {
+        "pequiar netflix": 1
+    },
+    "pequiar netflix": {
+        "abrir vscode": 1
+    },
+    "abrir vscode": {
+        "abrir github": 2,
+        "mostrar habitos": 1
+    },
+    "abrir github": {
+        "abrir vscode": 2
+    },
+    "mostrar habitos": {
+        "pesquisar netflix": 1
+    },
+    "pesquisar netflix": {
+        "clicar em Login Netflix": 1
+    }
+}

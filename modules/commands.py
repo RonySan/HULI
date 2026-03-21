@@ -18,6 +18,7 @@ from modules.history import listar as listar_historico
 from modules.intent_engine import interpretar_intencao
 from modules.logger import ler_logs, limpar_logs, registrar_log
 from modules.vision import screenshot, localizar_imagem, clicar_imagem
+from modules.habits import listar_habitos, limpar_habitos
 from modules.vision_advanced import (
     tirar_print,
     ler_tela,
@@ -495,6 +496,11 @@ def processar_comando(comando: str):
             "• mostra tarefas\n"
             "• mostra ideias\n"
             "• o que voce lembra\n\n"
+            
+            "🧠 MEMÓRIA OPERACIONAL\n"
+            "• mostrar habitos\n"
+            "• limpar habitos\n"
+            "• a HULI aprende automaticamente seus padrões\n\n"
 
             "⏰ LEMBRETES\n"
             "• me lembra às 18:30 ligar pro João\n"
@@ -1195,6 +1201,27 @@ def processar_comando(comando: str):
 
     if comando in ["limpar logs", "apagar logs"]:
         return f"{base} {limpar_logs()}"
+    
+    # -------------------------
+    # Hábitos (memória operacional)
+    # -------------------------
+    if comando in ["mostrar habitos", "ver habitos", "memoria operacional"]:
+        dados = listar_habitos()
+
+        if not dados:
+            return f"{base} Ainda não aprendi nenhum padrão."
+
+        resposta = "Padrões aprendidos:\n"
+
+        for anterior, proximos in dados.items():
+            resposta += f"\n{anterior} →\n"
+            for prox, qtd in proximos.items():
+                resposta += f"   - {prox} ({qtd}x)\n"
+
+        return resposta
+
+    if comando in ["limpar habitos", "resetar habitos"]:
+        return f"{base} {limpar_habitos()}"
 
     # -------------------------
     # Sair

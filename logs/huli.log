@@ -4,3 +4,56 @@
 [2026-03-20 19:20:30] [RESPOSTA] Certo. Logs limpos com sucesso.
 [2026-03-20 19:20:34] [COMANDO] mostrar logs
 
+[2026-03-20 19:48:53] [COMANDO] sair
+[2026-03-20 19:48:53] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-03-20 19:51:50] [COMANDO] abrir vscode
+[2026-03-20 19:51:50] [RESPOSTA] Abrindo vscode.
+[2026-03-21 14:41:11] [COMANDO] abrir netflix
+[2026-03-21 14:41:11] [RESPOSTA] Não encontrei o programa 'netflix'.
+[2026-03-21 14:41:32] [COMANDO] pequiar netflix
+[2026-03-21 14:41:54] [RESPOSTA] 🌐 ONLINE | Você quis dizer **“Peaky Blinders na Netflix”**?
+
+Se for isso: sim, a série está disponível na Netflix. É um drama criminal sobre uma gangue em Birmingham, com bastante tensão, política e estratégia. Vale muito a pena se você curte séries intensas.
+
+Se não era isso, me dá um toque com mais detalhes que eu te ajudo certinho 👍
+[2026-03-21 14:42:33] [COMANDO] abrir vscode
+[2026-03-21 14:42:33] [RESPOSTA] Abrindo vscode.
+[2026-03-21 14:42:35] [COMANDO] abrir github
+[2026-03-21 14:42:35] [RESPOSTA] Abrindo github.
+[2026-03-21 14:42:37] [COMANDO] abrir vscode
+[2026-03-21 14:42:37] [RESPOSTA] Abrindo vscode.
+[2026-03-21 14:42:40] [COMANDO] abrir github
+[2026-03-21 14:42:40] [RESPOSTA] Abrindo github.
+[2026-03-21 14:42:42] [COMANDO] abrir vscode
+[2026-03-21 14:42:42] [RESPOSTA] Abrindo vscode.
+[2026-03-21 14:42:53] [COMANDO] mostrar habitos
+[2026-03-21 14:42:53] [RESPOSTA] Padrões aprendidos:
+
+abrir netflix →
+   - pequiar netflix (1x)
+
+pequiar netflix →
+   - abrir vscode (1x)
+
+abrir vscode →
+   - abrir github (2x)
+
+abrir github →
+   - abrir vscode (2x)
+
+[2026-03-21 14:43:37] [COMANDO] pesquisar netflix
+[2026-03-21 14:43:37] [RESPOSTA] Pesquisando por: netflix
+[2026-03-21 14:44:38] [COMANDO] clicar em Login Netflix
+[2026-03-21 14:44:45] [RESPOSTA] 🌐 ONLINE | Para clicar em **“Entrar / Login” na Netflix**, faz assim:
+
+• Abra o site: netflix.com  
+• No canto superior direito, clique em **“Entrar”**  
+• Digite seu e-mail ou telefone e sua senha  
+• Clique em **“Entrar”** de novo
+
+Se estiver no celular ou app:  
+• Abra o app da Netflix  
+• Toque em **“Entrar”**  
+• Preencha seus dados e confirme
+
+Se não estiver achando o botão, me fala onde você está (celular, TV, PC) que eu te guio certinho 👍

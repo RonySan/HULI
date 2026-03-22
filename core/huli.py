@@ -10,10 +10,13 @@ from modules.voice_listener import ouvir_um_comando
 from modules.scheduler import verificar_agendamentos
 from modules.history import registrar as registrar_historico
 from modules.logger import registrar_log
+from modules.autopilot import obter_autoexecucao, ativar_autoexecucao
 
 
 encerrar_programa = False
 ultimo_comando = None
+sugestao_pendente = None
+
 
 def monitor_agendamentos(stop_event):
     while not stop_event.is_set():
@@ -61,14 +64,36 @@ def monitor_lembretes(stop_event: threading.Event):
     t_agendamentos.start()
 
 
+
 def executar_comando(comando: str):
-    global encerrar_programa, ultimo_comando
+    global encerrar_programa, ultimo_comando, sugestao_pendente
 
     if not comando:
         return
 
     comando_limpo = comando.strip().lower()
     registrar_log("comando", comando)
+
+    # confirma autoexecução sugerida
+    if sugestao_pendente and comando_limpo in ["sim", "s", "ok", "pode", "claro"]:
+        comando_base = sugestao_pendente["base"]
+        proximo = sugestao_pendente["proximo"]
+
+        resposta_auto = ativar_autoexecucao(comando_base, proximo)
+        registrar_log("autopilot", resposta_auto)
+
+        print(f"H.U.L.I: {resposta_auto}")
+        falar(resposta_auto)
+
+        sugestao_pendente = None
+        return
+
+    if sugestao_pendente and comando_limpo in ["nao", "não", "n", "deixa", "deixa pra la", "deixa pra lá"]:
+        print("H.U.L.I: Entendido. Não vou automatizar isso.")
+        falar("Entendido. Não vou automatizar isso.")
+        registrar_log("autopilot", "Usuário recusou sugestão de autoexecução.")
+        sugestao_pendente = None
+        return
 
     if comando_limpo in ["sair", "encerrar", "fechar huli"]:
         registrar_log("sistema", "Encerrando H.U.L.I por comando do usuário.")
@@ -91,17 +116,27 @@ def executar_comando(comando: str):
         print(f"H.U.L.I: {resposta}")
         falar(resposta)
 
-    # aprender sequência
+    # memória operacional
     registrar_sequencia(ultimo_comando, comando)
 
-    # sugerir próximo passo
     sugestao = sugerir_proximo(comando)
 
     if sugestao:
-        print(f"H.U.L.I: 💡 Você costuma fazer isso depois: '{sugestao}'. Quer que eu execute?")
-        falar(f"Você costuma fazer isso depois. Quer que eu execute?")
+        auto = obter_autoexecucao(comando)
 
-    # atualizar histórico
+        if auto:
+            registrar_log("autopilot", f"Executando automaticamente após '{comando}': '{auto}'")
+            print(f"H.U.L.I: ⚡ Executando automaticamente: {auto}")
+            falar("Executando automaticamente.")
+            executar_comando(auto)
+        else:
+            sugestao_pendente = {
+                "base": comando,
+                "proximo": sugestao,
+            }
+            print(f"H.U.L.I: 💡 Você costuma fazer isso depois: '{sugestao}'. Quer que eu execute automaticamente da próxima vez?")
+            falar("Você costuma fazer isso depois. Quer que eu execute automaticamente da próxima vez?")
+
     ultimo_comando = comando
 
 

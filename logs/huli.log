@@ -57,3 +57,40 @@ Se estiver no celular ou app:
 • Preencha seus dados e confirme
 
 Se não estiver achando o botão, me fala onde você está (celular, TV, PC) que eu te guio certinho 👍
+[2026-03-21 14:49:55] [COMANDO] pequisar axolote
+[2026-03-21 14:50:13] [RESPOSTA] 🌐 ONLINE | 🌐 ONLINE | Quer pesquisar sobre **axolote**? Faz assim:
+
+• Abra o Google ou outro buscador  
+• Digite: **axolote**  
+• Toque em pesquisar
+
+Se quiser ir direto ao ponto, aqui vai um resumo rápido:  
+Axolote é um tipo de salamandra que vive na água e tem a capacidade incrível de regenerar partes do corpo, como patas e até partes do coração e cérebro. Ele é nativo do México e está em risco de extinção.
+
+Se quiser, posso te mostrar imagens ou curiosidades mais legais sobre ele 👍
+[2026-03-22 08:58:59] [COMANDO] sair
+[2026-03-22 08:58:59] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-03-22 08:59:35] [COMANDO] abrir vscode
+[2026-03-22 08:59:36] [RESPOSTA] Abrindo vscode.
+[2026-03-22 08:59:45] [COMANDO] abrir github
+[2026-03-22 08:59:46] [RESPOSTA] Abrindo github.
+[2026-03-22 08:59:55] [COMANDO] abrir vscode
+[2026-03-22 08:59:55] [RESPOSTA] Abrindo vscode.
+[2026-03-22 09:00:05] [COMANDO] abrir github
+[2026-03-22 09:00:05] [RESPOSTA] Abrindo github.
+[2026-03-22 09:00:50] [COMANDO] sim
+[2026-03-22 09:00:50] [AUTOPILOT] Autoexecução ativada: depois de 'abrir github', vou executar 'abrir vscode'.
+[2026-03-22 09:03:23] [COMANDO] listar autoexecucoes
+[2026-03-22 09:03:23] [RESPOSTA] Autoexecuções ativas:
+- depois de 'abrir github' => 'abrir vscode'
+
+[2026-03-22 09:03:29] [COMANDO] desativar autoexecucao abrir vscode
+[2026-03-22 09:03:29] [RESPOSTA] Deixa comigo, chefe 😎 Não existe autoexecução cadastrada para 'abrir vscode'.
+[2026-03-22 09:03:40] [COMANDO] listar autoexecucoes
+[2026-03-22 09:03:40] [RESPOSTA] Autoexecuções ativas:
+- depois de 'abrir github' => 'abrir vscode'
+
+[2026-03-22 09:04:53] [COMANDO] desativar autoexecucao abrir github
+[2026-03-22 09:04:53] [RESPOSTA] Deixa comigo, chefe 😎 Autoexecução removida para 'abrir github'.
+[2026-03-22 09:05:04] [COMANDO] listar autoexecucoes
+[2026-03-22 09:05:04] [RESPOSTA] Entendido. Ainda não existem autoexecuções cadastradas.

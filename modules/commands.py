@@ -19,6 +19,11 @@ from modules.intent_engine import interpretar_intencao
 from modules.logger import ler_logs, limpar_logs, registrar_log
 from modules.vision import screenshot, localizar_imagem, clicar_imagem
 from modules.habits import listar_habitos, limpar_habitos
+from modules.autopilot import (
+    listar_autoexecucoes,
+    desativar_autoexecucao,
+    limpar_autoexecucoes,
+)
 from modules.vision_advanced import (
     tirar_print,
     ler_tela,
@@ -496,7 +501,7 @@ def processar_comando(comando: str):
             "• mostra tarefas\n"
             "• mostra ideias\n"
             "• o que voce lembra\n\n"
-            
+
             "🧠 MEMÓRIA OPERACIONAL\n"
             "• mostrar habitos\n"
             "• limpar habitos\n"
@@ -513,6 +518,13 @@ def processar_comando(comando: str):
             "• o que voce sabe sobre meu cliente principal\n"
             "• o que voce aprendeu\n"
             "• listar conhecimento\n\n"
+
+            "⚡ AUTOEXECUÇÃO INTELIGENTE\n"
+            "• a H.U.L.I pode aprender sequências e automatizar depois\n"
+            "• quando ela perguntar, responda: sim ou nao\n"
+            "• listar autoexecucoes\n"
+            "• desativar autoexecucao abrir vscode\n"
+            "• limpar autoexecucoes\n\n"
 
             "📂 DOCUMENTOS\n"
             "• buscar docs multa\n"
@@ -1222,6 +1234,32 @@ def processar_comando(comando: str):
 
     if comando in ["limpar habitos", "resetar habitos"]:
         return f"{base} {limpar_habitos()}"
+    
+    # -------------------------
+    # Autoexecução inteligente
+    # -------------------------
+    if comando in ["listar autoexecucoes", "listar autoexecuções", "mostrar autoexecucoes", "mostrar autoexecuções"]:
+        dados = listar_autoexecucoes()
+
+        if not dados:
+            return f"{base} Ainda não existem autoexecuções cadastradas."
+
+        resposta = "Autoexecuções ativas:\n"
+        for base_cmd, prox_cmd in dados.items():
+            resposta += f"- depois de '{base_cmd}' => '{prox_cmd}'\n"
+        return resposta
+
+    if comando.startswith("desativar autoexecucao ") or comando.startswith("desativar autoexecução "):
+        nome = (
+            comando.replace("desativar autoexecucao ", "", 1)
+            .replace("desativar autoexecução ", "", 1)
+            .strip()
+        )
+        ok, resposta = desativar_autoexecucao(nome)
+        return f"{base} {resposta}"
+
+    if comando in ["limpar autoexecucoes", "limpar autoexecuções"]:
+        return f"{base} {limpar_autoexecucoes()}"
 
     # -------------------------
     # Sair

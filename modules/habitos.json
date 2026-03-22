@@ -6,16 +6,30 @@
         "abrir vscode": 1
     },
     "abrir vscode": {
-        "abrir github": 2,
+        "abrir github": 4,
         "mostrar habitos": 1
     },
     "abrir github": {
-        "abrir vscode": 2
+        "abrir vscode": 3,
+        "listar autoexecucoes": 1
     },
     "mostrar habitos": {
         "pesquisar netflix": 1
     },
     "pesquisar netflix": {
         "clicar em Login Netflix": 1
+    },
+    "clicar em Login Netflix": {
+        "pequisar axolote": 1
+    },
+    "listar autoexecucoes": {
+        "desativar autoexecucao abrir vscode": 1,
+        "desativar autoexecucao abrir github": 1
+    },
+    "desativar autoexecucao abrir vscode": {
+        "listar autoexecucoes": 1
+    },
+    "desativar autoexecucao abrir github": {
+        "listar autoexecucoes": 1
     }
 }

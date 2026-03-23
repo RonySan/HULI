@@ -24,7 +24,8 @@
     },
     "listar autoexecucoes": {
         "desativar autoexecucao abrir vscode": 1,
-        "desativar autoexecucao abrir github": 1
+        "desativar autoexecucao abrir github": 1,
+        "desligar cumputador": 1
     },
     "desativar autoexecucao abrir vscode": {
         "listar autoexecucoes": 1

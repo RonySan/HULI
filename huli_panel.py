@@ -15,7 +15,8 @@ class HuliPanel:
     def __init__(self, root):
         self.root = root
         self.root.title("H.U.L.I - Painel Interativo")
-        self.root.geometry("1050x700")
+        self.root.geometry("1200x760")
+        self.root.minsize(1000, 650)
 
         titulo = tk.Label(
             root,
@@ -26,12 +27,12 @@ class HuliPanel:
 
         subtitulo = tk.Label(
             root,
-            text="Você pode usar o painel e o terminal ao mesmo tempo.",
+            text="Use o painel e o terminal ao mesmo tempo.",
             font=("Arial", 10)
         )
         subtitulo.pack()
 
-        # Área superior de comando
+        # Entrada de comando
         frame_comando = tk.Frame(root)
         frame_comando.pack(fill="x", padx=10, pady=10)
 
@@ -42,40 +43,57 @@ class HuliPanel:
         btn_executar = tk.Button(
             frame_comando,
             text="Executar",
-            width=15,
+            width=16,
             command=self.executar_comando
         )
         btn_executar.pack(side="left")
 
-        # Botões rápidos
+        # Área de botões
         frame_botoes = tk.Frame(root)
         frame_botoes.pack(fill="x", padx=10, pady=5)
 
-        botoes = [
-            ("Ajuda", lambda: self.preencher_e_executar("ajuda")),
-            ("Status Sistema", lambda: self.preencher_e_executar("status sistema")),
-            ("Listar Rotinas", lambda: self.mostrar_rotinas()),
-            ("Agendamentos", lambda: self.mostrar_agendamentos()),
-            ("Comandos", lambda: self.mostrar_comandos()),
-            ("Missões", lambda: self.mostrar_missoes()),
-            ("Backups", lambda: self.mostrar_backups()),
-            ("Logs", lambda: self.mostrar_logs()),
-            ("Limpar Tela", self.limpar_tela),
+        # Linha 1 - sistema
+        botoes_linha_1 = [
+            ("Ajuda", "ajuda"),
+            ("Status Sistema", "status sistema"),
+            ("Mostrar Logs", "mostrar logs"),
+            ("Logs ao vivo", "__LOGS_AO_VIVO__"),
+            ("Criar Backup", "criar backup"),
+            ("Listar Backups", "listar backups"),
+            ("Limpar Tela", "__LIMPAR_TELA__"),
         ]
 
-        for i, (texto, comando) in enumerate(botoes):
-            tk.Button(frame_botoes, text=texto, width=18, command=comando).grid(
-                row=0,
-                column=i,
-                padx=4,
-                pady=4
-            )
+        # Linha 2 - rotinas e navegação
+        botoes_linha_2 = [
+            ("Listar Rotinas", "listar rotinas"),
+            ("Abrir Trabalho", "abrir trabalho"),
+            ("Abrir Projeto HULI", "abrir projeto huli"),
+            ("Abrir GitHub", "abra o github"),
+            ("Abrir Gmail", "abra o gmail"),
+            ("Abrir YouTube", "abra o youtube"),
+            ("Abrir ChatGPT", "abra o chatgpt"),
+        ]
 
-        # Área principal dividida
+        # Linha 3 - inteligência e automação
+        botoes_linha_3 = [
+            ("Listar Missões", "listar missoes"),
+            ("Listar Comandos", "listar comandos personalizados"),
+            ("Mostrar Hábitos", "mostrar habitos"),
+            ("Autoexecuções", "listar autoexecucoes"),
+            ("Agendamentos", "listar agendamentos"),
+            ("Missão GitHub", "missao abrir github"),
+            ("Missão Pesquisa", "missao pesquisar python"),
+        ]
+
+        self.criar_linha_botoes(frame_botoes, botoes_linha_1, 0)
+        self.criar_linha_botoes(frame_botoes, botoes_linha_2, 1)
+        self.criar_linha_botoes(frame_botoes, botoes_linha_3, 2)
+
+        # Área principal
         frame_principal = tk.Frame(root)
         frame_principal.pack(fill="both", expand=True, padx=10, pady=10)
 
-        # Console do painel
+        # Console
         frame_console = tk.Frame(frame_principal)
         frame_console.pack(side="left", fill="both", expand=True, padx=(0, 5))
 
@@ -89,8 +107,8 @@ class HuliPanel:
         )
         self.console.pack(fill="both", expand=True)
 
-        # Painel lateral
-        frame_lateral = tk.Frame(frame_principal, width=300)
+        # Resumo lateral
+        frame_lateral = tk.Frame(frame_principal, width=320)
         frame_lateral.pack(side="right", fill="y", padx=(5, 0))
 
         lbl_lateral = tk.Label(frame_lateral, text="Resumo", font=("Arial", 12, "bold"))
@@ -101,21 +119,13 @@ class HuliPanel:
             wrap="word",
             font=("Consolas", 10),
             height=20,
-            width=35
+            width=38
         )
         self.resumo.pack(fill="both", expand=True)
 
         # Rodapé
         frame_rodape = tk.Frame(root)
         frame_rodape.pack(fill="x", padx=10, pady=5)
-
-        btn_logs_auto = tk.Button(
-            frame_rodape,
-            text="Logs ao vivo",
-            width=18,
-            command=self.logs_ao_vivo
-        )
-        btn_logs_auto.pack(side="left", padx=5)
 
         btn_atualizar_resumo = tk.Button(
             frame_rodape,
@@ -125,9 +135,41 @@ class HuliPanel:
         )
         btn_atualizar_resumo.pack(side="left", padx=5)
 
+        btn_rotinas = tk.Button(
+            frame_rodape,
+            text="Ver Rotinas",
+            width=18,
+            command=self.mostrar_rotinas
+        )
+        btn_rotinas.pack(side="left", padx=5)
+
+        btn_logs = tk.Button(
+            frame_rodape,
+            text="Ver Logs",
+            width=18,
+            command=self.mostrar_logs
+        )
+        btn_logs.pack(side="left", padx=5)
+
         self.escrever_console("H.U.L.I painel iniciado.")
         self.escrever_console("Você pode continuar usando o terminal normalmente.")
         self.atualizar_resumo()
+
+    def criar_linha_botoes(self, frame, itens, row):
+        for col, (texto, comando) in enumerate(itens):
+            if comando == "__LOGS_AO_VIVO__":
+                action = self.logs_ao_vivo
+            elif comando == "__LIMPAR_TELA__":
+                action = self.limpar_tela
+            else:
+                action = lambda c=comando: self.preencher_e_executar(c)
+
+            tk.Button(
+                frame,
+                text=texto,
+                width=18,
+                command=action
+            ).grid(row=row, column=col, padx=4, pady=4)
 
     def escrever_console(self, texto):
         self.console.insert(tk.END, texto + "\n")
@@ -259,4 +301,4 @@ class HuliPanel:
 if __name__ == "__main__":
     root = tk.Tk()
     app = HuliPanel(root)
-    root.mainloop()
+    root.mainloop()    

@@ -1,0 +1,249 @@
+{
+    "oi": {
+        "quem e voce": 2
+    },
+    "quem e voce": {
+        "como voce esta": 1,
+        "horas": 1
+    },
+    "como voce esta": {
+        "horas": 1
+    },
+    "horas": {
+        "que dia e hoje": 2
+    },
+    "que dia e hoje": {
+        "status": 2
+    },
+    "status": {
+        "status ia": 2
+    },
+    "status ia": {
+        "status sistema": 2
+    },
+    "status sistema": {
+        "historico": 1,
+        "abrir trabalho": 1
+    },
+    "abrir chrome": {
+        "abrir vscode": 1
+    },
+    "historico": {
+        "abra o github": 1
+    },
+    "abra o github": {
+        "abra o gmail": 1
+    },
+    "abra o gmail": {
+        "abra o youtube": 1
+    },
+    "abra o youtube": {
+        "abra o chatgpt": 1
+    },
+    "abra o chatgpt": {
+        "pesquise python": 1
+    },
+    "pesquise python": {
+        "abra o google e pesquise laravel": 1
+    },
+    "abra o google e pesquise laravel": {
+        "listar rotinas": 1
+    },
+    "listar rotinas": {
+        "mostrar rotina trabalho": 1,
+        "mostrar rotina teste": 1,
+        "abra o google e pesquise python e clique em imagens": 1
+    },
+    "mostrar rotina trabalho": {
+        "criar rotina teste com chrome, vscode, github": 1
+    },
+    "criar rotina teste com chrome, vscode, github": {
+        "listar rotinas": 1
+    },
+    "mostrar rotina teste": {
+        "adicionar youtube na rotina teste": 1,
+        "remover youtube da rotina teste": 1,
+        "abrir teste": 1
+    },
+    "adicionar youtube na rotina teste": {
+        "mostrar rotina teste": 1
+    },
+    "remover youtube da rotina teste": {
+        "mostrar rotina teste": 1
+    },
+    "abrir teste": {
+        "apagar rotina teste": 1
+    },
+    "apagar rotina teste": {
+        "listar rotinas": 1
+    },
+    "abra o google e pesquise python e clique em imagens": {
+        "abra o github e clique em entrar": 1
+    },
+    "abra o github e clique em entrar": {
+        "abra o gmail e clique em caixa de entrada": 1
+    },
+    "abra o gmail e clique em caixa de entrada": {
+        "abra o youtube e pesquise lo fi": 1
+    },
+    "abra o youtube e pesquise lo fi": {
+        "procurar texto entrar": 1
+    },
+    "abrir vscode": {
+        "abrir vscode": 2,
+        "protecao on": 1,
+        "sim, obrigado huli": 1,
+        "sim obrigado huli": 1
+    },
+    "procurar texto entrar": {
+        "abrir vscode": 1
+    },
+    "protecao on": {
+        "status protecao": 1
+    },
+    "status protecao": {
+        "apagar rotina trabalho": 1
+    },
+    "apagar rotina trabalho": {
+        "apagar rotina trabalho": 1,
+        "sim": 1
+    },
+    "sim": {
+        "protecao off": 1
+    },
+    "protecao off": {
+        "status protecao": 1
+    },
+    "ajuda": {
+        "anota teste": 1,
+        "ajuda": 1,
+        "oi": 1,
+        "abrir trabalho": 1
+    },
+    "anota teste": {
+        "mostra tarefas": 1
+    },
+    "mostra tarefas": {
+        "missao abrir github": 1
+    },
+    "missao abrir github": {
+        "clicar": 1,
+        "missao pesquisar python": 1
+    },
+    "clicar": {
+        "mostrar logs": 1
+    },
+    "mostrar logs": {
+        "listar autoexecucoes": 1
+    },
+    "listar autoexecucoes": {
+        "meu perfil": 1
+    },
+    "meu perfil": {
+        "oi huli como voce esta ?": 1
+    },
+    "oi huli como voce esta ?": {
+        "estou otimo, huli vamos comecar a trabalhar": 1
+    },
+    "estou otimo, huli vamos comecar a trabalhar": {
+        "sim quero, faz um plano para evoluir voce, o que acha que voce deve sair fazer ?": 1
+    },
+    "missao pesquisar python": {
+        "abra o google e pesquise python e clique em imagens": 1
+    },
+    "abrir trabalho": {
+        "abrir trabalho": 2,
+        "abrir estudo segunda sexta": 1,
+        "huli abrir email": 1
+    },
+    "abrir estudo segunda sexta": {
+        "abrir trabalho": 1
+    },
+    "tudo bem ?": {
+        "huli, abre o word por favor": 1
+    },
+    "huli, abre o word por favor": {
+        "abrir word": 1
+    },
+    "abrir word": {
+        "abir o programa word": 1
+    },
+    "abir o programa word": {
+        "abrir trabalho": 1
+    },
+    "huli abrir email": {
+        "abrir email": 1
+    },
+    "abrir email": {
+        "huli abrir gmail": 1
+    },
+    "huli abrir gmail": {
+        "abrir o yutube": 1
+    },
+    "abrir o yutube": {
+        "abrir o youtube": 1
+    },
+    "abrir o youtube": {
+        "abrir o youtube e pesquise musicas de alok": 1
+    },
+    "abrir o youtube e pesquise musicas de alok": {
+        "pesquise no youtube musicas de alok": 1
+    },
+    "pesquise no youtube musicas de alok": {
+        "pesquise no youtube musicas de alok e clica no primeiro link": 1
+    },
+    "pesquise no youtube musicas de alok e clica no primeiro link": {
+        "ajuda": 1
+    },
+    "huli que dia e hoje ?": {
+        "me fala que dia e hoje": 1
+    },
+    "huli abrir projeto huli": {
+        "abrir chatgpt": 1
+    },
+    "abrir chatgpt": {
+        "pesquisar chatgpt no chrome": 1
+    },
+    "pesquisar chatgpt no chrome": {
+        "modo silencioso": 1
+    },
+    "modo silencioso": {
+        "oi huli": 1
+    },
+    "abri projeto huli": {
+        "voce esta bem hili ?": 1
+    },
+    "voce esta bem hili ?": {
+        "ativar modo voz": 1
+    },
+    "ativar modo voz": {
+        "ativar voz": 1
+    },
+    "ativar voz": {
+        "obrigado huli": 1
+    },
+    "obrigado huli": {
+        "voce e otima huli": 1
+    },
+    "voce e otima huli": {
+        "huli conecta a caixa de son no bluetooth por favor": 1
+    },
+    "huli conecta a caixa de son no bluetooth por favor": {
+        "huli status": 1
+    },
+    "huli status": {
+        "porque voce nao consegui ligr direta mente o pc no bluetooth da caixa de som ?": 1
+    },
+    "porque voce nao consegui ligr direta mente o pc no bluetooth da caixa de som ?": {
+        "]": 1
+    },
+    "]": {
+        "abrir vscode": 1
+    },
+    "sim, obrigado huli": {
+        "abrir termianl no projeto huli": 1
+    },
+    "abrir termianl no projeto huli": {
+        "abrir vscode": 1
+    }
+}

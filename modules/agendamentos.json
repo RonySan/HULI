@@ -11,48 +11,8 @@
         "id": 2,
         "tipo": "rotina",
         "valor": "trabalho",
-        "horario": "18:49",
-        "executado_hoje": false,
-        "ultima_data": ""
-    },
-    {
-        "id": 3,
-        "tipo": "rotina",
-        "valor": "trabalho",
-        "horario": "18:49",
-        "executado_hoje": false,
-        "ultima_data": ""
-    },
-    {
-        "id": 4,
-        "tipo": "rotina",
-        "valor": "trabalho",
-        "horario": "18:49",
-        "executado_hoje": false,
-        "ultima_data": ""
-    },
-    {
-        "id": 5,
-        "tipo": "rotina",
-        "valor": "trabalho",
-        "horario": "19:03",
-        "executado_hoje": false,
-        "ultima_data": ""
-    },
-    {
-        "id": 6,
-        "tipo": "rotina",
-        "valor": "trabalho",
         "horario": "08:00",
         "recorrencia": "todo dia",
-        "ultima_execucao": ""
-    },
-    {
-        "id": 7,
-        "tipo": "rotina",
-        "valor": "estudo segunda sexta",
-        "horario": "19:00",
-        "recorrencia": "uma vez",
-        "ultima_execucao": ""
+        "ultima_execucao": "2026-04-30 08:00"
     }
 ]

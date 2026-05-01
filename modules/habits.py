@@ -1,7 +1,7 @@
 import json
 import os
 
-ARQUIVO = os.path.join(os.path.dirname(__file__), "habitos.json")
+ARQUIVO = os.path.join(os.path.dirname(__file__), "habits.json")
 
 
 def carregar():
@@ -11,7 +11,7 @@ def carregar():
     try:
         with open(ARQUIVO, "r", encoding="utf-8") as f:
             return json.load(f)
-    except:
+    except Exception:
         return {}
 
 
@@ -20,38 +20,39 @@ def salvar(dados):
         json.dump(dados, f, indent=4, ensure_ascii=False)
 
 
-def registrar_sequencia(anterior, atual):
-    if not anterior or not atual:
+def registrar_sequencia(comando_anterior, comando_atual):
+    if not comando_anterior or not comando_atual:
         return
+
+    comando_anterior = comando_anterior.strip().lower()
+    comando_atual = comando_atual.strip().lower()
 
     dados = carregar()
 
-    if anterior not in dados:
-        dados[anterior] = {}
+    if comando_anterior not in dados:
+        dados[comando_anterior] = {}
 
-    if atual not in dados[anterior]:
-        dados[anterior][atual] = 0
+    if comando_atual not in dados[comando_anterior]:
+        dados[comando_anterior][comando_atual] = 0
 
-    dados[anterior][atual] += 1
-
+    dados[comando_anterior][comando_atual] += 1
     salvar(dados)
 
 
-def sugerir_proximo(comando):
+def prever_proximo(comando, minimo=2):
+    comando = comando.strip().lower()
     dados = carregar()
 
     if comando not in dados:
         return None
 
     proximos = dados[comando]
-
     if not proximos:
         return None
 
-    # pega o mais usado
     sugestao = max(proximos, key=proximos.get)
 
-    if proximos[sugestao] >= 2:
+    if proximos[sugestao] >= minimo:
         return sugestao
 
     return None
@@ -63,4 +64,4 @@ def listar_habitos():
 
 def limpar_habitos():
     salvar({})
-    return "Memória de hábitos limpa."
+    return "Memória de hábitos limpa com sucesso."

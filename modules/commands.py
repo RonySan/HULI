@@ -3,6 +3,8 @@ import re
 import random
 from datetime import datetime, timedelta
 
+from modules.help_system import obter_ajuda
+
 from modules.nlp import normalizar_comando_natural
 from modules.ai import responder_ia, tem_internet, extrair_conhecimento
 from modules.aliases import ALIASES_APPS
@@ -17,13 +19,27 @@ from modules.system_monitor import status_sistema
 from modules.history import listar as listar_historico
 from modules.intent_engine import interpretar_intencao
 from modules.logger import ler_logs, limpar_logs, registrar_log
-from modules.vision import screenshot, localizar_imagem, clicar_imagem
+from modules.voice_mode import ativar_voz, desativar_voz, voz_esta_ativa
+
+
 from modules.habits import listar_habitos, limpar_habitos
 from modules.autopilot import (
     listar_autoexecucoes,
     desativar_autoexecucao,
     limpar_autoexecucoes,
 )
+from modules.user_profile import definir_valor, listar_perfil, limpar_perfil
+from modules.protection import (
+    ativar_protecao,
+    desativar_protecao,
+    status_protecao,
+    requer_confirmacao,
+    registrar_confirmacao_pendente,
+    tem_confirmacao_pendente,
+    resolver_confirmacao,
+)
+
+from modules.vision import screenshot, localizar_imagem, clicar_imagem
 from modules.vision_advanced import (
     tirar_print,
     ler_tela,
@@ -186,14 +202,53 @@ def processar_comando(comando: str):
     base = personalidade.gerar_resposta_base()
 
     # -------------------------
-    # Comandos personalizados (resolver antes de tudo)
+    # Controle da voz
+    # -------------------------
+    if comando in ["ativar voz", "voz on", "ligar voz", "modo falante"]:
+        return f"{base} {ativar_voz()}"
+
+    if comando in ["parar voz", "desativar voz", "voz off", "desligar voz", "modo silencioso"]:
+        return f"{base} {desativar_voz()}"
+
+    if comando in ["status voz", "voz status"]:
+        status = "ATIVA" if voz_esta_ativa() else "DESATIVADA"
+        return f"{base} Voz: {status}."
+
+    # -------------------------
+    # Comandos personalizados
     # -------------------------
     comando_personalizado = resolver_comando_personalizado(comando)
     if comando_personalizado:
         return processar_comando(comando_personalizado)
-    
+
     # -------------------------
-    # Missões naturais multietapas (prioridade alta)
+    # Confirmação do modo proteção
+    # -------------------------
+    if tem_confirmacao_pendente():
+        resolvido, comando_confirmado, mensagem = resolver_confirmacao(comando)
+
+        if resolvido:
+            if comando_confirmado:
+                return processar_comando(comando_confirmado)
+            return f"{base} {mensagem}"
+
+    # -------------------------
+    # Modo proteção
+    # -------------------------
+    if comando in ["protecao on", "proteção on", "ativar protecao", "ativar proteção"]:
+        return f"{base} {ativar_protecao()}"
+
+    if comando in ["protecao off", "proteção off", "desativar protecao", "desativar proteção"]:
+        return f"{base} {desativar_protecao()}"
+
+    if comando in ["status protecao", "status proteção"]:
+        return f"{base} Modo proteção: {status_protecao()}"
+
+    if requer_confirmacao(comando):
+        return f"{base} {registrar_confirmacao_pendente(comando)}"
+
+    # -------------------------
+    # Missões naturais multietapas
     # -------------------------
     if (
         " e clique em " in comando
@@ -201,7 +256,6 @@ def processar_comando(comando: str):
         or ", pesquise " in comando
     ):
         resposta_missao = executar_missao_rapida(comando)
-
         if resposta_missao != "Missão não reconhecida.":
             return resposta_missao
 
@@ -218,7 +272,7 @@ def processar_comando(comando: str):
             modo="simples"
         )
         return f"{base} {resumo}"
-    
+
     # -------------------------
     # Intenção natural
     # -------------------------
@@ -237,7 +291,6 @@ def processar_comando(comando: str):
             return resposta
 
         elif tipo == "abrir":
-            # tenta rotina primeiro
             ok_rotina, resposta_rotina = executar_rotina(
                 valor,
                 abrir_programa,
@@ -250,15 +303,12 @@ def processar_comando(comando: str):
                 registrar_log("rotina", resposta_rotina)
                 return f"{base} {resposta_rotina}"
 
-            # tenta site depois
             ok_site, resposta_site = abrir_site(valor)
             if ok_site:
                 return resposta_site
 
-            # tenta programa por último
             _, resposta_pc = abrir_programa(valor)
             return resposta_pc
-
 
     # -------------------------
     # Conversa dinâmica
@@ -370,10 +420,10 @@ def processar_comando(comando: str):
         try:
             texto = comando.replace("criar rotina", "", 1).strip()
 
-            if "com" not in texto:
+            if " com " not in texto:
                 return f"{base} Use assim: criar rotina trabalho com chrome, vscode"
 
-            nome, itens = texto.split("com", 1)
+            nome, itens = texto.split(" com ", 1)
             nome = nome.strip()
             itens = [x.strip() for x in itens.split(",")]
 
@@ -428,29 +478,6 @@ def processar_comando(comando: str):
         _, resposta_web = pesquisar_web(termo)
         return resposta_web
 
-    if comando.startswith("abrir "):
-        nome_destino = comando.replace("abrir ", "", 1).strip()
-        ok_site, resposta_site = abrir_site(nome_destino)
-        if ok_site:
-            return resposta_site
-
-    if "navegador" in comando:
-        if "github" in comando:
-            _, resp = abrir_site("github")
-            return resp
-        if "youtube" in comando:
-            _, resp = abrir_site("youtube")
-            return resp
-        if "gmail" in comando:
-            _, resp = abrir_site("gmail")
-            return resp
-        if "chatgpt" in comando:
-            _, resp = abrir_site("chatgpt")
-            return resp
-
-    # -------------------------
-    # Documentos
-    # -------------------------
     if comando.startswith("buscar docs"):
         termo = comando.replace("buscar docs", "").strip()
 
@@ -468,191 +495,34 @@ def processar_comando(comando: str):
         return resposta
 
     # -------------------------
+    # Hábitos
+    # -------------------------
+    if comando in ["mostrar habitos", "mostrar hábitos", "ver habitos", "memoria operacional"]:
+        habitos = listar_habitos()
+
+        if not habitos:
+            return f"{base} Ainda não aprendi nenhum padrão."
+
+        resposta = "Padrões aprendidos:\n"
+        for anterior, proximos in habitos.items():
+            resposta += f"\n{anterior} →\n"
+            for prox, qtd in proximos.items():
+                resposta += f"   - {prox} ({qtd}x)\n"
+
+        return resposta
+
+    if comando in ["limpar habitos", "limpar hábitos", "resetar habitos"]:
+        return f"{base} {limpar_habitos()}"
+
+    # -------------------------
     # Ajuda
     # -------------------------
     if comando in ["ajuda", "help", "socorro", "o que voce faz", "o que você faz"]:
-        return (
-            "Eu posso ajudar com várias coisas, Rony:\n\n"
-
-            "💬 CONVERSA\n"
-            "• oi\n"
-            "• como voce esta\n"
-            "• quem e voce\n"
-            "• ajuda\n\n"
-
-            "🕒 SISTEMA\n"
-            "• horas\n"
-            "• que dia e hoje\n"
-            "• status\n"
-            "• status ia\n"
-            "• modo simples\n"
-            "• modo normal\n"
-            "• modo detalhado\n"
-            "• modo atual\n"
-            "• limpar contexto\n"
-            "• resumir conversa\n\n"
-
-            "📝 MEMÓRIA E ORGANIZAÇÃO\n"
-            "• anota comprar pão\n"
-            "• anota na agenda reunião amanhã\n"
-            "• anota tarefa pagar conta\n"
-            "• anota ideia criar sistema novo\n"
-            "• mostra agenda\n"
-            "• mostra tarefas\n"
-            "• mostra ideias\n"
-            "• o que voce lembra\n\n"
-
-            "🧠 MEMÓRIA OPERACIONAL\n"
-            "• mostrar habitos\n"
-            "• limpar habitos\n"
-            "• a HULI aprende automaticamente seus padrões\n\n"
-
-            "⏰ LEMBRETES\n"
-            "• me lembra às 18:30 ligar pro João\n"
-            "• me lembra às 22 estudar\n"
-            "• apagar lembretes\n"
-            "• limpar lembretes executados\n\n"
-
-            "🧠 CONHECIMENTO PERMANENTE\n"
-            "• aprenda que meu cliente principal é a empresa XPTO\n"
-            "• o que voce sabe sobre meu cliente principal\n"
-            "• o que voce aprendeu\n"
-            "• listar conhecimento\n\n"
-
-            "⚡ AUTOEXECUÇÃO INTELIGENTE\n"
-            "• a H.U.L.I pode aprender sequências e automatizar depois\n"
-            "• quando ela perguntar, responda: sim ou nao\n"
-            "• listar autoexecucoes\n"
-            "• desativar autoexecucao abrir vscode\n"
-            "• limpar autoexecucoes\n\n"
-
-            "📂 DOCUMENTOS\n"
-            "• buscar docs multa\n"
-            "• buscar docs contrato\n\n"
-
-            "💻 PROGRAMAS E COMPUTADOR\n"
-            "• listar programas\n"
-            "• abrir navegador\n"
-            "• abrir edge\n"
-            "• abrir chrome\n"
-            "• abrir vscode\n"
-            "• abrir github\n"
-            "• abrir gmail\n"
-            "• abrir youtube\n"
-            "• aprender programa paint em C:\\Windows\\System32\\mspaint.exe\n\n"
-
-            "📁 PASTAS E ARQUIVOS\n"
-            "• abrir projeto huli\n"
-            "• abrir documentos\n\n"
-
-            "🚀 ROTINAS\n"
-            "• listar rotinas\n"
-            "• mostrar rotina trabalho\n"
-            "• criar rotina musica com chrome, youtube\n"
-            "• abrir trabalho\n"
-            "• adicionar youtube na rotina trabalho\n"
-            "• remover youtube da rotina trabalho\n"
-            "• apagar rotina estudo\n\n"
-
-            "🗓️ AGENDAMENTOS\n"
-            "• agendar rotina trabalho às 08:00\n"
-            "• agendar comando abrir gmail às 09:00\n"
-            "• agendar rotina trabalho todo dia às 08:00\n"
-            "• agendar rotina estudo segunda a sexta às 19:00\n"
-            "• listar agendamentos\n"
-            "• remover agendamento 1\n\n"
-
-            "🧩 COMANDOS PERSONALIZADOS\n"
-            "• criar comando modo trabalho com abrir trabalho\n"
-            "• criar comando abrir meu projeto com abrir projeto huli\n"
-            "• listar comandos personalizados\n"
-            "• apagar comando modo trabalho\n\n"
-
-            "💾 BACKUP\n"
-            "• criar backup\n"
-            "• listar backups\n\n"
-
-            "🧭 COMANDOS NATURAIS\n"
-            "• pode abrir o navegador pra mim\n"
-            "• abre meu github\n"
-            "• que horas são agora\n"
-            "• me mostra os programas\n"
-            "• pode abrir o vscode\n"
-            "• me ajuda\n\n"
-
-            "🧠 MISSÕES NATURAIS\n"
-            "• abra o google e pesquise python\n"
-            "• pesquise laravel\n"
-            "• abra o github\n"
-            "• abra o gmail\n"
-            "• abra o youtube\n"
-            "• abra o chatgpt\n\n"
-
-            "🖱️ AUTOMAÇÃO DO PC\n"
-            "• clicar\n"
-            "• duplo clique\n"
-            "• clique direito\n"
-            "• mover mouse para 500 300\n"
-            "• posicao do mouse\n"
-            "• digitar ola mundo\n"
-            "• pressionar enter\n"
-            "• pressionar ctrl s\n"
-            "• rolar para baixo\n"
-            "• rolar para cima\n\n"
-
-            "👁️ VISÃO DA TELA\n"
-            "• tirar print\n"
-            "• procurar imagem botao.png\n"
-            "• clicar imagem botao.png\n"
-            "• ler tela\n"
-            "• listar textos da tela\n"
-            "• procurar texto entrar\n"
-            "• clicar texto entrar\n\n"
-
-            "🚀 MISSÕES\n"
-            "• missao pesquisar python\n"
-            "• missao abrir github\n"
-            "• missao abrir gmail\n"
-            "• missao abrir youtube\n"
-            "• missao clicar entrar\n"
-            "• criar missao pesquisar python com pesquisa python\n"
-            "• criar missao abrir github rapido com abrir github\n"
-            "• listar missoes\n"
-            "• executar missao python\n"
-            "• apagar missao python\n\n"
-
-            "🧠 MISSÕES MULTIETAPAS\n"
-            "• abra o google, pesquise python e clique em imagens\n"
-            "• abra o google e pesquise laravel e clique em imagens\n"
-            "• abra o github e clique em entrar\n"
-            "• abra o gmail e clique em caixa de entrada\n"
-            "• abra o youtube e pesquise lo fi\n\n"
-
-            "🎤 VOZ\n"
-            "• digite: voz\n"
-            "• depois fale o comando\n"
-            "• exemplo: abrir navegador\n\n"
-
-            "🖥️ PAINEL VISUAL\n"
-            "• rode: python huli_panel.py\n\n"
-
-            "📜 LOGS\n"
-            "• mostrar logs\n"
-            "• limpar logs\n"
-            "• rode: python huli_panel.py\n"
-            "• use o botão Logs ao vivo no painel\n\n"
-
-            "🚪 ENCERRAR\n"
-            "• sair\n"
-            "• encerrar\n\n"
-
-            "Eu também posso executar comandos locais, responder perguntas, "
-            "usar IA online/offline, falar com você por voz e evoluir com novas funções 😎"
-        )
+        return obter_ajuda()
 
     # -------------------------
     # Lembretes
-    # -------------------------
+    # -------------------------.
     if comando in ["apagar lembretes", "limpar todos os lembretes"]:
         memoria.apagar_lembretes()
         return f"{base} Ok. Apaguei todos os lembretes."
@@ -683,11 +553,15 @@ def processar_comando(comando: str):
 
         ok = memoria.salvar_lembrete(conteudo, quando)
         if ok:
+
             return f"{base} {escolher(RESP_OK_CHEFE)} Lembrete registrado para {quando.strftime('%d/%m/%Y %H:%M')}."
         return f"{base} Esse lembrete já está registrado."
 
     # -------------------------
-    # Memória categorizada
+    # 
+    # 
+    # 
+    # emória categorizada
     # -------------------------
     if comando in ["mostra agenda", "mostrar agenda"]:
         itens = memoria.listar_por_categoria("agenda")
@@ -816,13 +690,13 @@ def processar_comando(comando: str):
         return f"{base} Ainda não sei nada sobre isso."
 
     if comando in ["o que voce aprendeu", "mostra conhecimento", "listar conhecimento"]:
-        dados = listar_tudo()
+        conhecimento = listar_tudo()
 
-        if not dados:
+        if not conhecimento:
             return f"{base} Ainda não aprendi nada na memória permanente."
 
         resposta = "Isto é o que eu aprendi:\n"
-        for chave, valor in dados.items():
+        for chave, valor in conhecimento.items():
             resposta += f"- {chave} {valor}\n"
 
         return resposta
@@ -849,352 +723,37 @@ def processar_comando(comando: str):
             return f"{base} Não consegui aprender esse programa."
 
     # -------------------------
-    # Controle do PC
+    # Perfil do usuário
     # -------------------------
-    if comando in [
-        "listar programas",
-        "listar programa",
-        "listar apps",
-        "quais programas voce conhece",
-        "lista programas",
-        "lista programa",
-    ]:
-        programas = listar_programas()
-        if not programas:
-            return "Não encontrei programas no Menu Iniciar."
-
-        resposta = "Programas encontrados:\n"
-        for i, nome in enumerate(programas[:30], 1):
-            resposta += f"{i}. {nome}\n"
-
-        if len(programas) > 30:
-            resposta += f"\nMostrando 30 de {len(programas)} programas."
-        return resposta
-
-    if comando.startswith(("abrir ", "abri ", "abre ")):
-        nome_programa = comando.replace("abrir ", "")
-        nome_programa = nome_programa.replace("abri ", "")
-        nome_programa = nome_programa.replace("abre ", "")
-        nome_programa = nome_programa.strip()
-
-        if "navegador" in nome_programa:
-            if "edge" in nome_programa:
-                nome_programa = "edge"
-            elif "chrome" in nome_programa:
-                nome_programa = "chrome"
-            else:
-                nome_programa = "chrome"
-
-        if nome_programa in ALIASES_APPS:
-            nome_programa = ALIASES_APPS[nome_programa]
-
-        _, resposta_pc = abrir_programa(nome_programa)
-        return resposta_pc
-
-    # -------------------------
-    # Controle do sistema
-    # -------------------------
-    if comando in ["desligar pc", "desligar computador", "desligar o pc", "desligar o computador"]:
-        return desligar_pc()
-
-    if comando in ["reiniciar pc", "reiniciar computador", "reiniciar o pc", "reiniciar o computador"]:
-        return reiniciar_pc()
-
-    if comando in ["bloquear pc", "bloquear computador", "bloquear o pc", "bloquear o computador"]:
-        return bloquear_pc()
-
-    if comando in ["cancelar desligamento", "cancelar reinicio", "cancelar reinício"]:
-        return cancelar_desligamento()
-
-    # -------------------------
-    # Agendamentos
-    # -------------------------
-    if comando.startswith("agendar rotina ") and " todo dia às " in comando:
-        try:
-            texto = comando.replace("agendar rotina ", "", 1)
-            nome, horario = texto.split(" todo dia às ", 1)
-            horario = horario.strip().replace(" ", ":")
-            return f"{base} {adicionar_agendamento('rotina', nome.strip(), horario, 'todo dia')}"
-        except Exception:
-            return f"{base} Não consegui criar o agendamento da rotina."
-
-    if comando.startswith("agendar rotina ") and " segunda a sexta às " in comando:
-        try:
-            texto = comando.replace("agendar rotina ", "", 1)
-            nome, horario = texto.split(" segunda a sexta às ", 1)
-            horario = horario.strip().replace(" ", ":")
-            return f"{base} {adicionar_agendamento('rotina', nome.strip(), horario, 'segunda a sexta')}"
-        except Exception:
-            return f"{base} Não consegui criar o agendamento da rotina."
-
-    if comando.startswith("agendar comando ") and " todo dia às " in comando:
-        try:
-            texto = comando.replace("agendar comando ", "", 1)
-            nome, horario = texto.split(" todo dia às ", 1)
-            horario = horario.strip().replace(" ", ":")
-            return f"{base} {adicionar_agendamento('comando', nome.strip(), horario, 'todo dia')}"
-        except Exception:
-            return f"{base} Não consegui criar o agendamento do comando."
-
-    if comando.startswith("agendar comando ") and " segunda a sexta às " in comando:
-        try:
-            texto = comando.replace("agendar comando ", "", 1)
-            nome, horario = texto.split(" segunda a sexta às ", 1)
-            horario = horario.strip().replace(" ", ":")
-            return f"{base} {adicionar_agendamento('comando', nome.strip(), horario, 'segunda a sexta')}"
-        except Exception:
-            return f"{base} Não consegui criar o agendamento do comando."
-
-    if comando.startswith("agendar rotina ") and (" às " in comando or " as " in comando):
-        try:
-            texto = comando.replace("agendar rotina ", "", 1)
-
-            if " às " in texto:
-                nome, horario = texto.split(" às ", 1)
-            else:
-                nome, horario = texto.split(" as ", 1)
-
-            horario = horario.strip().replace(" ", ":")
-            return f"{base} {adicionar_agendamento('rotina', nome.strip(), horario, 'uma vez')}"
-        except Exception:
-            return f"{base} Não consegui criar o agendamento da rotina."
-
-    if comando.startswith("agendar comando ") and (" às " in comando or " as " in comando):
-        try:
-            texto = comando.replace("agendar comando ", "", 1)
-
-            if " às " in texto:
-                nome, horario = texto.split(" às ", 1)
-            else:
-                nome, horario = texto.split(" as ", 1)
-
-            horario = horario.strip().replace(" ", ":")
-            return f"{base} {adicionar_agendamento('comando', nome.strip(), horario, 'uma vez')}"
-        except Exception:
-            return f"{base} Não consegui criar o agendamento do comando."
-
-    if comando in ["listar agendamentos", "listar agendamento", "mostrar agendamentos", "mostrar agendamento"]:
-        itens = listar_agendamentos()
-
-        if not itens:
-            return f"{base} Não existem agendamentos cadastrados."
-
-        resposta = "Agendamentos:\n"
-        for item in itens:
-            resposta += f"{item['id']}. [{item['tipo']}] {item['valor']} às {item['horario']} ({item.get('recorrencia', 'uma vez')})\n"
-        return resposta
-
-    if comando.startswith("remover agendamento "):
-        try:
-            agendamento_id = int(comando.replace("remover agendamento ", "", 1).strip())
-            ok, resposta = remover_agendamento(agendamento_id)
-            return f"{base} {resposta}"
-        except Exception:
-            return f"{base} Não consegui remover o agendamento."
-
-    # -------------------------
-    # Backup
-    # -------------------------
-    if comando in ["criar backup", "backup"]:
-        resposta = criar_backup()
-        registrar_log("backup", resposta)
-        return f"{base} {resposta}"
-
-    if comando in ["listar backups", "mostrar backups"]:
-        itens = listar_backups()
-
-        if not itens:
-            return f"{base} Ainda não existem backups."
-
-        resposta = "Backups disponíveis:\n"
-        for i, nome in enumerate(itens, 1):
-            resposta += f"{i}. {nome}\n"
-        return resposta
-
-    # -------------------------
-    # Comandos personalizados
-    # -------------------------
-    if comando.startswith("criar comando ") and " com " in comando:
-        try:
-            texto = comando.replace("criar comando ", "", 1)
-            nome, acao = texto.split(" com ", 1)
-            return f"{base} {criar_comando_personalizado(nome.strip(), acao.strip())}"
-        except Exception:
-            return f"{base} Não consegui criar o comando personalizado."
-
-    if comando in ["listar comandos personalizados", "mostrar comandos personalizados"]:
-        dados = listar_comandos_personalizados()
-
-        if not dados:
-            return f"{base} Ainda não existem comandos personalizados cadastrados."
-
-        resposta = "Comandos personalizados:\n"
-        for nome, acao in dados.items():
-            resposta += f"- {nome} => {acao}\n"
-        return resposta
-
-    if comando.startswith("apagar comando "):
-        nome = comando.replace("apagar comando ", "", 1).strip()
-        ok, resposta = apagar_comando_personalizado(nome)
-        return f"{base} {resposta}"
-
-    # -------------------------
-    # Visão da tela (imagem)
-    # -------------------------
-    if comando in ["screenshot", "capturar tela imagem"]:
-        return screenshot()
-
-    if comando.startswith("procurar imagem "):
-        caminho = comando.replace("procurar imagem ", "", 1).strip()
-        return localizar_imagem(caminho)
-
-    if comando.startswith("clicar imagem "):
-        caminho = comando.replace("clicar imagem ", "", 1).strip()
-        return clicar_imagem(caminho)
-
-    # -------------------------
-    # Automação do PC
-    # -------------------------
-    if comando in ["clicar", "clique"]:
-        return clicar()
-
-    if comando in ["duplo clique", "clicar duas vezes"]:
-        return duplo_clique()
-
-    if comando in ["clique direito", "botao direito", "botão direito"]:
-        return clique_direito()
-
-    if comando in ["posicao do mouse", "posição do mouse", "onde esta o mouse", "onde está o mouse"]:
-        return posicao_mouse()
-
-    if comando.startswith("mover mouse para "):
-        try:
-            texto = comando.replace("mover mouse para ", "", 1).strip()
-            partes = texto.split()
-
-            if len(partes) != 2:
-                return f"{base} Use assim: mover mouse para 500 300"
-
-            x = int(partes[0])
-            y = int(partes[1])
-
-            return mover_mouse(x, y)
-        except Exception:
-            return f"{base} Não consegui mover o mouse."
-
-    if comando.startswith("digitar "):
-        texto = comando.replace("digitar ", "", 1).strip()
-
-        if not texto:
-            return f"{base} O que você quer que eu digite?"
-
-        return digitar_texto(texto)
-
-    if comando.startswith("pressionar "):
-        texto = comando.replace("pressionar ", "", 1).strip()
-
-        if not texto:
-            return f"{base} Qual tecla você quer pressionar?"
-
-        if " " in texto:
-            teclas = texto.split()
-            return pressionar_atalho(*teclas)
-
-        return pressionar_tecla(texto)
-
-    if comando in ["rolar para baixo", "scroll para baixo"]:
-        return rolar("baixo")
-
-    if comando in ["rolar para cima", "scroll para cima"]:
-        return rolar("cima")
-
-    # -------------------------
-    # Visão avançada da tela (OCR)
-    # -------------------------
-    if comando in ["tirar print", "capturar tela", "ler tela print"]:
-        return tirar_print()
-
-    if comando in ["ler tela", "ler texto da tela"]:
-        return ler_tela()
-
-    if comando in ["listar textos da tela", "mostrar textos da tela"]:
-        return listar_textos_tela()
-
-    if comando.startswith("procurar texto "):
-        texto_alvo = comando.replace("procurar texto ", "", 1).strip()
-
-        if not texto_alvo:
-            return f"{base} Diga o texto que você quer procurar."
-
-        ok, resposta, _ = procurar_texto_na_tela(texto_alvo)
-        return resposta
-
-    if comando.startswith("clicar texto "):
-        texto_alvo = comando.replace("clicar texto ", "", 1).strip()
-
-        if not texto_alvo:
-            return f"{base} Diga o texto em que você quer clicar."
-
-        return clicar_texto_na_tela(texto_alvo)
-
-    # -------------------------
-    # Missões
-    # -------------------------
-    if comando.startswith("missao "):
-        resposta = executar_missao_rapida(comando)
-        registrar_log("missao", f"{comando} => {resposta}")
-        return resposta
-
-    if comando in ["listar missoes", "listar missões", "mostrar missoes", "mostrar missões"]:
-        itens = listar_missoes()
-
-        if not itens:
-            return f"{base} Ainda não existem missões salvas."
-
-        resposta = "Missões disponíveis:\n"
-        for i, nome in enumerate(itens, 1):
-            resposta += f"{i}. {nome}\n"
-        return resposta
-
-    if comando.startswith("executar missao ") or comando.startswith("executar missão "):
-        nome = (
-            comando.replace("executar missao ", "", 1)
-            .replace("executar missão ", "", 1)
+    if comando.startswith("definir nome "):
+        valor = comando.replace("definir nome ", "", 1).strip()
+        return f"{base} {definir_valor('nome', valor)}"
+
+    if comando.startswith("definir navegador "):
+        valor = comando.replace("definir navegador ", "", 1).strip()
+        return f"{base} {definir_valor('navegador_padrao', valor)}"
+
+    if comando.startswith("definir horario trabalho ") or comando.startswith("definir horário trabalho "):
+        valor = (
+            comando.replace("definir horario trabalho ", "", 1)
+            .replace("definir horário trabalho ", "", 1)
             .strip()
         )
-        ok, resposta = executar_missao_salva(nome)
-        return f"{base} {resposta}"
+        return f"{base} {definir_valor('horario_trabalho', valor)}"
 
-    if comando.startswith("apagar missao ") or comando.startswith("apagar missão "):
-        nome = (
-            comando.replace("apagar missao ", "", 1)
-            .replace("apagar missão ", "", 1)
-            .strip()
-        )
-        ok, resposta = apagar_missao(nome)
-        return f"{base} {resposta}"
+    if comando in ["meu perfil", "mostrar perfil"]:
+        perfil = listar_perfil()
 
-    if comando.startswith("criar missao pesquisar ") or comando.startswith("criar missão pesquisar "):
-        texto = (
-            comando.replace("criar missao pesquisar ", "", 1)
-            .replace("criar missão pesquisar ", "", 1)
-            .strip()
-        )
+        if not perfil:
+            return f"{base} Seu perfil ainda está vazio."
 
-        if " com " not in texto:
-            return f"{base} Use assim: criar missao pesquisar python com pesquisa python"
+        resposta = "Perfil do usuário:\n"
+        for k, v in perfil.items():
+            resposta += f"- {k}: {v}\n"
+        return resposta
 
-        nome, termo = texto.split(" com ", 1)
-        return f"{base} {criar_missao_pesquisa(nome.strip(), termo.strip())}"
-
-    if comando.startswith("criar missao ") and " com abrir " in comando:
-        try:
-            texto = comando.replace("criar missao ", "", 1)
-            nome, destino = texto.split(" com abrir ", 1)
-            return f"{base} {criar_missao_simples(nome.strip(), destino.strip())}"
-        except Exception:
-            return f"{base} Não consegui criar a missão."
-        
+    if comando in ["limpar perfil"]:
+        return f"{base} {limpar_perfil()}"
 
     # -------------------------
     # Logs
@@ -1208,44 +767,22 @@ def processar_comando(comando: str):
         resposta = "Logs recentes:\n"
         for linha in linhas:
             resposta += linha
-
         return resposta
 
     if comando in ["limpar logs", "apagar logs"]:
         return f"{base} {limpar_logs()}"
-    
+
     # -------------------------
-    # Hábitos (memória operacional)
-    # -------------------------
-    if comando in ["mostrar habitos", "ver habitos", "memoria operacional"]:
-        dados = listar_habitos()
-
-        if not dados:
-            return f"{base} Ainda não aprendi nenhum padrão."
-
-        resposta = "Padrões aprendidos:\n"
-
-        for anterior, proximos in dados.items():
-            resposta += f"\n{anterior} →\n"
-            for prox, qtd in proximos.items():
-                resposta += f"   - {prox} ({qtd}x)\n"
-
-        return resposta
-
-    if comando in ["limpar habitos", "resetar habitos"]:
-        return f"{base} {limpar_habitos()}"
-    
-    # -------------------------
-    # Autoexecução inteligente
+    # Autoexecução
     # -------------------------
     if comando in ["listar autoexecucoes", "listar autoexecuções", "mostrar autoexecucoes", "mostrar autoexecuções"]:
-        dados = listar_autoexecucoes()
+        autos = listar_autoexecucoes()
 
-        if not dados:
+        if not autos:
             return f"{base} Ainda não existem autoexecuções cadastradas."
 
         resposta = "Autoexecuções ativas:\n"
-        for base_cmd, prox_cmd in dados.items():
+        for base_cmd, prox_cmd in autos.items():
             resposta += f"- depois de '{base_cmd}' => '{prox_cmd}'\n"
         return resposta
 

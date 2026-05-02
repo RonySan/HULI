@@ -18,6 +18,7 @@ from modules.voice_mode import deve_falar
 encerrar_programa = False
 ultimo_comando = None
 sugestao_pendente = None
+escuta_continua_ativa = False
 
 
 def monitor_agendamentos(stop_event: threading.Event):
@@ -153,9 +154,31 @@ def executar_comando(comando: str):
 
     ultimo_comando = comando
 
+def modo_escuta_continua(stop_event: threading.Event):
+    global escuta_continua_ativa
+
+    print("🎙️ Escuta contínua ativada. Diga 'huli' + comando.")
+
+    while not stop_event.is_set() and escuta_continua_ativa:
+        try:
+            comando_voz = ouvir_com_ativacao(
+                timeout=6,
+                phrase_time_limit=6
+            )
+
+            if comando_voz:
+                print(f"\n🎤 Você disse: {comando_voz}")
+                executar_comando(comando_voz)
+
+        except Exception as e:
+            registrar_log("erro", f"modo_escuta_continua: {e}")
+
+        time.sleep(0.5)
+
+    print("🎙️ Escuta contínua encerrada.")
 
 def iniciar():
-    global encerrar_programa
+    global encerrar_programa, escuta_continua_ativa
 
     identidade = HULIIdentity()
 
@@ -196,31 +219,39 @@ def iniciar():
 
             if not comando:
                 continue
-            if comando.lower() == "ouvir":
-                print("🎙️ Modo voz com ativação...")
-                comando_voz = ouvir_com_ativacao()
 
-                if not comando_voz:
-                    print("H.U.L.I: Não ouvi nenhum comando válido com ativação.")
-                    falar_se_permitido("Não ouvi nenhum comando válido com ativação.")
+            # -------------------------
+            # ESCUTA CONTÍNUA
+            # -------------------------
+            if comando.lower() in ["modo escuta", "ativar escuta", "escuta continua", "escuta contínua"]:
+                if escuta_continua_ativa:
+                    print("H.U.L.I: A escuta contínua já está ativa.")
+                    falar_se_permitido("A escuta contínua já está ativa.")
                     continue
 
-                print(f"Você disse: {comando_voz}")
-                executar_comando(comando_voz)
+                escuta_continua_ativa = True
+
+                print("H.U.L.I: Escuta contínua ativada.")
+                falar_se_permitido("Escuta contínua ativada.")
+
+                t_escuta = threading.Thread(
+                    target=modo_escuta_continua,
+                    args=(stop_event,),
+                    daemon=True
+                )
+                t_escuta.start()
                 continue
 
-            if comando.lower() == "ouvir natural":
-                comando_voz = ouvir_natural()
+            if comando.lower() in ["parar escuta", "desativar escuta", "encerrar escuta"]:
+                escuta_continua_ativa = False
 
-                if not comando_voz:
-                    print("H.U.L.I: Não consegui entender pela voz natural.")
-                    falar_se_permitido("Não consegui entender pela voz natural.")
-                    continue
-
-                print(f"Você disse: {comando_voz}")
-                executar_comando(comando_voz)
+                print("H.U.L.I: Escuta contínua desativada.")
+                falar_se_permitido("Escuta contínua desativada.")
                 continue
 
+            # -------------------------
+            # VOZ MANUAL
+            # -------------------------
             if comando.lower() == "voz":
                 print("🎤 Fale agora...")
                 comando_voz = ouvir_um_comando()
@@ -259,6 +290,9 @@ def iniciar():
                 executar_comando(comando_voz)
                 continue
 
+            # -------------------------
+            # EXECUÇÃO NORMAL
+            # -------------------------
             executar_comando(comando)
 
         except (KeyboardInterrupt, EOFError):
@@ -266,12 +300,12 @@ def iniciar():
             print("\nH.U.L.I: Encerrando pelo teclado.")
             falar_se_permitido("Encerrando pelo teclado.")
             break
+
         except Exception as e:
             registrar_log("erro", f"loop principal: {e}")
             print(f"H.U.L.I: Ocorreu um erro: {e}")
 
     stop_event.set()
-
 
 if __name__ == "__main__":
     iniciar()

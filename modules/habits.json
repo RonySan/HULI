@@ -26,7 +26,8 @@
         "abrir trabalho": 1
     },
     "abrir chrome": {
-        "abrir vscode": 1
+        "abrir vscode": 1,
+        "abrir chrome e pesquise github": 1
     },
     "historico": {
         "abra o github": 1
@@ -245,5 +246,35 @@
     },
     "abrir termianl no projeto huli": {
         "abrir vscode": 1
+    },
+    "sim obrigado huli": {
+        "abrir chrome e pesquisar github": 1
+    },
+    "abrir chrome e pesquisar github": {
+        "abrir chrome": 1
+    },
+    "abrir chrome e pesquise github": {
+        "pesquise github": 1
+    },
+    "rhuli modo silencioso": {
+        "huli modo silencioso": 1
+    },
+    "huli modo silencioso": {
+        "huli modo trabalho": 1
+    },
+    "como vai ?": {
+        "e fala como ta o dia hoje ?": 1
+    },
+    "e fala como ta o dia hoje ?": {
+        "como assim onde estou ? voce noo sbe huli ?": 1
+    },
+    "como assim onde estou ? voce noo sbe huli ?": {
+        "grava ai e huli, sao paulo zona sul": 1
+    },
+    "grava ai e huli, sao paulo zona sul": {
+        "sim claro": 1
+    },
+    "sim claro": {
+        "huli voce e a melhor amo voce": 1
     }
 }

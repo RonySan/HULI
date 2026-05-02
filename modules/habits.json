@@ -13,7 +13,8 @@
         "que dia e hoje": 2
     },
     "que dia e hoje": {
-        "status": 2
+        "status": 2,
+        "obrigado": 1
     },
     "status": {
         "status ia": 2
@@ -276,5 +277,11 @@
     },
     "sim claro": {
         "huli voce e a melhor amo voce": 1
+    },
+    "huli voce e a melhor amo voce": {
+        "que dia e hoje": 1
+    },
+    "obrigado": {
+        "voce fala quais idiomoas ?": 1
     }
 }

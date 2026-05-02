@@ -19,6 +19,7 @@ encerrar_programa = False
 ultimo_comando = None
 sugestao_pendente = None
 escuta_continua_ativa = False
+modo_conversa_ativo = False
 
 
 def monitor_agendamentos(stop_event: threading.Event):
@@ -177,8 +178,45 @@ def modo_escuta_continua(stop_event: threading.Event):
 
     print("🎙️ Escuta contínua encerrada.")
 
+def modo_conversa_continua(stop_event: threading.Event):
+    global modo_conversa_ativo
+
+    print("🤖 Modo conversa contínua ativado.")
+    print("Diga comandos normalmente. Para sair, diga: sair conversa.")
+
+    falar_se_permitido("Modo conversa contínua ativado.")
+
+    while not stop_event.is_set() and modo_conversa_ativo:
+        try:
+            comando_voz = ouvir_natural(
+                timeout=8,
+                phrase_time_limit=8
+            )
+
+            if not comando_voz:
+                continue
+
+            comando_voz = comando_voz.strip().lower()
+
+            print(f"\n🎤 Você disse: {comando_voz}")
+
+            if comando_voz in ["sair conversa", "encerrar conversa", "parar conversa"]:
+                modo_conversa_ativo = False
+                print("H.U.L.I: Modo conversa encerrado.")
+                falar_se_permitido("Modo conversa encerrado.")
+                break
+
+            executar_comando(comando_voz)
+
+        except Exception as e:
+            registrar_log("erro", f"modo_conversa_continua: {e}")
+
+        time.sleep(0.5)
+
+    print("🤖 Modo conversa contínua finalizado.")
+
 def iniciar():
-    global encerrar_programa, escuta_continua_ativa
+    global encerrar_programa, escuta_continua_ativa, modo_conversa_ativo
 
     identidade = HULIIdentity()
 
@@ -194,6 +232,7 @@ def iniciar():
     print(" - digite 'ouvir' para falar com ativação")
     print(" - digite 'ouvir natural' para voz natural")
     print(" - digite 'sair' para encerrar\n")
+    print(" - digite 'modo conversa' para conversa contínua")
 
     registrar_log("sistema", "H.U.L.I iniciada com sucesso.")
 
@@ -247,6 +286,32 @@ def iniciar():
 
                 print("H.U.L.I: Escuta contínua desativada.")
                 falar_se_permitido("Escuta contínua desativada.")
+                continue
+
+            # -------------------------
+            # MODO CONVERSA CONTÍNUA
+            # -------------------------
+            if comando.lower() in ["modo conversa", "ativar conversa", "conversa continua", "conversa contínua"]:
+                if modo_conversa_ativo:
+                    print("H.U.L.I: O modo conversa já está ativo.")
+                    falar_se_permitido("O modo conversa já está ativo.")
+                    continue
+
+                modo_conversa_ativo = True
+
+                t_conversa = threading.Thread(
+                    target=modo_conversa_continua,
+                    args=(stop_event,),
+                    daemon=True
+                )
+                t_conversa.start()
+                continue
+
+            if comando.lower() in ["parar conversa", "desativar conversa", "encerrar conversa"]:
+                modo_conversa_ativo = False
+
+                print("H.U.L.I: Modo conversa desativado.")
+                falar_se_permitido("Modo conversa desativado.")
                 continue
 
             # -------------------------

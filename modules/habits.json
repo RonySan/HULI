@@ -219,10 +219,12 @@
         "ativar modo voz": 1
     },
     "ativar modo voz": {
-        "ativar voz": 1
+        "ativar voz": 1,
+        "huli ativar voz": 1
     },
     "ativar voz": {
-        "obrigado huli": 1
+        "obrigado huli": 1,
+        "huli cumprimenta minha namorada gisele": 1
     },
     "obrigado huli": {
         "voce e otima huli": 1
@@ -283,5 +285,32 @@
     },
     "obrigado": {
         "voce fala quais idiomoas ?": 1
+    },
+    "oi huli": {
+        "ativar modo voz": 1
+    },
+    "huli ativar voz": {
+        "huli coprimena minha namorada gisele": 1
+    },
+    "huli coprimena minha namorada gisele": {
+        "huli dis oi pra gisele": 1
+    },
+    "huli dis oi pra gisele": {
+        "i huli": 1
+    },
+    "i huli": {
+        "o": 1
+    },
+    "dis oi pra gisele": {
+        "dis i pra minh preta, ela e minha namorada, seja gentil huli": 1
+    },
+    "dis i pra minh preta, ela e minha namorada, seja gentil huli": {
+        "desatiar voz": 1
+    },
+    "desatiar voz": {
+        "desativar voz": 1
+    },
+    "huli cumprimenta minha namorada gisele": {
+        "quem e rony ?": 1
     }
 }

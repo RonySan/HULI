@@ -84,10 +84,20 @@ class HuliPanel:
             ("Missão GitHub", "missao abrir github"),
             ("Missão Pesquisa", "missao pesquisar python"),
         ]
+        botoes_linha_4 = [
+            ("Voz ON", "ativar voz"),
+            ("Voz OFF", "parar voz"),
+            ("Status Voz", "status voz"),
+            ("Modo Escuta", "modo escuta"),
+            ("Parar Escuta", "parar escuta"),
+            ("Modo Conversa", "modo conversa"),
+            ("Parar Conversa", "parar conversa"),
+        ]
 
         self.criar_linha_botoes(frame_botoes, botoes_linha_1, 0)
         self.criar_linha_botoes(frame_botoes, botoes_linha_2, 1)
         self.criar_linha_botoes(frame_botoes, botoes_linha_3, 2)
+        self.criar_linha_botoes(frame_botoes, botoes_linha_4, 3)
 
         # Área principal
         frame_principal = tk.Frame(root)

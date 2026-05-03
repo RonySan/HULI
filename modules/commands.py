@@ -20,6 +20,7 @@ from modules.history import listar as listar_historico
 from modules.intent_engine import interpretar_intencao
 from modules.logger import ler_logs, limpar_logs, registrar_log
 from modules.voice_mode import ativar_voz, desativar_voz, voz_esta_ativa
+from modules.social import se_apresentar_para, cumprimentar, elogiar, recado
 
 
 from modules.habits import listar_habitos, limpar_habitos
@@ -111,6 +112,13 @@ historico_conversa: list[dict] = []
 MAX_HIST = 12
 MODO_RESPOSTA = "normal"  # simples | normal | detalhado
 
+
+OWNER = "Rony"
+
+def verificar_permissao(usuario):
+    if usuario != OWNER:
+        return False
+    return True
 
 # -------------------------
 # Utilitários
@@ -803,10 +811,81 @@ def processar_comando(comando: str):
     # -------------------------
     if comando == "sair":
         return "ENCERRAR"
+    
+    resposta_ia = responder_ia(comando, historico=historico_conversa, modo=MODO_RESPOSTA)
+    
+        # -------------------------
+    # Cumprimentos para pessoas
+    # -------------------------
+    if comando.startswith("cumprimenta "):
+        nome = comando.replace("cumprimenta ", "", 1).strip()
+        nome = nome.replace("minha namorada ", "").replace("meu namorado ", "")
+        nome = nome.replace("minha esposa ", "").replace("meu esposo ", "")
+        nome = nome.strip()
+
+        if not nome:
+            return f"{base} Quem você quer que eu cumprimente?"
+
+        return f"Olá, {nome.title()}! Tudo bem? Eu sou a H.U.L.I, assistente inteligente do Rony. É um prazer falar com você."
+
+    if comando.startswith("diz oi pra ") or comando.startswith("dis oi pra "):
+        nome = (
+            comando.replace("diz oi pra ", "", 1)
+            .replace("dis oi pra ", "", 1)
+            .strip()
+        )
+
+        if not nome:
+            return f"{base} Para quem você quer que eu diga oi?"
+
+        return f"Oi, {nome.title()}! Eu sou a H.U.L.I. O Rony pediu para eu te mandar um oi com carinho."
 
     # -------------------------
     # Fallback IA com contexto
     # -------------------------
+
+        # -------------------------
+    # Modo social
+    # -------------------------
+    if comando.startswith("se apresenta para "):
+        nome = comando.replace("se apresenta para ", "", 1).strip()
+        return se_apresentar_para(nome)
+
+    if comando.startswith("se apresente para "):
+        nome = comando.replace("se apresente para ", "", 1).strip()
+        return se_apresentar_para(nome)
+
+    if comando.startswith("cumprimenta "):
+        nome = comando.replace("cumprimenta ", "", 1).strip()
+        return cumprimentar(nome)
+
+    if comando.startswith("diz oi pra ") or comando.startswith("dis oi pra "):
+        nome = (
+            comando.replace("diz oi pra ", "", 1)
+            .replace("dis oi pra ", "", 1)
+            .strip()
+        )
+        return cumprimentar(nome)
+
+    if comando.startswith("elogia "):
+        nome = comando.replace("elogia ", "", 1).strip()
+        return elogiar(nome)
+
+    if comando.startswith("elogiar "):
+        nome = comando.replace("elogiar ", "", 1).strip()
+        return elogiar(nome)
+
+    if comando.startswith("mande um recado para ") and " dizendo que " in comando:
+        texto = comando.replace("mande um recado para ", "", 1)
+        nome, mensagem = texto.split(" dizendo que ", 1)
+        return recado(nome.strip(), mensagem.strip())
+
+    if comando.startswith("manda um recado para ") and " dizendo que " in comando:
+        texto = comando.replace("manda um recado para ", "", 1)
+        nome, mensagem = texto.split(" dizendo que ", 1)
+        return recado(nome.strip(), mensagem.strip())
+
+
     resposta_ia = responder_ia(comando, historico=historico_conversa, modo=MODO_RESPOSTA)
 
     if resposta_ia:

@@ -1,6 +1,17 @@
 import random
 
 
+
+class HULIPersonality:
+    def __init__(self):
+        self.owner = "Rony"
+
+    def responder(self, usuario, mensagem):
+        if usuario != self.owner:
+            return "🛑 Não reconheço você como usuário autorizado."
+
+        return f"Claro, {usuario}. Como posso ajudar?"
+
 class HULIPersonality:
 
     def __init__(self):

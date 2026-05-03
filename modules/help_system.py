@@ -76,6 +76,15 @@ def obter_ajuda():
         "• protecao on\n"
         "• protecao off\n\n"
 
+        "🤝 MODO SOCIAL\n"
+        "• huli se apresenta para gisele\n"
+        "• huli cumprimenta gisele\n"
+        "• huli diz oi pra gisele\n"
+        "• huli elogia gisele\n"
+        "• huli mande um recado para gisele dizendo que eu amo ela\n\n"
+
+
+
         "🚪 ENCERRAR\n"
         "• sair\n"
     )

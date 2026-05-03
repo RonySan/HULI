@@ -22,6 +22,21 @@ escuta_continua_ativa = False
 modo_conversa_ativo = False
 
 
+from core.auth import autenticar
+
+print("🔐 Sistema H.U.L.I - Autenticação necessária")
+
+usuario = input("Usuário: ")
+senha = input("Senha: ")
+
+if not autenticar(usuario, senha):
+    print("🛑 Acesso negado.")
+    exit()
+
+print(f"✅ Bem-vindo, {usuario}. H.U.L.I ativada.")
+
+
+
 def monitor_agendamentos(stop_event: threading.Event):
     while not stop_event.is_set():
         try:

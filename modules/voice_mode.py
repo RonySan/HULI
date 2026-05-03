@@ -38,6 +38,7 @@ def voz_esta_ativa():
     return carregar_config().get("voz_ativa", True)
 
 
+
 def deve_falar(texto):
     dados = carregar_config()
 

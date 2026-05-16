@@ -6837,3 +6837,290 @@ informações confidenciais. Posso te ajudar em algo mais?
 [2026-05-03 18:45:42] [RESPOSTA] Olá, Gisele! Tudo bem? Eu sou a H.U.L.I, assistente inteligente do Rony. É um prazer falar com você.
 [2026-05-03 18:46:32] [COMANDO] quem e rony ?
 [2026-05-03 18:47:04] [RESPOSTA] 🌐 ONLINE | Rony é a pessoa que está usando este assistente — basicamente, você 🙂
+[2026-05-03 18:54:32] [COMANDO] desativar voz
+[2026-05-03 18:54:32] [RESPOSTA] Missão aceita. Voz desativada.
+[2026-05-03 18:54:38] [COMANDO] sair
+[2026-05-03 18:54:38] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-03 20:40:08] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-03 20:40:13] [COMANDO] sair
+[2026-05-03 20:40:13] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-03 20:41:10] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-03 20:41:25] [COMANDO] tudo bem ?
+[2026-05-03 20:41:25] [RESPOSTA] Já estou verificando. Estou bem sim, Rony. Operando 100%. E você, como está?
+[2026-05-03 20:41:29] [COMANDO] sair
+[2026-05-03 20:41:29] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-04 17:50:24] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-04 17:50:28] [COMANDO] sair
+[2026-05-04 17:50:28] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-05 02:58:24] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-05 02:58:38] [COMANDO] OI HULI, ABRIR MODO TRABALHO
+[2026-05-05 02:59:20] [RESPOSTA] 🌐 ONLINE | Modo trabalho ativado, Rony. Vamos focar.
+
+Me diz o que você precisa resolver agora.
+[2026-05-05 03:00:06] [COMANDO] abrir projeto huli
+[2026-05-05 03:00:07] [ROTINA] Executando rotina 'projeto huli'.
+[2026-05-05 03:00:07] [RESPOSTA] Missão aceita. Executando rotina 'projeto huli'.
+[2026-05-15 13:35:23] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-15 13:35:39] [COMANDO] oi huli como voce esta ?
+[2026-05-15 13:35:39] [RESPOSTA] Já estou verificando. Estou bem sim, Rony. Operando 100%. E você, como está?
+[2026-05-15 13:35:50] [COMANDO] huli ative modo voz
+[2026-05-15 13:48:14] [RESPOSTA] 🖥️ OFFLINE | Clique no ícone de "Modo Voz" na parte inferior da tela. Se você estiver us[2D[K
+usando o controle remoto, procure pelo botão correspondente à opção "Modo V[1D[K
+Voz". Por fim, também é possível usar a barra de comandos e digitar "Modo v[1D[K
+voz" para acessá-lo.
+[2026-05-15 15:13:27] [COMANDO] ativar voz
+[2026-05-15 15:13:27] [RESPOSTA] Já estou verificando. Voz ativada.
+[2026-05-15 15:14:08] [COMANDO] oi huli a sandra minha miga esta comigo aqui, se apresente pra ela
+[2026-05-15 15:16:03] [RESPOSTA] 🖥️ OFFLINE | Olá! Eu sou H.U.L.I, assistente pessoal do Rony. Estou aqui para ajudar. Vo[2D[K
+Vou passar o recado para a Sandra. Aqui vai: "Ela é uma garota super legal [K
+e estuda comigo em algumas matérias. Gosta de música e dança!"
+[2026-05-15 15:16:40] [COMANDO] como voce esta huli ?
+[2026-05-15 15:16:40] [RESPOSTA] Já resolvo isso antes do café acabar. Estou bem sim, Rony. Operando 100%. E você, como está?
+[2026-05-15 15:17:01] [COMANDO] estou otimo obrigado
+[2026-05-15 15:17:01] [RESPOSTA] Deixa comigo, chefe 😎 Tamo junto, Rony.
+[2026-05-15 15:17:50] [COMANDO] status ]
+[2026-05-15 15:17:50] [RESPOSTA] Já estou verificando. Sistemas operacionais funcionando normalmente.
+[2026-05-15 15:18:57] [COMANDO] ajuda
+[2026-05-15 15:18:57] [RESPOSTA] Eu posso ajudar com várias coisas, Rony:
+
+💬 CONVERSA
+• oi
+• como voce esta
+• quem e voce
+• ajuda
+
+🕒 SISTEMA
+• horas
+• que dia e hoje
+• status
+• status ia
+• status sistema
+• historico
+
+📝 MEMÓRIA E ORGANIZAÇÃO
+• anota comprar pão
+• anota tarefa pagar conta
+• mostra agenda
+• mostra tarefas
+• mostra ideias
+• o que voce lembra
+
+🧠 MEMÓRIA OPERACIONAL
+• mostrar habitos
+• limpar habitos
+
+⏰ LEMBRETES
+• me lembra às 18:30 ligar pro João
+• apagar lembretes
+
+💻 PROGRAMAS
+• abrir chrome
+• abrir vscode
+• abra o github
+• abra o gmail
+
+🚀 ROTINAS
+• listar rotinas
+• criar rotina trabalho com chrome, vscode
+
+🧩 COMANDOS PERSONALIZADOS
+• criar comando modo trabalho com abrir trabalho
+• listar comandos personalizados
+
+💾 BACKUP
+• criar backup
+• listar backups
+
+🧠 MISSÕES
+• missao pesquisar python
+• missao abrir github
+
+🖱️ AUTOMAÇÃO
+• clicar
+• mover mouse para 500 300
+• digitar texto
+
+👁️ VISÃO
+• tirar print
+• ler tela
+• clicar texto entrar
+
+📜 LOGS
+• mostrar logs
+• limpar logs
+
+👤 PERFIL
+• definir nome rony
+• meu perfil
+
+🔐 PROTEÇÃO
+• protecao on
+• protecao off
+
+🤝 MODO SOCIAL
+• huli se apresenta para gisele
+• huli cumprimenta gisele
+• huli diz oi pra gisele
+• huli elogia gisele
+• huli mande um recado para gisele dizendo que eu amo ela
+
+🚪 ENCERRAR
+• sair
+
+[2026-05-16 12:06:22] [COMANDO] huli boa tarde, que horas sao ?
+[2026-05-16 12:06:22] [RESPOSTA] Entendido. Agora são 12:06:22.
+[2026-05-16 12:07:17] [COMANDO] huli conecta o bluetooft do notebook no na caixa de som com nome MUNDIAL
+[2026-05-16 12:09:01] [RESPOSTA] 🌐 ONLINE | Beleza, vamos conectar 👍
+
+1. Liga a caixa de som “Mundial” e deixa em modo Bluetooth (geralmente faz um som ou pisca luz).
+2. No notebook, ativa o Bluetooth:
+   - Windows: Configurações > Bluetooth e dispositivos > Ativar Bluetooth
+3. Clica em “Adicionar dispositivo” ou “Parear novo dispositivo”
+4. Espera aparecer “Mundial” na lista e clica nela
+5. Confirma a conexão (se pedir código, normalmente é 0000 ou 1234)
+
+Depois disso, o áudio já deve sair na caixa.  
+Se não aparecer, me fala que te ajudo a forçar a busca 👍
+[2026-05-16 12:13:46] [COMANDO] abrir projeto huli
+[2026-05-16 12:13:46] [ROTINA] Executando rotina 'projeto huli'.
+[2026-05-16 12:13:46] [RESPOSTA] Perfeito. Executando rotina 'projeto huli'.
+[2026-05-16 19:34:14] [COMANDO] oi huli
+[2026-05-16 19:37:06] [RESPOSTA] 🖥️ OFFLINE | Olá! Estou aqui para ajudar o Rony com qualquer coisa. Como posso te ajudar[6D[K
+ajudar hoje?
+[2026-05-16 19:39:02] [COMANDO] huli preciso dar remedio pro meu filho de 8 em 8 horas o primeiro horario do remeio e as 6:30 da manha quais os outros horarios ?
+[2026-05-16 19:39:02] [RESPOSTA] Perfeito. Agora são 19:39:02.
+[2026-05-16 19:39:43] [COMANDO] me de hos horairos por 10 dias de 8h em 8hs apartir das 6:30 da manha
+[2026-05-16 19:39:43] [RESPOSTA] Deixa comigo, chefe 😎 Agora são 19:39:43.
+[2026-05-16 20:05:29] [COMANDO] sair
+[2026-05-16 20:05:29] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-16 20:06:16] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-16 20:06:30] [COMANDO] mostrar confguracoes
+[2026-05-16 20:08:56] [RESPOSTA] 🖥️ OFFLINE | Para visualizar as configurações do seu aplicativo, você pode tentar seguir[6D[K
+seguir estes passos:
+
+1. Abra o menu "Configurações" (ou equivalente) dentro da aplicação.
+2. Selecione a opção "Conectar-se à conta de Rony" ou algo semelhante.
+3. Faça login na sua conta para visualizar as configurações.
+
+Se esses passos não funcionarem, é possível que você precise acessar o pain[4D[K
+painel de controle do aplicativo diretamente, dependendo da plataforma util[4D[K
+utilizada (web, mobile, etc.).
+[2026-05-16 20:09:43] [COMANDO] mostrar configuracoes
+[2026-05-16 20:10:16] [RESPOSTA] Configurações da H.U.L.I:
+- usuario: Rony
+- empresa: Impulso Digital
+- assistente_nome: H.U.L.I
+- voz_ativa: True
+- limite_fala: 250
+- escuta_continua: False
+- modo_conversa: False
+- personalidade: huli
+- debug: True
+- modo_protecao: False
+- bluetooth_dispositivo_padrao: MUNDIAL
+- iniciar_com_windows: False
+
+[2026-05-16 20:12:02] [COMANDO] status voz
+[2026-05-16 20:12:02] [RESPOSTA] Missão aceita. Voz: ATIVA.
+[2026-05-16 20:12:13] [COMANDO] parar voz
+[2026-05-16 20:12:13] [RESPOSTA] Já resolvo isso antes do café acabar. Voz desativada.
+[2026-05-16 20:12:18] [COMANDO] ajuda
+[2026-05-16 20:12:18] [RESPOSTA] Eu posso ajudar com várias coisas, Rony:
+
+💬 CONVERSA
+• oi
+• como voce esta
+• quem e voce
+• ajuda
+
+🕒 SISTEMA
+• horas
+• que dia e hoje
+• status
+• status ia
+• status sistema
+• historico
+
+📝 MEMÓRIA E ORGANIZAÇÃO
+• anota comprar pão
+• anota tarefa pagar conta
+• mostra agenda
+• mostra tarefas
+• mostra ideias
+• o que voce lembra
+
+🧠 MEMÓRIA OPERACIONAL
+• mostrar habitos
+• limpar habitos
+
+⏰ LEMBRETES
+• me lembra às 18:30 ligar pro João
+• apagar lembretes
+
+💻 PROGRAMAS
+• abrir chrome
+• abrir vscode
+• abra o github
+• abra o gmail
+
+🚀 ROTINAS
+• listar rotinas
+• criar rotina trabalho com chrome, vscode
+
+🧩 COMANDOS PERSONALIZADOS
+• criar comando modo trabalho com abrir trabalho
+• listar comandos personalizados
+
+💾 BACKUP
+• criar backup
+• listar backups
+
+🧠 MISSÕES
+• missao pesquisar python
+• missao abrir github
+
+🖱️ AUTOMAÇÃO
+• clicar
+• mover mouse para 500 300
+• digitar texto
+
+👁️ VISÃO
+• tirar print
+• ler tela
+• clicar texto entrar
+
+📜 LOGS
+• mostrar logs
+• limpar logs
+
+👤 PERFIL
+• definir nome rony
+• meu perfil
+
+🔐 PROTEÇÃO
+• protecao on
+• protecao off
+
+🤝 MODO SOCIAL
+• huli se apresenta para gisele
+• huli cumprimenta gisele
+• huli diz oi pra gisele
+• huli elogia gisele
+• huli mande um recado para gisele dizendo que eu amo ela
+
+⚙️ CONFIGURAÇÕES
+• mostrar configuracoes
+• definir usuario Rony
+• definir empresa Impulso Digital
+• definir personalidade huli
+• definir limite fala 250
+• definir bluetooth padrao MUNDIAL
+• qual bluetooth padrao
+
+🚪 ENCERRAR
+• sair
+
+[2026-05-16 20:13:03] [COMANDO] definir limite fala 100
+[2026-05-16 20:13:40] [RESPOSTA] Deixa comigo, chefe 😎 Configuração atualizada: limite_fala = 100
+[2026-05-16 20:14:14] [COMANDO] definir bluetooth padrao mundial
+[2026-05-16 20:14:49] [RESPOSTA] Missão aceita. Configuração atualizada: bluetooth_dispositivo_padrao = mundial

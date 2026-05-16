@@ -120,7 +120,9 @@
         "anota teste": 1,
         "ajuda": 1,
         "oi": 1,
-        "abrir trabalho": 1
+        "abrir trabalho": 1,
+        "huli boa tarde, que horas sao ?": 1,
+        "definir limite fala 100": 1
     },
     "anota teste": {
         "mostra tarefas": 1
@@ -145,7 +147,8 @@
         "oi huli como voce esta ?": 1
     },
     "oi huli como voce esta ?": {
-        "estou otimo, huli vamos comecar a trabalhar": 1
+        "estou otimo, huli vamos comecar a trabalhar": 1,
+        "huli ative modo voz": 1
     },
     "estou otimo, huli vamos comecar a trabalhar": {
         "sim quero, faz um plano para evoluir voce, o que acha que voce deve sair fazer ?": 1
@@ -224,7 +227,8 @@
     },
     "ativar voz": {
         "obrigado huli": 1,
-        "huli cumprimenta minha namorada gisele": 1
+        "huli cumprimenta minha namorada gisele": 1,
+        "oi huli a sandra minha miga esta comigo aqui, se apresente pra ela": 1
     },
     "obrigado huli": {
         "voce e otima huli": 1
@@ -287,7 +291,8 @@
         "voce fala quais idiomoas ?": 1
     },
     "oi huli": {
-        "ativar modo voz": 1
+        "ativar modo voz": 1,
+        "huli preciso dar remedio pro meu filho de 8 em 8 horas o primeiro horario do remeio e as 6:30 da manha quais os outros horarios ?": 1
     },
     "huli ativar voz": {
         "huli coprimena minha namorada gisele": 1
@@ -312,5 +317,53 @@
     },
     "huli cumprimenta minha namorada gisele": {
         "quem e rony ?": 1
+    },
+    "quem e rony ?": {
+        "desativar voz": 1
+    },
+    "oi huli, abrir modo trabalho": {
+        "abrir projeto huli": 1
+    },
+    "huli ative modo voz": {
+        "ativar voz": 1
+    },
+    "oi huli a sandra minha miga esta comigo aqui, se apresente pra ela": {
+        "como voce esta huli ?": 1
+    },
+    "como voce esta huli ?": {
+        "estou otimo obrigado": 1
+    },
+    "estou otimo obrigado": {
+        "status ]": 1
+    },
+    "status ]": {
+        "ajuda": 1
+    },
+    "huli boa tarde, que horas sao ?": {
+        "huli conecta o bluetooft do notebook no na caixa de som com nome mundial": 1
+    },
+    "huli conecta o bluetooft do notebook no na caixa de som com nome mundial": {
+        "abrir projeto huli": 1
+    },
+    "abrir projeto huli": {
+        "oi huli": 1
+    },
+    "huli preciso dar remedio pro meu filho de 8 em 8 horas o primeiro horario do remeio e as 6:30 da manha quais os outros horarios ?": {
+        "me de hos horairos por 10 dias de 8h em 8hs apartir das 6:30 da manha": 1
+    },
+    "mostrar confguracoes": {
+        "mostrar configuracoes": 1
+    },
+    "mostrar configuracoes": {
+        "status voz": 1
+    },
+    "status voz": {
+        "parar voz": 1
+    },
+    "parar voz": {
+        "ajuda": 1
+    },
+    "definir limite fala 100": {
+        "definir bluetooth padrao mundial": 1
     }
 }

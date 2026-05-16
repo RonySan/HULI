@@ -82,7 +82,15 @@ def obter_ajuda():
         "• huli diz oi pra gisele\n"
         "• huli elogia gisele\n"
         "• huli mande um recado para gisele dizendo que eu amo ela\n\n"
-
+        
+        "⚙️ CONFIGURAÇÕES\n"
+        "• mostrar configuracoes\n"
+        "• definir usuario Rony\n"
+        "• definir empresa Impulso Digital\n"
+        "• definir personalidade huli\n"
+        "• definir limite fala 250\n"
+        "• definir bluetooth padrao MUNDIAL\n"
+        "• qual bluetooth padrao\n\n"
 
 
         "🚪 ENCERRAR\n"

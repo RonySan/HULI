@@ -14,27 +14,17 @@ from modules.logger import registrar_log
 from modules.habits import registrar_sequencia, prever_proximo
 from modules.autopilot import obter_autoexecucao, ativar_autoexecucao
 from modules.voice_mode import deve_falar
+from core.security import login, check_permission
+from core.security import login, check_permission, is_owner
 
+
+current_user = login()
 encerrar_programa = False
 ultimo_comando = None
 sugestao_pendente = None
 escuta_continua_ativa = False
 modo_conversa_ativo = False
-
-
-from core.auth import autenticar
-
-print("🔐 Sistema H.U.L.I - Autenticação necessária")
-
-usuario = input("Usuário: ")
-senha = input("Senha: ")
-
-if not autenticar(usuario, senha):
-    print("🛑 Acesso negado.")
-    exit()
-
-print(f"✅ Bem-vindo, {usuario}. H.U.L.I ativada.")
-
+current_user = None
 
 
 def monitor_agendamentos(stop_event: threading.Event):
@@ -231,7 +221,9 @@ def modo_conversa_continua(stop_event: threading.Event):
     print("🤖 Modo conversa contínua finalizado.")
 
 def iniciar():
-    global encerrar_programa, escuta_continua_ativa, modo_conversa_ativo
+    global encerrar_programa, escuta_continua_ativa, modo_conversa_ativo, current_user
+
+    current_user = login()
 
     identidade = HULIIdentity()
 

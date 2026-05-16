@@ -22,6 +22,7 @@ from modules.logger import ler_logs, limpar_logs, registrar_log
 from modules.voice_mode import ativar_voz, desativar_voz, voz_esta_ativa
 from modules.social import se_apresentar_para, cumprimentar, elogiar, recado
 
+from modules.settings_manager import listar_config, definir, obter
 
 from modules.habits import listar_habitos, limpar_habitos
 from modules.autopilot import (
@@ -839,6 +840,50 @@ def processar_comando(comando: str):
             return f"{base} Para quem você quer que eu diga oi?"
 
         return f"Oi, {nome.title()}! Eu sou a H.U.L.I. O Rony pediu para eu te mandar um oi com carinho."
+
+    # -------------------------
+    # Configurações centrais
+    # -------------------------
+    if comando in ["mostrar configuracoes", "mostrar configurações", "listar configuracoes", "listar configurações"]:
+        configs = listar_config()
+
+        resposta = "Configurações da H.U.L.I:\n"
+        for chave, valor in configs.items():
+            resposta += f"- {chave}: {valor}\n"
+
+        return resposta
+
+    if comando.startswith("definir usuario "):
+        valor = comando.replace("definir usuario ", "", 1).strip()
+        return f"{base} {definir('usuario', valor)}"
+
+    if comando.startswith("definir empresa "):
+        valor = comando.replace("definir empresa ", "", 1).strip()
+        return f"{base} {definir('empresa', valor)}"
+
+    if comando.startswith("definir personalidade "):
+        valor = comando.replace("definir personalidade ", "", 1).strip()
+        return f"{base} {definir('personalidade', valor)}"
+
+    if comando.startswith("definir limite fala "):
+        try:
+            valor = int(comando.replace("definir limite fala ", "", 1).strip())
+            return f"{base} {definir('limite_fala', valor)}"
+        except Exception:
+            return f"{base} Use assim: definir limite fala 250"
+
+    if comando.startswith("definir bluetooth padrao ") or comando.startswith("definir bluetooth padrão "):
+        valor = (
+            comando.replace("definir bluetooth padrao ", "", 1)
+            .replace("definir bluetooth padrão ", "", 1)
+            .strip()
+        )
+        return f"{base} {definir('bluetooth_dispositivo_padrao', valor)}"
+
+    if comando in ["qual bluetooth padrao", "qual bluetooth padrão"]:
+        return f"{base} Bluetooth padrão: {obter('bluetooth_dispositivo_padrao', 'não definido')}"
+
+
 
     # -------------------------
     # Fallback IA com contexto

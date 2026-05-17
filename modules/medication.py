@@ -1,3 +1,8 @@
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+
+import os
 import re
 from datetime import datetime, timedelta
 
@@ -171,9 +176,6 @@ def criar_lembretes_medicamento(memoria, comando: str):
 
     return True, f"{total} lembretes de medicamento criados com sucesso."
 
-import os
-
-
 def exportar_horarios_txt(comando: str):
     intervalo = extrair_intervalo_horas(comando)
     inicio = extrair_horario_inicio(comando)
@@ -197,12 +199,8 @@ def exportar_horarios_txt(comando: str):
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(resposta)
 
-    return True, f"Arquivo criado com sucesso em: {caminho}"
-
-from reportlab.lib.pagesizes import A4
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-from reportlab.lib.styles import getSampleStyleSheet
-
+    abrir_arquivo_exportado(caminho)
+    return True, f"Arquivo TXT criado e aberto com sucesso em: {caminho}"
 
 def exportar_horarios_pdf(comando: str):
     intervalo = extrair_intervalo_horas(comando)
@@ -259,4 +257,12 @@ def exportar_horarios_pdf(comando: str):
 
     doc.build(elementos)
 
-    return True, f"PDF criado com sucesso em: {caminho}"
+    abrir_arquivo_exportado(caminho)
+    return True, f"PDF criado e aberto com sucesso em: {caminho}"
+
+def abrir_arquivo_exportado(caminho: str):
+    try:
+        os.startfile(caminho)
+        return True, "Arquivo aberto com sucesso."
+    except Exception:
+        return False, "Arquivo criado, mas não consegui abrir automaticamente."

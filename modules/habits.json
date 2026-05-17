@@ -14,7 +14,8 @@
     },
     "que dia e hoje": {
         "status": 2,
-        "obrigado": 1
+        "obrigado": 1,
+        "nao obrigado": 1
     },
     "status": {
         "status ia": 2
@@ -371,7 +372,9 @@
         "huli preciso dar remedio pro meu filho de 9 em 9 horas começando às 06:30 por 10 dias": 1
     },
     "exportar horarios de remedio de 8 em 8 horas começando às 06:30 por 10 dias em txt": {
-        "ativar voz": 1
+        "ativar voz": 1,
+        "que dia e hoje": 1,
+        "status": 1
     },
     "diz oi huli": {
         "git add .": 1
@@ -383,6 +386,7 @@
         "gerar pdf de remedio de 8 em 8 horas começando às 06:30 por 10 dias": 1
     },
     "gerar pdf de remedio de 8 em 8 horas começando às 06:30 por 10 dias": {
-        "gerar pdf de remedio de 8 em 8 horas começando às 06:30 por 10 dias": 1
+        "gerar pdf de remedio de 8 em 8 horas começando às 06:30 por 10 dias": 1,
+        "exportar horarios de remedio de 8 em 8 horas começando às 06:30 por 10 dias em txt": 1
     }
 }

@@ -23,8 +23,14 @@ from modules.voice_mode import ativar_voz, desativar_voz, voz_esta_ativa
 from modules.social import se_apresentar_para, cumprimentar, elogiar, recado
 
 from modules.settings_manager import listar_config, definir, obter
-from modules.medication import processar_pedido_medicamento
 from modules.habits import listar_habitos, limpar_habitos
+
+from modules.medication import (
+    processar_pedido_medicamento,
+    criar_lembretes_medicamento,
+    exportar_horarios_txt,
+)
+
 from modules.autopilot import (
     listar_autoexecucoes,
     desativar_autoexecucao,
@@ -365,6 +371,16 @@ def processar_comando(comando: str):
     # -------------------------
     # Medicamentos / horários
     # -------------------------
+
+    if (
+        any(palavra in comando for palavra in ["remedio", "remédio", "medicamento", "dose"])
+        and any(palavra in comando for palavra in ["exportar", "arquivo", "txt", "salvar"])):
+        ok, resposta = exportar_horarios_txt(comando)
+        return f"{base} {resposta}"
+
+    if any(palavra in comando for palavra in ["remedio", "remédio", "medicamento", "dose"]):
+        return processar_pedido_medicamento(comando)
+                
     if any(palavra in comando for palavra in ["remedio", "remédio", "medicamento", "dose"]):
         return processar_pedido_medicamento(comando)
     # -------------------------
@@ -822,7 +838,7 @@ def processar_comando(comando: str):
     
     resposta_ia = responder_ia(comando, historico=historico_conversa, modo=MODO_RESPOSTA)
     
-        # -------------------------
+    # -------------------------
     # Cumprimentos para pessoas
     # -------------------------
     if comando.startswith("cumprimenta "):

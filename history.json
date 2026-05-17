@@ -1,9 +1,4 @@
 [
-    "huli abrir a netflix no google",
-    "huli abrir netflix",
-    "huli abrir netflix no google",
-    "sair",
-    "huli que dia e hoje ?",
     "me fala que dia e hoje",
     "sair",
     "huli abrir projeto huli",
@@ -98,5 +93,10 @@
     "definir bluetooth padrao mundial",
     "sair",
     "huli preciso dar remedio pro meu filho de 8 em 8 horas começando às 06:30 por 10 dias",
-    "huli preciso dar remedio pro meu filho de 9 em 9 horas começando às 06:30 por 10 dias"
+    "huli preciso dar remedio pro meu filho de 9 em 9 horas começando às 06:30 por 10 dias",
+    "exportar horarios de remedio de 8 em 8 horas começando às 06:30 por 10 dias em txt",
+    "ativar voz",
+    "diz oi huli",
+    "git add .",
+    "git commit -m \"feat: exporta horarios de medicamentos em txt\""
 ]

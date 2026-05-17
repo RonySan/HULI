@@ -228,7 +228,8 @@
     "ativar voz": {
         "obrigado huli": 1,
         "huli cumprimenta minha namorada gisele": 1,
-        "oi huli a sandra minha miga esta comigo aqui, se apresente pra ela": 1
+        "oi huli a sandra minha miga esta comigo aqui, se apresente pra ela": 1,
+        "diz oi huli": 1
     },
     "obrigado huli": {
         "voce e otima huli": 1
@@ -368,5 +369,14 @@
     },
     "huli preciso dar remedio pro meu filho de 8 em 8 horas começando às 06:30 por 10 dias": {
         "huli preciso dar remedio pro meu filho de 9 em 9 horas começando às 06:30 por 10 dias": 1
+    },
+    "exportar horarios de remedio de 8 em 8 horas começando às 06:30 por 10 dias em txt": {
+        "ativar voz": 1
+    },
+    "diz oi huli": {
+        "git add .": 1
+    },
+    "git add .": {
+        "git commit -m \"feat: exporta horarios de medicamentos em txt\"": 1
     }
 }

@@ -133,3 +133,68 @@ def processar_pedido_medicamento(comando: str):
         return horarios
 
     return formatar_horarios(horarios, intervalo, dias)
+
+
+
+def criar_lembretes_medicamento(memoria, comando: str):
+    intervalo = extrair_intervalo_horas(comando)
+    inicio = extrair_horario_inicio(comando)
+    dias = extrair_quantidade_dias(comando)
+
+    if not intervalo or not inicio:
+        return False, "Não consegui identificar intervalo ou horário inicial."
+
+    ok, horarios = gerar_horarios(inicio, intervalo, dias)
+
+    if not ok:
+        return False, horarios
+
+    total = 0
+
+    for item in horarios:
+        horario = item["hora"]
+
+        hoje = datetime.now()
+        hora, minuto = map(int, horario.split(":"))
+
+        quando = hoje.replace(hour=hora, minute=minuto, second=0, microsecond=0)
+
+        # se o horário já passou hoje, joga para o próximo dia
+        if quando <= hoje:
+            quando += timedelta(days=1)
+
+        memoria.salvar_lembrete(
+            f"Dar medicamento - dose {item['dose']} ({item['hora']})",
+            quando
+        )
+        total += 1
+
+    return True, f"{total} lembretes de medicamento criados com sucesso."
+
+import os
+
+
+def exportar_horarios_txt(comando: str):
+    intervalo = extrair_intervalo_horas(comando)
+    inicio = extrair_horario_inicio(comando)
+    dias = extrair_quantidade_dias(comando)
+
+    if not intervalo or not inicio:
+        return False, "Não consegui identificar intervalo ou horário inicial."
+
+    ok, horarios = gerar_horarios(inicio, intervalo, dias)
+
+    if not ok:
+        return False, horarios
+
+    resposta = formatar_horarios(horarios, intervalo, dias)
+
+    pasta = os.path.join(os.getcwd(), "exports")
+    os.makedirs(pasta, exist_ok=True)
+
+    caminho = os.path.join(pasta, "horarios_medicamento.txt")
+
+    with open(caminho, "w", encoding="utf-8") as f:
+        f.write(resposta)
+
+    return True, f"Arquivo criado com sucesso em: {caminho}"

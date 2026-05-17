@@ -2,7 +2,7 @@
     "usuario": "Rony",
     "empresa": "Impulso Digital",
     "assistente_nome": "H.U.L.I",
-    "voz_ativa": false,
+    "voz_ativa": true,
     "limite_fala": 100,
     "escuta_continua": false,
     "modo_conversa": false,

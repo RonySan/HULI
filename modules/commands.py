@@ -23,7 +23,7 @@ from modules.voice_mode import ativar_voz, desativar_voz, voz_esta_ativa
 from modules.social import se_apresentar_para, cumprimentar, elogiar, recado
 
 from modules.settings_manager import listar_config, definir, obter
-
+from modules.medication import processar_pedido_medicamento
 from modules.habits import listar_habitos, limpar_habitos
 from modules.autopilot import (
     listar_autoexecucoes,
@@ -361,7 +361,14 @@ def processar_comando(comando: str):
 
         return resposta
 
+    
     # -------------------------
+    # Medicamentos / horários
+    # -------------------------
+    if any(palavra in comando for palavra in ["remedio", "remédio", "medicamento", "dose"]):
+        return processar_pedido_medicamento(comando)
+    # -------------------------
+
     # Sistema / status / modos
     # -------------------------
     if any(frase in comando for frase in ["hora", "horas", "que horas", "que horas sao", "qual a hora", "qual e a hora", "horario"]):

@@ -7124,3 +7124,112 @@ utilizada (web, mobile, etc.).
 [2026-05-16 20:13:40] [RESPOSTA] Deixa comigo, chefe 😎 Configuração atualizada: limite_fala = 100
 [2026-05-16 20:14:14] [COMANDO] definir bluetooth padrao mundial
 [2026-05-16 20:14:49] [RESPOSTA] Missão aceita. Configuração atualizada: bluetooth_dispositivo_padrao = mundial
+[2026-05-16 20:45:07] [COMANDO] sair
+[2026-05-16 20:45:07] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-17 00:27:38] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-17 00:29:36] [COMANDO] huli preciso dar remedio pro meu filho de 8 em 8 horas começando às 06:30 por 10 dias
+[2026-05-17 00:29:36] [RESPOSTA] Horários do medicamento de 8 em 8 horas por 10 dia(s):
+
+
+📅 Dia 01/01
+• Dose 1: 06:00
+• Dose 2: 14:00
+• Dose 3: 22:00
+
+📅 Dia 02/01
+• Dose 4: 06:00
+• Dose 5: 14:00
+• Dose 6: 22:00
+
+📅 Dia 03/01
+• Dose 7: 06:00
+• Dose 8: 14:00
+• Dose 9: 22:00
+
+📅 Dia 04/01
+• Dose 10: 06:00
+• Dose 11: 14:00
+• Dose 12: 22:00
+
+📅 Dia 05/01
+• Dose 13: 06:00
+• Dose 14: 14:00
+• Dose 15: 22:00
+
+📅 Dia 06/01
+• Dose 16: 06:00
+• Dose 17: 14:00
+• Dose 18: 22:00
+
+📅 Dia 07/01
+• Dose 19: 06:00
+• Dose 20: 14:00
+• Dose 21: 22:00
+
+📅 Dia 08/01
+• Dose 22: 06:00
+• Dose 23: 14:00
+• Dose 24: 22:00
+
+📅 Dia 09/01
+• Dose 25: 06:00
+• Dose 26: 14:00
+• Dose 27: 22:00
+
+📅 Dia 10/01
+• Dose 28: 06:00
+• Dose 29: 14:00
+• Dose 30: 22:00
+
+⚠️ Observação: confirme sempre com o médico ou farmacêutico em caso de dúvida sobre dose, atraso ou troca de medicamento.
+[2026-05-17 00:30:01] [COMANDO] huli preciso dar remedio pro meu filho de 9 em 9 horas começando às 06:30 por 10 dias
+[2026-05-17 00:30:01] [RESPOSTA] Horários do medicamento de 9 em 9 horas por 10 dia(s):
+
+
+📅 Dia 01/01
+• Dose 1: 06:00
+• Dose 2: 15:00
+
+📅 Dia 02/01
+• Dose 3: 00:00
+• Dose 4: 09:00
+• Dose 5: 18:00
+
+📅 Dia 03/01
+• Dose 6: 03:00
+• Dose 7: 12:00
+• Dose 8: 21:00
+
+📅 Dia 04/01
+• Dose 9: 06:00
+• Dose 10: 15:00
+
+📅 Dia 05/01
+• Dose 11: 00:00
+• Dose 12: 09:00
+• Dose 13: 18:00
+
+📅 Dia 06/01
+• Dose 14: 03:00
+• Dose 15: 12:00
+• Dose 16: 21:00
+
+📅 Dia 07/01
+• Dose 17: 06:00
+• Dose 18: 15:00
+
+📅 Dia 08/01
+• Dose 19: 00:00
+• Dose 20: 09:00
+• Dose 21: 18:00
+
+📅 Dia 09/01
+• Dose 22: 03:00
+• Dose 23: 12:00
+• Dose 24: 21:00
+
+📅 Dia 10/01
+• Dose 25: 06:00
+• Dose 26: 15:00
+
+⚠️ Observação: confirme sempre com o médico ou farmacêutico em caso de dúvida sobre dose, atraso ou troca de medicamento.

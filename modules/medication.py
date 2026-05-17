@@ -198,3 +198,65 @@ def exportar_horarios_txt(comando: str):
         f.write(resposta)
 
     return True, f"Arquivo criado com sucesso em: {caminho}"
+
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+
+
+def exportar_horarios_pdf(comando: str):
+    intervalo = extrair_intervalo_horas(comando)
+    inicio = extrair_horario_inicio(comando)
+    dias = extrair_quantidade_dias(comando)
+
+    if not intervalo or not inicio:
+        return False, "Não consegui identificar intervalo ou horário inicial."
+
+    ok, horarios = gerar_horarios(inicio, intervalo, dias)
+
+    if not ok:
+        return False, horarios
+
+    pasta = os.path.join(os.getcwd(), "exports")
+    os.makedirs(pasta, exist_ok=True)
+
+    caminho = os.path.join(pasta, "horarios_medicamento.pdf")
+
+    doc = SimpleDocTemplate(caminho, pagesize=A4)
+    styles = getSampleStyleSheet()
+    elementos = []
+
+    elementos.append(Paragraph("<b>Horários de Medicamento</b>", styles["Title"]))
+    elementos.append(Spacer(1, 12))
+
+    elementos.append(Paragraph(
+        f"Intervalo: de {intervalo} em {intervalo} horas<br/>"
+        f"Período: {dias} dia(s)<br/>"
+        f"Horário inicial: {inicio}",
+        styles["BodyText"]
+    ))
+
+    elementos.append(Spacer(1, 16))
+
+    dia_atual = None
+
+    for item in horarios:
+        if item["data"] != dia_atual:
+            dia_atual = item["data"]
+            elementos.append(Spacer(1, 10))
+            elementos.append(Paragraph(f"<b>Dia {dia_atual}</b>", styles["Heading2"]))
+
+        elementos.append(Paragraph(
+            f"Dose {item['dose']}: {item['hora']}",
+            styles["BodyText"]
+        ))
+
+    elementos.append(Spacer(1, 18))
+    elementos.append(Paragraph(
+        "Observação: confirme sempre com médico ou farmacêutico em caso de dúvida sobre dose, atraso ou troca de medicamento.",
+        styles["Italic"]
+    ))
+
+    doc.build(elementos)
+
+    return True, f"PDF criado com sucesso em: {caminho}"

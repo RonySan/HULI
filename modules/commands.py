@@ -4,7 +4,6 @@ import random
 from datetime import datetime, timedelta
 
 from modules.help_system import obter_ajuda
-
 from modules.nlp import normalizar_comando_natural
 from modules.ai import responder_ia, tem_internet, extrair_conhecimento
 from modules.aliases import ALIASES_APPS
@@ -12,7 +11,6 @@ from modules.docs import buscar_docs
 from modules.knowledge import aprender, buscar, listar_tudo
 from modules.memory import HULIMemory
 from modules.personality import HULIPersonality
-
 from modules.backup import criar_backup, listar_backups
 from modules.scheduler import adicionar_agendamento, listar_agendamentos, remover_agendamento
 from modules.system_monitor import status_sistema
@@ -21,16 +19,14 @@ from modules.intent_engine import interpretar_intencao
 from modules.logger import ler_logs, limpar_logs, registrar_log
 from modules.voice_mode import ativar_voz, desativar_voz, voz_esta_ativa
 from modules.social import se_apresentar_para, cumprimentar, elogiar, recado
-
 from modules.settings_manager import listar_config, definir, obter
 from modules.habits import listar_habitos, limpar_habitos
-
 from modules.medication import (
     processar_pedido_medicamento,
     criar_lembretes_medicamento,
     exportar_horarios_txt,
+    exportar_horarios_pdf,
 )
-
 from modules.autopilot import (
     listar_autoexecucoes,
     desativar_autoexecucao,
@@ -367,21 +363,27 @@ def processar_comando(comando: str):
 
         return resposta
 
-    
     # -------------------------
     # Medicamentos / horários
     # -------------------------
+    eh_medicamento = any(
+        palavra in comando
+        for palavra in ["remedio", "remédio", "medicamento", "dose", "horario de remedio", "horários de remedio"]
+    )
 
-    if (
-        any(palavra in comando for palavra in ["remedio", "remédio", "medicamento", "dose"])
-        and any(palavra in comando for palavra in ["exportar", "arquivo", "txt", "salvar"])):
+    if eh_medicamento and "pdf" in comando:
+        ok, resposta = exportar_horarios_pdf(comando)
+        return f"{base} {resposta}"
+
+    if eh_medicamento and any(palavra in comando for palavra in ["exportar", "arquivo", "txt", "salvar"]):
         ok, resposta = exportar_horarios_txt(comando)
         return f"{base} {resposta}"
 
-    if any(palavra in comando for palavra in ["remedio", "remédio", "medicamento", "dose"]):
-        return processar_pedido_medicamento(comando)
-                
-    if any(palavra in comando for palavra in ["remedio", "remédio", "medicamento", "dose"]):
+    if eh_medicamento and any(palavra in comando for palavra in ["lembrete", "lembretes", "avisar", "avisa", "alarme"]):
+        ok, resposta = criar_lembretes_medicamento(memoria, comando)
+        return f"{base} {resposta}"
+
+    if eh_medicamento:
         return processar_pedido_medicamento(comando)
     # -------------------------
 

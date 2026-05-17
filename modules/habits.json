@@ -378,5 +378,11 @@
     },
     "git add .": {
         "git commit -m \"feat: exporta horarios de medicamentos em txt\"": 1
+    },
+    "git commit -m \"feat: exporta horarios de medicamentos em txt\"": {
+        "gerar pdf de remedio de 8 em 8 horas começando às 06:30 por 10 dias": 1
+    },
+    "gerar pdf de remedio de 8 em 8 horas começando às 06:30 por 10 dias": {
+        "gerar pdf de remedio de 8 em 8 horas começando às 06:30 por 10 dias": 1
     }
 }

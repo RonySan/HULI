@@ -22,6 +22,12 @@ from modules.settings_manager import listar_config, definir, obter
 from modules.habits import listar_habitos, limpar_habitos
 from modules.intent_engine import interpretar_intencao, detectar_intencao
 
+from modules.reminder_engine import (
+    criar_lembrete,
+    listar_lembretes,
+    apagar_lembretes
+)
+
 from modules.medication import (
     processar_pedido_medicamento,
     criar_lembretes_medicamento,
@@ -724,12 +730,16 @@ def processar_comando(comando: str):
         memoria.limpar_lembretes_executados()
         return f"{base} Ok. Limpei os lembretes executados."
 
-    if comando.startswith("me lembra"):
+    if comando.startswith("me lembra") or comando.startswith("me lembre"):
         h, mi = extrair_horario(comando)
         if h is None:
             return f"{base} Me diga o horário, exemplo: 'me lembra às 18:30 comprar pão'."
 
-        conteudo = comando.replace("me lembra", "").strip()
+        conteudo = (
+            comando.replace("me lembra", "", 1)
+            .replace("me lembre", "", 1)
+            .strip()
+)
         conteudo = re.sub(r"\b(?:as|às)\s*\d{1,2}(:\d{2})?\b", "", conteudo).strip()
         conteudo = re.sub(r"\b\d{1,2}:\d{2}\b", "", conteudo).strip()
         conteudo = re.sub(r"\b\d{1,2}h(\d{2})?\b", "", conteudo).strip()
@@ -751,10 +761,7 @@ def processar_comando(comando: str):
         return f"{base} Esse lembrete já está registrado."
 
     # -------------------------
-    # 
-    # 
-    # 
-    # emória categorizada
+    # memória categorizada
     # -------------------------
     if comando in ["mostra agenda", "mostrar agenda"]:
         itens = memoria.listar_por_categoria("agenda")
@@ -788,11 +795,11 @@ def processar_comando(comando: str):
 
     if any(comando.startswith(g) for g in [
         "lembrar que", "lembra de", "preciso lembrar de", "anota", "anote",
-        "guarda isso", "guardar", "me lembre", "me lembrar",
+        "guarda isso", "guardar",
     ]):
         gatilhos = [
             "lembrar que", "lembra de", "preciso lembrar de", "anota", "anote",
-            "guarda isso", "guardar", "me lembre", "me lembrar",
+            "guarda isso", "guardar",
         ]
 
         conteudo = ""

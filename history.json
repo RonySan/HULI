@@ -1,5 +1,4 @@
 [
-    "sair",
     "oi huli",
     "ativar modo voz",
     "huli ativar voz",
@@ -98,5 +97,6 @@
     "abrir github",
     "pesquise python",
     "clicar",
-    "mostrar logs"
+    "mostrar logs",
+    "ajuda"
 ]

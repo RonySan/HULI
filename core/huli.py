@@ -14,8 +14,10 @@ from modules.logger import registrar_log
 from modules.habits import registrar_sequencia, prever_proximo
 from modules.autopilot import obter_autoexecucao, ativar_autoexecucao
 from modules.voice_mode import deve_falar
+from modules.reminder_engine import iniciar_engine
 from core.security import login, check_permission
 from core.security import login, check_permission, is_owner
+from modules.reminder_engine import iniciar_engine
 
 
 current_user = login()
@@ -242,6 +244,8 @@ def iniciar():
     print(" - digite 'modo conversa' para conversa contínua")
 
     registrar_log("sistema", "H.U.L.I iniciada com sucesso.")
+
+    iniciar_engine(falar)
 
     stop_event = threading.Event()
 

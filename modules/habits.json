@@ -141,7 +141,8 @@
         "mostrar logs": 2
     },
     "mostrar logs": {
-        "listar autoexecucoes": 1
+        "listar autoexecucoes": 1,
+        "ajuda": 1
     },
     "listar autoexecucoes": {
         "meu perfil": 1

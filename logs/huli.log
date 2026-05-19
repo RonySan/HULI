@@ -7943,3 +7943,264 @@ Se preferir, pode escrever tudo junto tipo: “Reunião amanhã às 14h com lemb
 🚪 ENCERRAR
 • sair
 
+[2026-05-19 17:24:44] [COMANDO] sair
+[2026-05-19 17:24:44] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-19 17:25:06] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-19 17:25:17] [COMANDO] status geral
+[2026-05-19 17:26:27] [RESPOSTA] 🧠 STATUS GERAL DA H.U.L.I
+
+⚙️ Configurações:
+- Usuário: Rony
+- Empresa: Impulso Digital
+- Voz ativa: True
+- Personalidade: huli
+- Bluetooth padrão: mundial
+
+🖥️ Sistema:
+CPU: 2.9% | MEMÓRIA: 92.2% | DISCO: 55.5%
+
+🔔 Lembretes:
+Nenhum lembrete cadastrado.
+
+📜 Logs recentes:
+• definir bluetooth padrao MUNDIAL
+• qual bluetooth padrao
+
+🚪 ENCERRAR
+• sair
+
+[2026-05-19 17:24:44] [COMANDO] sair
+[2026-05-19 17:24:44] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-19 17:25:06] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-19 17:25:17] [COMANDO] status geral
+
+[2026-05-19 17:29:00] [COMANDO] ajuda
+[2026-05-19 17:29:00] [RESPOSTA] Eu posso ajudar com várias coisas, Rony:
+
+💬 CONVERSA
+• oi
+• como voce esta
+• quem e voce
+• ajuda
+
+🕒 SISTEMA
+• horas
+• que dia e hoje
+• status
+• status ia
+• status sistema
+• historico
+
+📝 MEMÓRIA E ORGANIZAÇÃO
+• anota comprar pão
+• anota tarefa pagar conta
+• mostra agenda
+• mostra tarefas
+• mostra ideias
+• o que voce lembra
+
+🧠 MEMÓRIA OPERACIONAL
+• mostrar habitos
+• limpar habitos
+
+⏰ LEMBRETES
+• me lembra às 18:30 ligar pro João
+• apagar lembretes
+
+💻 PROGRAMAS
+• abrir chrome
+• abrir vscode
+• abra o github
+• abra o gmail
+
+🚀 ROTINAS
+• listar rotinas
+• criar rotina trabalho com chrome, vscode
+
+🧩 COMANDOS PERSONALIZADOS
+• criar comando modo trabalho com abrir trabalho
+• listar comandos personalizados
+
+💾 BACKUP
+• criar backup
+• listar backups
+
+🧠 MISSÕES
+• missao pesquisar python
+• missao abrir github
+
+🖱️ AUTOMAÇÃO
+• clicar
+• mover mouse para 500 300
+• digitar texto
+
+👁️ VISÃO
+• tirar print
+• ler tela
+• clicar texto entrar
+
+📜 LOGS
+• mostrar logs
+• limpar logs
+
+👤 PERFIL
+• definir nome rony
+• meu perfil
+
+🔐 PROTEÇÃO
+• protecao on
+• protecao off
+
+🤝 MODO SOCIAL
+• huli se apresenta para gisele
+• huli cumprimenta gisele
+• huli diz oi pra gisele
+• huli elogia gisele
+• huli mande um recado para gisele dizendo que eu amo ela
+
+⚙️ CONFIGURAÇÕES
+• mostrar configuracoes
+• definir usuario Rony
+• definir empresa Impulso Digital
+• definir personalidade huli
+• definir limite fala 250
+• definir bluetooth padrao MUNDIAL
+• qual bluetooth padrao
+
+🚪 ENCERRAR
+• sair
+
+[2026-05-19 17:32:23] [COMANDO] status geral
+[2026-05-19 17:33:21] [RESPOSTA] 🧠 STATUS GERAL DA H.U.L.I
+
+⚙️ Configurações:
+- Usuário: Rony
+- Empresa: Impulso Digital
+- Voz ativa: True
+- Personalidade: huli
+- Bluetooth padrão: mundial
+
+🖥️ Sistema:
+CPU: 2.6% | MEMÓRIA: 88.5% | DISCO: 55.9%
+
+🔔 Lembretes:
+Nenhum lembrete cadastrado.
+
+📜 Logs recentes:
+• definir empresa Impulso Digital
+• definir personalidade huli
+• definir limite fala 250
+• definir bluetooth padrao MUNDIAL
+• qual bluetooth padrao
+
+🚪 ENCERRAR
+• sair
+
+[2026-05-19 17:32:23] [COMANDO] status geral
+
+[2026-05-19 17:33:58] [COMANDO] ativa voz
+[2026-05-19 17:35:26] [RESPOSTA] 🖥️ OFFLINE | Desculpe, não entendi a pergunta. Você quer ativar a voz assistida do Rony?[5D[K
+Rony? Se sim, posso ajudar com isso.
+[2026-05-19 17:47:54] [COMANDO] painel neural
+[2026-05-19 17:49:08] [RESPOSTA] 🧠 STATUS GERAL DA H.U.L.I
+
+⚙️ Configurações:
+- Usuário: Rony
+- Empresa: Impulso Digital
+- Voz ativa: True
+- Personalidade: huli
+- Bluetooth padrão: mundial
+
+🖥️ Sistema:
+CPU: 1.8% | MEMÓRIA: 91.6% | DISCO: 55.5%
+
+🔔 Lembretes:
+Nenhum lembrete cadastrado.
+
+📜 Logs recentes:
+
+🚪 ENCERRAR
+• sair
+
+[2026-05-19 17:32:23] [COMANDO] status geral
+
+[2026-05-19 17:33:58] [COMANDO] ativa voz
+[2026-05-19 17:35:26] [RESPOSTA] 🖥️ OFFLINE | Desculpe, não entendi a pergunta. Você quer ativar a voz assistida do Rony?[5D[K
+Rony? Se sim, posso ajudar com isso.
+[2026-05-19 17:47:54] [COMANDO] painel neural
+
+[2026-05-19 17:51:16] [COMANDO] ativar voz
+[2026-05-19 17:51:16] [RESPOSTA] Deixa comigo, chefe 😎 Voz ativada.
+[2026-05-19 17:51:30] [COMANDO] que dia e hoje ?
+[2026-05-19 17:51:30] [RESPOSTA] Já estou verificando. Hoje é 19/05/2026.
+[2026-05-19 17:51:45] [COMANDO] o que voce lembra ?
+[2026-05-19 17:51:45] [RESPOSTA] Eu lembro:
+1. [geral] teste (Registrado em 25/03/2026 às 12:58:14)
+2. [geral] de dar remedio pro luan as 06 30 (Registrado em 19/05/2026 às 16:36:05)
+
+[2026-05-19 17:52:06] [COMANDO] o que voce lembra ? pode falar em voz pra mim
+[2026-05-19 17:52:46] [RESPOSTA] 🌐 ONLINE | Ainda não consigo falar em áudio direto por aqui, só texto. Mas dá pra resolver fácil usando leitura em voz do seu dispositivo 👍
+
+Se você quiser ouvir o que eu digo, tenta isso:
+
+• No celular (Android): ativa “Selecionar para ouvir” ou “TalkBack” nas configurações de acessibilidade  
+• No iPhone: ativa “Falar Conteúdo da Tela” (Ajustes > Acessibilidade > Conteúdo Falado)  
+• No PC: usa um leitor de tela ou extensão de texto‑para‑fala no navegador  
+
+Se quiser, posso escrever as respostas de um jeito mais natural pra soar melhor quando for lido em voz 👍
+[2026-05-19 17:52:52] [COMANDO] status huli
+[2026-05-19 17:53:12] [RESPOSTA] 🧠 STATUS GERAL DA H.U.L.I
+
+⚙️ Configurações:
+- Usuário: Rony
+- Empresa: Impulso Digital
+- Voz ativa: True
+- Personalidade: huli
+- Bluetooth padrão: mundial
+
+🖥️ Sistema:
+CPU: 11.1% | MEMÓRIA: 88.2% | DISCO: 55.5%
+
+🔔 Lembretes:
+Nenhum lembrete cadastrado.
+
+📜 Logs recentes:
+[2026-05-19 17:52:46] [RESPOSTA] 🌐 ONLINE | Ainda não consigo falar em áudio direto por aqui, só texto. Mas dá pra resolver fácil usando leitura em voz do seu dispositivo 👍
+
+Se você quiser ouvir o que eu digo, tenta isso:
+
+• No celular (Android): ativa “Selecionar para ouvir” ou “TalkBack” nas configurações de acessibilidade  
+• No iPhone: ativa “Falar Conteúdo da Tela” (Ajustes > Acessibilidade > Conteúdo Falado)  
+• No PC: usa um leitor de tela ou extensão de texto‑para‑fala no navegador  
+
+Se quiser, posso escrever as respostas de um jeito mais natural pra soar melhor quando for lido em voz 👍
+[2026-05-19 17:52:52] [COMANDO] status huli
+
+[2026-05-19 18:00:29] [COMANDO] status huli
+[2026-05-19 18:01:24] [RESPOSTA] 🧠 STATUS GERAL DA H.U.L.I
+
+⚙️ Configurações:
+- Usuário: Rony
+- Empresa: Impulso Digital
+- Voz ativa: True
+- Personalidade: huli
+- Bluetooth padrão: mundial
+
+🖥️ Sistema:
+CPU: 60.5% | MEMÓRIA: 87.4% | DISCO: 55.6%
+
+🔔 Lembretes:
+Nenhum lembrete cadastrado.
+
+📜 Logs recentes:
+Se você quiser ouvir o que eu digo, tenta isso:
+
+• No celular (Android): ativa “Selecionar para ouvir” ou “TalkBack” nas configurações de acessibilidade  
+• No iPhone: ativa “Falar Conteúdo da Tela” (Ajustes > Acessibilidade > Conteúdo Falado)  
+• No PC: usa um leitor de tela ou extensão de texto‑para‑fala no navegador  
+
+Se quiser, posso escrever as respostas de um jeito mais natural pra soar melhor quando for lido em voz 👍
+[2026-05-19 17:52:52] [COMANDO] status huli
+
+[2026-05-19 18:00:29] [COMANDO] status huli
+

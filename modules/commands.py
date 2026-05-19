@@ -21,6 +21,7 @@ from modules.social import se_apresentar_para, cumprimentar, elogiar, recado
 from modules.settings_manager import listar_config, definir, obter
 from modules.habits import listar_habitos, limpar_habitos
 from modules.intent_engine import interpretar_intencao, detectar_intencao
+from modules.status_center import status_geral
 
 from modules.reminder_engine import (
     criar_lembrete,
@@ -1074,6 +1075,11 @@ def processar_comando(comando: str):
     if comando in ["qual bluetooth padrao", "qual bluetooth padrão"]:
         return f"{base} Bluetooth padrão: {obter('bluetooth_dispositivo_padrao', 'não definido')}"
 
+    # -------------------------
+    # Status geral / painel neural
+    # -------------------------
+    if comando in ["status geral", "painel neural", "status huli", "diagnostico geral"]:
+        return status_geral()
 
 
     # -------------------------

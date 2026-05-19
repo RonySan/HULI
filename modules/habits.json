@@ -125,7 +125,8 @@
         "abrir trabalho": 1,
         "huli boa tarde, que horas sao ?": 1,
         "definir limite fala 100": 1,
-        "me lembre as 06:30 dar remedio pro luan": 1
+        "me lembre as 06:30 dar remedio pro luan": 1,
+        "status geral": 1
     },
     "anota teste": {
         "mostra tarefas": 1
@@ -233,7 +234,8 @@
         "obrigado huli": 1,
         "huli cumprimenta minha namorada gisele": 1,
         "oi huli a sandra minha miga esta comigo aqui, se apresente pra ela": 1,
-        "diz oi huli": 1
+        "diz oi huli": 1,
+        "que dia e hoje ?": 1
     },
     "obrigado huli": {
         "voce e otima huli": 1,
@@ -406,7 +408,8 @@
     },
     "o que voce lembra ?": {
         "dar remedio em 8 e 8 horas apatir das 6:30": 1,
-        "agenda": 1
+        "agenda": 1,
+        "o que voce lembra ? pode falar em voz pra mim": 1
     },
     "dar remedio em 8 e 8 horas apatir das 6:30": {
         "remedio de 8 em 8 horas a partir das 6:30 por 10 dias": 1
@@ -432,5 +435,24 @@
     },
     "abrir github": {
         "pesquise python": 1
+    },
+    "status geral": {
+        "ajuda": 1,
+        "ativa voz": 1
+    },
+    "ativa voz": {
+        "painel neural": 1
+    },
+    "painel neural": {
+        "ativar voz": 1
+    },
+    "que dia e hoje ?": {
+        "o que voce lembra ?": 1
+    },
+    "o que voce lembra ? pode falar em voz pra mim": {
+        "status huli": 1
+    },
+    "status huli": {
+        "status huli": 1
     }
 }

@@ -103,3 +103,114 @@ def interpretar_intencao(texto: str):
                 return {"tipo": "abrir", "valor": destino}
 
     return None
+
+def contem(texto, palavras):
+    return any(p in texto for p in palavras)
+
+
+def extrair_depois(texto, gatilho):
+    if gatilho not in texto:
+        return ""
+    return texto.split(gatilho, 1)[1].strip()
+
+
+def detectar_intencao(comando: str):
+    texto = comando.lower().strip()
+
+    # mantém compatibilidade com o motor antigo
+    antiga = interpretar_intencao(texto)
+    if antiga:
+        tipo = antiga.get("tipo")
+
+        if tipo == "site":
+            return {
+                "intent": "abrir_site",
+                "valor": antiga.get("valor", "")
+            }
+
+        if tipo == "pesquisa":
+            return {
+                "intent": "pesquisar",
+                "valor": antiga.get("valor", "")
+            }
+
+        if tipo == "abrir":
+            return {
+                "intent": "abrir",
+                "valor": antiga.get("valor", "")
+            }
+
+    # lembrete vem antes de medicamento
+    if contem(texto, ["me lembra", "me lembre", "lembrete", "lembra de"]):
+        return {
+            "intent": "lembrete",
+            "texto": texto
+        }
+
+    if contem(texto, ["remedio", "remédio", "medicamento", "dose"]):
+        return {
+            "intent": "medicamento",
+            "texto": texto
+        }
+
+    if texto in ["hora", "horas", "que horas", "que horas sao", "que horas são", "qual a hora", "qual e a hora"]:
+        return {"intent": "hora"}
+
+    if texto in ["que dia e hoje", "que dia é hoje", "data de hoje", "qual a data"]:
+        return {"intent": "data"}
+
+    if texto == "status":
+        return {"intent": "status"}
+
+    if texto in ["status sistema", "diagnostico", "diagnóstico"]:
+        return {"intent": "status_sistema"}
+
+    if texto in ["status ia", "modo ia", "online ou offline"]:
+        return {"intent": "status_ia"}
+
+    if texto in ["ajuda", "help", "socorro", "o que voce faz", "o que você faz"]:
+        return {"intent": "ajuda"}
+
+    if texto in ["sair", "encerrar", "fechar huli"]:
+        return {"intent": "sair"}
+
+    if texto in ["clicar", "clique"]:
+        return {"intent": "clicar"}
+
+    if texto in ["duplo clique", "clicar duas vezes"]:
+        return {"intent": "duplo_clique"}
+
+    if texto in ["clique direito", "botao direito", "botão direito"]:
+        return {"intent": "clique_direito"}
+
+    if texto.startswith("mover mouse para "):
+        return {
+            "intent": "mover_mouse",
+            "texto": texto
+        }
+
+    if texto.startswith("digitar "):
+        return {
+            "intent": "digitar",
+            "valor": texto.replace("digitar ", "", 1).strip()
+        }
+
+    if texto.startswith("pressionar "):
+        return {
+            "intent": "pressionar",
+            "valor": texto.replace("pressionar ", "", 1).strip()
+        }
+
+    if texto in ["mostrar logs", "ver logs", "listar logs"]:
+        return {"intent": "mostrar_logs"}
+
+    if texto in ["limpar logs", "apagar logs"]:
+        return {"intent": "limpar_logs"}
+
+    if texto in ["criar backup", "backup"]:
+        return {"intent": "criar_backup"}
+
+    if texto in ["listar backups", "mostrar backups"]:
+        return {"intent": "listar_backups"}
+
+    return None

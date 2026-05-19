@@ -15,12 +15,13 @@ from modules.backup import criar_backup, listar_backups
 from modules.scheduler import adicionar_agendamento, listar_agendamentos, remover_agendamento
 from modules.system_monitor import status_sistema
 from modules.history import listar as listar_historico
-from modules.intent_engine import interpretar_intencao
 from modules.logger import ler_logs, limpar_logs, registrar_log
 from modules.voice_mode import ativar_voz, desativar_voz, voz_esta_ativa
 from modules.social import se_apresentar_para, cumprimentar, elogiar, recado
 from modules.settings_manager import listar_config, definir, obter
 from modules.habits import listar_habitos, limpar_habitos
+from modules.intent_engine import interpretar_intencao, detectar_intencao
+
 from modules.medication import (
     processar_pedido_medicamento,
     criar_lembretes_medicamento,
@@ -211,6 +212,153 @@ def processar_comando(comando: str):
         return ""
 
     base = personalidade.gerar_resposta_base()
+
+
+    # -------------------------
+    # Intent Engine V1
+    # -------------------------
+    intencao_local = detectar_intencao(comando)
+
+    if intencao_local:
+        intent = intencao_local.get("intent")
+
+        if intent == "ajuda":
+            return obter_ajuda()
+
+        if intent == "sair":
+            return "ENCERRAR"
+
+        if intent == "hora":
+            agora = datetime.now()
+            return f"{base} Agora são {agora.strftime('%H:%M:%S')}."
+
+        if intent == "data":
+            hoje = datetime.now()
+            return f"{base} Hoje é {hoje.strftime('%d/%m/%Y')}."
+
+        if intent == "status":
+            return f"{base} Sistemas operacionais funcionando normalmente."
+
+        if intent == "status_sistema":
+            return status_sistema()
+
+        if intent == "status_ia":
+            tem_net = tem_internet()
+            tem_key = bool(os.getenv("OPENAI_API_KEY"))
+            status = []
+            status.append("🌐 INTERNET: OK" if tem_net else "🌐 INTERNET: NÃO")
+            status.append("🔑 OPENAI_API_KEY: OK" if tem_key else "🔑 OPENAI_API_KEY: NÃO")
+            return f"{base} " + " | ".join(status)
+
+        if intent == "medicamento":
+            return processar_pedido_medicamento(intencao_local.get("texto", comando))
+
+        if intent == "abrir_site":
+            valor = intencao_local.get("valor", "")
+            ok, resposta = abrir_site(valor)
+            if ok:
+                return resposta
+
+        if intent == "abrir":
+            valor = intencao_local.get("valor", "")
+
+            ok_rotina, resposta_rotina = executar_rotina(
+                valor,
+                abrir_programa,
+                abrir_site,
+                abrir_pasta,
+                executar_comando_terminal,
+                abrir_arquivo
+            )
+
+            if ok_rotina:
+                return f"{base} {resposta_rotina}"
+
+            ok_site, resposta_site = abrir_site(valor)
+            if ok_site:
+                return resposta_site
+
+            _, resposta_pc = abrir_programa(valor)
+            return resposta_pc
+
+        if intent == "pesquisar":
+            termo = intencao_local.get("valor", "")
+            _, resposta_web = pesquisar_web(termo)
+            return resposta_web
+
+        if intent == "clicar":
+            return clicar()
+
+        if intent == "duplo_clique":
+            return duplo_clique()
+
+        if intent == "clique_direito":
+            return clique_direito()
+
+        if intent == "mover_mouse":
+            try:
+                texto = intencao_local.get("texto", "").replace("mover mouse para ", "", 1)
+                partes = texto.split()
+
+                if len(partes) != 2:
+                    return f"{base} Use assim: mover mouse para 500 300"
+
+                x = int(partes[0])
+                y = int(partes[1])
+
+                return mover_mouse(x, y)
+            except Exception:
+                return f"{base} Não consegui mover o mouse."
+
+        if intent == "digitar":
+            texto = intencao_local.get("valor", "")
+            if not texto:
+                return f"{base} O que você quer que eu digite?"
+            return digitar_texto(texto)
+
+        if intent == "pressionar":
+            texto = intencao_local.get("valor", "")
+
+            if not texto:
+                return f"{base} Qual tecla você quer pressionar?"
+
+            if " " in texto:
+                teclas = texto.split()
+                return pressionar_atalho(*teclas)
+
+            return pressionar_tecla(texto)
+
+        if intent == "mostrar_logs":
+            linhas = ler_logs(50)
+
+            if not linhas:
+                return f"{base} Ainda não existem logs."
+
+            resposta = "Logs recentes:\n"
+            for linha in linhas:
+                resposta += linha
+
+            return resposta
+
+        if intent == "limpar_logs":
+            return f"{base} {limpar_logs()}"
+
+        if intent == "criar_backup":
+            resposta = criar_backup()
+            registrar_log("backup", resposta)
+            return f"{base} {resposta}"
+
+        if intent == "listar_backups":
+            backups = listar_backups()
+
+            if not backups:
+                return f"{base} Ainda não existem backups."
+
+            resposta = "Backups disponíveis:\n"
+            for i, nome in enumerate(backups, 1):
+                resposta += f"{i}. {nome}\n"
+
+            return resposta
 
     # -------------------------
     # Controle da voz

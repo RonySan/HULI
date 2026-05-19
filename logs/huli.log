@@ -7384,3 +7384,307 @@ Se você precisar de mais informações, é só perguntar!
 [2026-05-17 16:33:07] [RESPOSTA] Deixa comigo, chefe 😎 Sistemas operacionais funcionando normalmente.
 [2026-05-17 16:33:43] [COMANDO] nao obrigado
 [2026-05-17 16:33:43] [RESPOSTA] Deixa comigo, chefe 😎 Sempre, chefe 😎
+[2026-05-18 00:34:22] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-18 00:34:37] [COMANDO] huli status
+[2026-05-18 00:34:37] [RESPOSTA] Missão aceita. Sistemas operacionais funcionando normalmente.
+[2026-05-18 00:34:55] [COMANDO] obrigado huli
+[2026-05-18 00:34:55] [RESPOSTA] Perfeito. Sempre, chefe 😎
+[2026-05-18 00:35:25] [COMANDO] que dia e hje
+[2026-05-18 00:36:21] [RESPOSTA] 🌐 ONLINE | Hoje é 18 de maio de 2026.
+[2026-05-18 00:37:20] [COMANDO] me lembre de dar remedio pro luan as 06:30
+[2026-05-18 00:37:20] [RESPOSTA] Entendi que é sobre medicamento, mas não encontrei o intervalo.
+Exemplo: remédio de 8 em 8 horas começando às 06:30 por 10 dias.
+[2026-05-18 00:39:29] [COMANDO] ajuda
+[2026-05-18 00:39:29] [RESPOSTA] Eu posso ajudar com várias coisas, Rony:
+
+💬 CONVERSA
+• oi
+• como voce esta
+• quem e voce
+• ajuda
+
+🕒 SISTEMA
+• horas
+• que dia e hoje
+• status
+• status ia
+• status sistema
+• historico
+
+📝 MEMÓRIA E ORGANIZAÇÃO
+• anota comprar pão
+• anota tarefa pagar conta
+• mostra agenda
+• mostra tarefas
+• mostra ideias
+• o que voce lembra
+
+🧠 MEMÓRIA OPERACIONAL
+• mostrar habitos
+• limpar habitos
+
+⏰ LEMBRETES
+• me lembra às 18:30 ligar pro João
+• apagar lembretes
+
+💻 PROGRAMAS
+• abrir chrome
+• abrir vscode
+• abra o github
+• abra o gmail
+
+🚀 ROTINAS
+• listar rotinas
+• criar rotina trabalho com chrome, vscode
+
+🧩 COMANDOS PERSONALIZADOS
+• criar comando modo trabalho com abrir trabalho
+• listar comandos personalizados
+
+💾 BACKUP
+• criar backup
+• listar backups
+
+🧠 MISSÕES
+• missao pesquisar python
+• missao abrir github
+
+🖱️ AUTOMAÇÃO
+• clicar
+• mover mouse para 500 300
+• digitar texto
+
+👁️ VISÃO
+• tirar print
+• ler tela
+• clicar texto entrar
+
+📜 LOGS
+• mostrar logs
+• limpar logs
+
+👤 PERFIL
+• definir nome rony
+• meu perfil
+
+🔐 PROTEÇÃO
+• protecao on
+• protecao off
+
+🤝 MODO SOCIAL
+• huli se apresenta para gisele
+• huli cumprimenta gisele
+• huli diz oi pra gisele
+• huli elogia gisele
+• huli mande um recado para gisele dizendo que eu amo ela
+
+⚙️ CONFIGURAÇÕES
+• mostrar configuracoes
+• definir usuario Rony
+• definir empresa Impulso Digital
+• definir personalidade huli
+• definir limite fala 250
+• definir bluetooth padrao MUNDIAL
+• qual bluetooth padrao
+
+🚪 ENCERRAR
+• sair
+
+[2026-05-18 00:40:10] [COMANDO] me lembre as 06:30 dar remedio pro luan
+[2026-05-18 00:40:10] [RESPOSTA] Entendi que é sobre medicamento, mas não encontrei o intervalo.
+Exemplo: remédio de 8 em 8 horas começando às 06:30 por 10 dias.
+[2026-05-18 00:40:26] [COMANDO] o que voce lembra ?
+[2026-05-18 00:40:26] [RESPOSTA] Eu lembro:
+1. [geral] teste (Registrado em 25/03/2026 às 12:58:14)
+
+[2026-05-18 00:42:00] [COMANDO] dar remedio em 8 e 8 horas apatir das 6:30
+[2026-05-18 00:42:00] [RESPOSTA] Entendi que é sobre medicamento, mas não encontrei o intervalo.
+Exemplo: remédio de 8 em 8 horas começando às 06:30 por 10 dias.
+[2026-05-18 00:42:40] [COMANDO] remedio de 8 em 8 horas a partir das 6:30 por 10 dias
+[2026-05-18 00:42:40] [RESPOSTA] Horários do medicamento de 8 em 8 horas por 10 dia(s):
+
+
+📅 Dia 01/01
+• Dose 1: 06:00
+• Dose 2: 14:00
+• Dose 3: 22:00
+
+📅 Dia 02/01
+• Dose 4: 06:00
+• Dose 5: 14:00
+• Dose 6: 22:00
+
+📅 Dia 03/01
+• Dose 7: 06:00
+• Dose 8: 14:00
+• Dose 9: 22:00
+
+📅 Dia 04/01
+• Dose 10: 06:00
+• Dose 11: 14:00
+• Dose 12: 22:00
+
+📅 Dia 05/01
+• Dose 13: 06:00
+• Dose 14: 14:00
+• Dose 15: 22:00
+
+📅 Dia 06/01
+• Dose 16: 06:00
+• Dose 17: 14:00
+• Dose 18: 22:00
+
+📅 Dia 07/01
+• Dose 19: 06:00
+• Dose 20: 14:00
+• Dose 21: 22:00
+
+📅 Dia 08/01
+• Dose 22: 06:00
+• Dose 23: 14:00
+• Dose 24: 22:00
+
+📅 Dia 09/01
+• Dose 25: 06:00
+• Dose 26: 14:00
+• Dose 27: 22:00
+
+📅 Dia 10/01
+• Dose 28: 06:00
+• Dose 29: 14:00
+• Dose 30: 22:00
+
+⚠️ Observação: confirme sempre com o médico ou farmacêutico em caso de dúvida sobre dose, atraso ou troca de medicamento.
+[2026-05-18 17:01:15] [COMANDO] sair
+[2026-05-18 17:01:15] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-18 17:03:37] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-18 17:03:41] [COMANDO] remedio de 8 em 8 horas a partir das 6:30 por 10 dias
+[2026-05-18 17:03:41] [ERRO] loop principal: name 'extrair_intervalo_horas' is not defined
+[2026-05-18 17:31:05] [COMANDO] sair
+[2026-05-18 17:31:05] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-18 17:31:21] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-18 17:31:25] [COMANDO] remedio de 8 em 8 horas a partir das 6:30 por 10 dias
+[2026-05-18 17:31:25] [RESPOSTA] Horários do medicamento de 8 em 8 horas por 10 dia(s):
+
+
+📅 Dia 18/05
+• Dose 1: 06:00
+• Dose 2: 14:00
+• Dose 3: 22:00
+
+📅 Dia 19/05
+• Dose 4: 06:00
+• Dose 5: 14:00
+• Dose 6: 22:00
+
+📅 Dia 20/05
+• Dose 7: 06:00
+• Dose 8: 14:00
+• Dose 9: 22:00
+
+📅 Dia 21/05
+• Dose 10: 06:00
+• Dose 11: 14:00
+• Dose 12: 22:00
+
+📅 Dia 22/05
+• Dose 13: 06:00
+• Dose 14: 14:00
+• Dose 15: 22:00
+
+📅 Dia 23/05
+• Dose 16: 06:00
+• Dose 17: 14:00
+• Dose 18: 22:00
+
+📅 Dia 24/05
+• Dose 19: 06:00
+• Dose 20: 14:00
+• Dose 21: 22:00
+
+📅 Dia 25/05
+• Dose 22: 06:00
+• Dose 23: 14:00
+• Dose 24: 22:00
+
+📅 Dia 26/05
+• Dose 25: 06:00
+• Dose 26: 14:00
+• Dose 27: 22:00
+
+📅 Dia 27/05
+• Dose 28: 06:00
+• Dose 29: 14:00
+• Dose 30: 22:00
+
+⚠️ Observação: confirme sempre com o médico ou farmacêutico em caso de dúvida sobre dose, atraso ou troca de medicamento.
+[2026-05-18 17:38:37] [COMANDO] sair
+[2026-05-18 17:38:37] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-18 17:54:50] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-18 17:54:53] [COMANDO] remedio de 8 em 8 horas a partir das 6:30 por 10 dias
+[2026-05-18 17:54:53] [RESPOSTA] Entendi que é sobre medicamento, mas não encontrei o horário inicial.
+Exemplo: remédio de 8 em 8 horas começando às 06:30 por 10 dias.
+[2026-05-18 18:00:35] [COMANDO] sair
+[2026-05-18 18:00:35] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-19 14:08:55] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-19 14:09:05] [COMANDO] huli diz oi pra sandra
+[2026-05-19 14:09:11] [RESPOSTA] Oi, Sandra! Eu sou a H.U.L.I. O Rony pediu para eu te mandar um oi com carinho.
+[2026-05-19 14:10:50] [COMANDO] remedio de 8 em 8 horas a partir das 6:30 por 10 dias
+[2026-05-19 14:10:50] [RESPOSTA] Horários do medicamento de 8 em 8 horas por 10 dia(s):
+
+
+📅 Dia 19/05
+• Dose 1: 06:30
+• Dose 2: 14:30
+• Dose 3: 22:30
+
+📅 Dia 20/05
+• Dose 4: 06:30
+• Dose 5: 14:30
+• Dose 6: 22:30
+
+📅 Dia 21/05
+• Dose 7: 06:30
+• Dose 8: 14:30
+• Dose 9: 22:30
+
+📅 Dia 22/05
+• Dose 10: 06:30
+• Dose 11: 14:30
+• Dose 12: 22:30
+
+📅 Dia 23/05
+• Dose 13: 06:30
+• Dose 14: 14:30
+• Dose 15: 22:30
+
+📅 Dia 24/05
+• Dose 16: 06:30
+• Dose 17: 14:30
+• Dose 18: 22:30
+
+📅 Dia 25/05
+• Dose 19: 06:30
+• Dose 20: 14:30
+• Dose 21: 22:30
+
+📅 Dia 26/05
+• Dose 22: 06:30
+• Dose 23: 14:30
+• Dose 24: 22:30
+
+📅 Dia 27/05
+• Dose 25: 06:30
+• Dose 26: 14:30
+• Dose 27: 22:30
+
+📅 Dia 28/05
+• Dose 28: 06:30
+• Dose 29: 14:30
+• Dose 30: 22:30
+
+⚠️ Observação: confirme sempre com médico ou farmacêutico em caso de dúvida.
+[2026-05-19 14:11:03] [COMANDO] obrigado huli
+[2026-05-19 14:11:03] [RESPOSTA] Entendido. Tamo junto, Rony.
+[2026-05-19 16:04:10] [COMANDO] sair
+[2026-05-19 16:04:10] [SISTEMA] Encerrando H.U.L.I por comando do usuário.

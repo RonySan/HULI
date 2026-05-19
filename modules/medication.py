@@ -1,24 +1,38 @@
-from reportlab.lib.pagesizes import A4
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-from reportlab.lib.styles import getSampleStyleSheet
-
 import os
 import re
+
 from datetime import datetime, timedelta
 
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import (
+    SimpleDocTemplate,
+    Paragraph,
+    Spacer,
+)
+from reportlab.lib.styles import getSampleStyleSheet
+
+
+# =====================================================
+# EXTRAÇÃO DE DADOS
+# =====================================================
 
 def extrair_intervalo_horas(texto: str):
     texto = texto.lower()
 
     padroes = [
         r"(\d{1,2})\s*em\s*\1\s*horas",
+        r"(\d{1,2})\s*em\s*\1\s*hora",
+        r"(\d{1,2})\s*e\s*\1\s*horas",
+        r"(\d{1,2})\s*e\s*\1\s*hora",
         r"de\s*(\d{1,2})\s*em\s*\1",
         r"a cada\s*(\d{1,2})\s*horas",
+        r"a cada\s*(\d{1,2})\s*hora",
         r"(\d{1,2})h\s*em\s*\1h",
     ]
 
     for padrao in padroes:
         m = re.search(padrao, texto)
+
         if m:
             return int(m.group(1))
 
@@ -28,48 +42,91 @@ def extrair_intervalo_horas(texto: str):
 def extrair_horario_inicio(texto: str):
     texto = texto.lower()
 
-    padroes = [
-        r"(\d{1,2}):(\d{2})",
-        r"(\d{1,2})h(\d{2})?",
-        r"às\s*(\d{1,2})(?:\s*da\s*manhã|\s*da\s*tarde|\s*da\s*noite)?",
-        r"as\s*(\d{1,2})(?:\s*da\s*manhã|\s*da\s*tarde|\s*da\s*noite)?",
-    ]
+    # 06:30
+    m = re.search(r"\b(\d{1,2}):(\d{2})\b", texto)
+    if m:
+        hora = int(m.group(1))
+        minuto = int(m.group(2))
 
-    for padrao in padroes:
-        m = re.search(padrao, texto)
-        if m:
-            hora = int(m.group(1))
-            minuto = int(m.group(2) or 0) if len(m.groups()) > 1 else 0
+        if 0 <= hora <= 23 and 0 <= minuto <= 59:
+            return f"{hora:02d}:{minuto:02d}"
 
-            if "tarde" in texto and hora < 12:
-                hora += 12
+    # 6 30 / 06 30
+    m = re.search(r"\b(\d{1,2})\s+(\d{2})\b", texto)
+    if m:
+        hora = int(m.group(1))
+        minuto = int(m.group(2))
 
-            if "noite" in texto and hora < 12:
-                hora += 12
+        if 0 <= hora <= 23 and 0 <= minuto <= 59:
+            return f"{hora:02d}:{minuto:02d}"
 
-            if 0 <= hora <= 23 and 0 <= minuto <= 59:
-                return f"{hora:02d}:{minuto:02d}"
+    # 6h30
+    m = re.search(r"\b(\d{1,2})h(\d{2})\b", texto)
+    if m:
+        hora = int(m.group(1))
+        minuto = int(m.group(2))
+
+        if 0 <= hora <= 23 and 0 <= minuto <= 59:
+            return f"{hora:02d}:{minuto:02d}"
+
+    # 6h
+    m = re.search(r"\b(\d{1,2})h\b", texto)
+    if m:
+        hora = int(m.group(1))
+
+        if 0 <= hora <= 23:
+            return f"{hora:02d}:00"
+
+    # às 6 da manhã / as 6 da tarde
+    m = re.search(
+        r"\b(?:as|às)\s*(\d{1,2})(?:\s*da\s*(manhã|manha|tarde|noite))?\b",
+        texto
+    )
+    if m:
+        hora = int(m.group(1))
+        periodo = m.group(2)
+
+        if periodo in ["tarde", "noite"] and hora < 12:
+            hora += 12
+
+        if 0 <= hora <= 23:
+            return f"{hora:02d}:00"
 
     return None
-
 
 def extrair_quantidade_dias(texto: str):
     texto = texto.lower()
 
     m = re.search(r"por\s*(\d{1,3})\s*dias", texto)
+
     if m:
         return int(m.group(1))
 
     m = re.search(r"durante\s*(\d{1,3})\s*dias", texto)
+
     if m:
         return int(m.group(1))
 
     return 1
 
 
+# =====================================================
+# GERAÇÃO DE HORÁRIOS
+# =====================================================
+
 def gerar_horarios(inicio: str, intervalo_horas: int, dias: int = 1):
     try:
-        base = datetime.strptime(inicio, "%H:%M")
+        hora, minuto = map(int, inicio.split(":"))
+
+        agora = datetime.now()
+
+        base = agora.replace(
+            hour=hora,
+            minute=minuto,
+            second=0,
+            microsecond=0
+        )
+
     except Exception:
         return False, "Horário inválido. Use HH:MM."
 
@@ -82,187 +139,354 @@ def gerar_horarios(inicio: str, intervalo_horas: int, dias: int = 1):
     atual = base
 
     for i in range(total_doses):
+
         horarios.append({
             "dose": i + 1,
             "data": atual.strftime("%d/%m"),
             "hora": atual.strftime("%H:%M"),
         })
+
         atual += timedelta(hours=intervalo_horas)
 
     return True, horarios
 
 
+# =====================================================
+# FORMATAÇÃO
+# =====================================================
+
 def formatar_horarios(horarios, intervalo, dias):
+
     resposta = (
-        f"Horários do medicamento de {intervalo} em {intervalo} horas "
+        f"Horários do medicamento de "
+        f"{intervalo} em {intervalo} horas "
         f"por {dias} dia(s):\n\n"
     )
 
     dia_atual = None
 
     for item in horarios:
+
         if item["data"] != dia_atual:
+
             dia_atual = item["data"]
+
             resposta += f"\n📅 Dia {dia_atual}\n"
 
-        resposta += f"• Dose {item['dose']}: {item['hora']}\n"
+        resposta += (
+            f"• Dose {item['dose']}: "
+            f"{item['hora']}\n"
+        )
 
     resposta += (
-        "\n⚠️ Observação: confirme sempre com o médico ou farmacêutico "
-        "em caso de dúvida sobre dose, atraso ou troca de medicamento."
+        "\n⚠️ Observação: confirme sempre "
+        "com médico ou farmacêutico "
+        "em caso de dúvida."
     )
 
     return resposta
 
 
+# =====================================================
+# PROCESSAMENTO PRINCIPAL
+# =====================================================
+
 def processar_pedido_medicamento(comando: str):
+
     intervalo = extrair_intervalo_horas(comando)
     inicio = extrair_horario_inicio(comando)
     dias = extrair_quantidade_dias(comando)
 
     if not intervalo:
+
         return (
-            "Entendi que é sobre medicamento, mas não encontrei o intervalo.\n"
-            "Exemplo: remédio de 8 em 8 horas começando às 06:30 por 10 dias."
+            "Entendi que é sobre medicamento, "
+            "mas não encontrei o intervalo.\n"
+            "Exemplo: remédio de 8 em 8 horas "
+            "começando às 06:30 por 10 dias."
         )
 
     if not inicio:
+
         return (
-            "Entendi que é sobre medicamento, mas não encontrei o horário inicial.\n"
-            "Exemplo: remédio de 8 em 8 horas começando às 06:30 por 10 dias."
+            "Entendi que é sobre medicamento, "
+            "mas não encontrei o horário inicial.\n"
+            "Exemplo: remédio de 8 em 8 horas "
+            "começando às 06:30 por 10 dias."
         )
 
-    ok, horarios = gerar_horarios(inicio, intervalo, dias)
+    ok, horarios = gerar_horarios(
+        inicio,
+        intervalo,
+        dias
+    )
 
     if not ok:
         return horarios
 
-    return formatar_horarios(horarios, intervalo, dias)
+    return formatar_horarios(
+        horarios,
+        intervalo,
+        dias
+    )
 
 
+# =====================================================
+# LEMBRETES
+# =====================================================
 
 def criar_lembretes_medicamento(memoria, comando: str):
+
     intervalo = extrair_intervalo_horas(comando)
     inicio = extrair_horario_inicio(comando)
     dias = extrair_quantidade_dias(comando)
 
     if not intervalo or not inicio:
-        return False, "Não consegui identificar intervalo ou horário inicial."
+        return False, (
+            "Não consegui identificar "
+            "intervalo ou horário inicial."
+        )
 
-    ok, horarios = gerar_horarios(inicio, intervalo, dias)
+    ok, horarios = gerar_horarios(
+        inicio,
+        intervalo,
+        dias
+    )
 
     if not ok:
         return False, horarios
 
     total = 0
 
+    agora = datetime.now()
+
     for item in horarios:
-        horario = item["hora"]
 
-        hoje = datetime.now()
-        hora, minuto = map(int, horario.split(":"))
+        hora, minuto = map(
+            int,
+            item["hora"].split(":")
+        )
 
-        quando = hoje.replace(hour=hora, minute=minuto, second=0, microsecond=0)
-
-        # se o horário já passou hoje, joga para o próximo dia
-        if quando <= hoje:
-            quando += timedelta(days=1)
+        quando = agora.replace(
+            hour=hora,
+            minute=minuto,
+            second=0,
+            microsecond=0
+        )
 
         memoria.salvar_lembrete(
-            f"Dar medicamento - dose {item['dose']} ({item['hora']})",
+            f"Dar medicamento - "
+            f"dose {item['dose']} "
+            f"({item['hora']})",
             quando
         )
+
         total += 1
 
-    return True, f"{total} lembretes de medicamento criados com sucesso."
+    return True, (
+        f"{total} lembretes criados "
+        f"com sucesso."
+    )
+
+
+# =====================================================
+# EXPORTAÇÃO
+# =====================================================
+
+def abrir_arquivo_exportado(caminho: str):
+
+    try:
+        os.startfile(caminho)
+        return True
+
+    except Exception:
+        return False
+
 
 def exportar_horarios_txt(comando: str):
+
     intervalo = extrair_intervalo_horas(comando)
     inicio = extrair_horario_inicio(comando)
     dias = extrair_quantidade_dias(comando)
 
     if not intervalo or not inicio:
-        return False, "Não consegui identificar intervalo ou horário inicial."
+        return False, (
+            "Não consegui identificar "
+            "intervalo ou horário inicial."
+        )
 
-    ok, horarios = gerar_horarios(inicio, intervalo, dias)
+    ok, horarios = gerar_horarios(
+        inicio,
+        intervalo,
+        dias
+    )
 
     if not ok:
         return False, horarios
 
-    resposta = formatar_horarios(horarios, intervalo, dias)
+    resposta = formatar_horarios(
+        horarios,
+        intervalo,
+        dias
+    )
 
-    pasta = os.path.join(os.getcwd(), "exports")
-    os.makedirs(pasta, exist_ok=True)
+    pasta = os.path.join(
+        os.getcwd(),
+        "exports"
+    )
 
-    caminho = os.path.join(pasta, "horarios_medicamento.txt")
+    os.makedirs(
+        pasta,
+        exist_ok=True
+    )
 
-    with open(caminho, "w", encoding="utf-8") as f:
+    caminho = os.path.join(
+        pasta,
+        "horarios_medicamento.txt"
+    )
+
+    with open(
+        caminho,
+        "w",
+        encoding="utf-8"
+    ) as f:
+
         f.write(resposta)
 
     abrir_arquivo_exportado(caminho)
-    return True, f"Arquivo TXT criado e aberto com sucesso em: {caminho}"
+
+    return True, (
+        f"TXT criado com sucesso em:\n"
+        f"{caminho}"
+    )
+
 
 def exportar_horarios_pdf(comando: str):
+
     intervalo = extrair_intervalo_horas(comando)
     inicio = extrair_horario_inicio(comando)
     dias = extrair_quantidade_dias(comando)
 
     if not intervalo or not inicio:
-        return False, "Não consegui identificar intervalo ou horário inicial."
+        return False, (
+            "Não consegui identificar "
+            "intervalo ou horário inicial."
+        )
 
-    ok, horarios = gerar_horarios(inicio, intervalo, dias)
+    ok, horarios = gerar_horarios(
+        inicio,
+        intervalo,
+        dias
+    )
 
     if not ok:
         return False, horarios
 
-    pasta = os.path.join(os.getcwd(), "exports")
-    os.makedirs(pasta, exist_ok=True)
+    pasta = os.path.join(
+        os.getcwd(),
+        "exports"
+    )
 
-    caminho = os.path.join(pasta, "horarios_medicamento.pdf")
+    os.makedirs(
+        pasta,
+        exist_ok=True
+    )
 
-    doc = SimpleDocTemplate(caminho, pagesize=A4)
+    caminho = os.path.join(
+        pasta,
+        "horarios_medicamento.pdf"
+    )
+
+    doc = SimpleDocTemplate(
+        caminho,
+        pagesize=A4
+    )
+
     styles = getSampleStyleSheet()
+
     elementos = []
 
-    elementos.append(Paragraph("<b>Horários de Medicamento</b>", styles["Title"]))
-    elementos.append(Spacer(1, 12))
+    elementos.append(
+        Paragraph(
+            "<b>Horários de Medicamento</b>",
+            styles["Title"]
+        )
+    )
 
-    elementos.append(Paragraph(
-        f"Intervalo: de {intervalo} em {intervalo} horas<br/>"
-        f"Período: {dias} dia(s)<br/>"
-        f"Horário inicial: {inicio}",
-        styles["BodyText"]
-    ))
+    elementos.append(
+        Spacer(1, 12)
+    )
 
-    elementos.append(Spacer(1, 16))
+    elementos.append(
+        Paragraph(
+            f"""
+            Intervalo:
+            de {intervalo} em {intervalo} horas
+            <br/>
+            Período:
+            {dias} dia(s)
+            <br/>
+            Horário inicial:
+            {inicio}
+            """,
+            styles["BodyText"]
+        )
+    )
+
+    elementos.append(
+        Spacer(1, 16)
+    )
 
     dia_atual = None
 
     for item in horarios:
+
         if item["data"] != dia_atual:
+
             dia_atual = item["data"]
-            elementos.append(Spacer(1, 10))
-            elementos.append(Paragraph(f"<b>Dia {dia_atual}</b>", styles["Heading2"]))
 
-        elementos.append(Paragraph(
-            f"Dose {item['dose']}: {item['hora']}",
-            styles["BodyText"]
-        ))
+            elementos.append(
+                Spacer(1, 10)
+            )
 
-    elementos.append(Spacer(1, 18))
-    elementos.append(Paragraph(
-        "Observação: confirme sempre com médico ou farmacêutico em caso de dúvida sobre dose, atraso ou troca de medicamento.",
-        styles["Italic"]
-    ))
+            elementos.append(
+                Paragraph(
+                    f"<b>Dia {dia_atual}</b>",
+                    styles["Heading2"]
+                )
+            )
+
+        elementos.append(
+            Paragraph(
+                f"""
+                Dose {item['dose']}:
+                {item['hora']}
+                """,
+                styles["BodyText"]
+            )
+        )
+
+    elementos.append(
+        Spacer(1, 18)
+    )
+
+    elementos.append(
+        Paragraph(
+            """
+            Observação:
+            confirme sempre com médico
+            ou farmacêutico em caso
+            de dúvida.
+            """,
+            styles["Italic"]
+        )
+    )
 
     doc.build(elementos)
 
     abrir_arquivo_exportado(caminho)
-    return True, f"PDF criado e aberto com sucesso em: {caminho}"
 
-def abrir_arquivo_exportado(caminho: str):
-    try:
-        os.startfile(caminho)
-        return True, "Arquivo aberto com sucesso."
-    except Exception:
-        return False, "Arquivo criado, mas não consegui abrir automaticamente."
+    return True, (
+        f"PDF criado com sucesso em:\n"
+        f"{caminho}"
+    )

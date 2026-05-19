@@ -366,9 +366,20 @@ def processar_comando(comando: str):
     # -------------------------
     # Medicamentos / horários
     # -------------------------
-    eh_medicamento = any(
-        palavra in comando
-        for palavra in ["remedio", "remédio", "medicamento", "dose", "horario de remedio", "horários de remedio"]
+    eh_medicamento = (
+        any(
+            palavra in comando
+            for palavra in [
+                "remedio",
+                "remédio",
+                "medicamento",
+                "dose",
+                "horario de remedio",
+                "horários de remedio",
+            ]
+        )
+        and "lembre" not in comando
+        and "lembrete" not in comando
     )
 
     if eh_medicamento and "pdf" in comando:

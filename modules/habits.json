@@ -454,5 +454,11 @@
     },
     "status huli": {
         "status huli": 1
+    },
+    "abrir bluetooth": {
+        "conectar bluetooth mundial": 1
+    },
+    "conectar bluetooth mundial": {
+        "conectar caixa de som": 1
     }
 }

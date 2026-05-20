@@ -9,6 +9,7 @@ from modules.custom_commands import listar_comandos_personalizados
 from modules.missions import listar_missoes
 from modules.backup import listar_backups
 from modules.logger import ler_logs
+from modules.status_center import status_geral
 
 
 class HuliPanel:
@@ -56,6 +57,7 @@ class HuliPanel:
         botoes_linha_1 = [
             ("Ajuda", "ajuda"),
             ("Status Sistema", "status sistema"),
+            ("Painel Neural", "status geral"),
             ("Mostrar Logs", "mostrar logs"),
             ("Logs ao vivo", "__LOGS_AO_VIVO__"),
             ("Criar Backup", "criar backup"),
@@ -306,6 +308,15 @@ class HuliPanel:
 
         for linha in ler_logs(10):
             self.resumo.insert(tk.END, linha)
+
+
+    def mostrar_status_geral(self):
+        try:
+            resposta = status_geral()
+            self.caixa_saida.delete("1.0", "end")
+            self.caixa_saida.insert("end", resposta)
+        except Exception as e:
+            self.caixa_saida.insert("end", f"\nErro ao carregar status geral: {e}")
 
 
 if __name__ == "__main__":

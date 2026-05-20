@@ -23,6 +23,14 @@ from modules.habits import listar_habitos, limpar_habitos
 from modules.intent_engine import interpretar_intencao, detectar_intencao
 from modules.status_center import status_geral
 
+from modules.windows_control import (
+    abrir_bluetooth,
+    conectar_bluetooth,
+    conectar_bluetooth_padrao,
+    abrir_som,
+    abrir_wifi,
+)
+
 from modules.reminder_engine import (
     criar_lembrete,
     listar_lembretes,
@@ -1080,6 +1088,29 @@ def processar_comando(comando: str):
     # -------------------------
     if comando in ["status geral", "painel neural", "status huli", "diagnostico geral"]:
         return status_geral()
+
+    # -------------------------
+    # Windows / Bluetooth
+    # -------------------------
+    if comando in ["abrir bluetooth", "bluetooth"]:
+        return f"{base} {abrir_bluetooth()}"
+
+    if comando in ["conectar bluetooth", "conectar caixa", "conectar caixa de som"]:
+        return f"{base} {conectar_bluetooth_padrao()}"
+
+    if comando.startswith("conectar bluetooth "):
+        nome = comando.replace("conectar bluetooth ", "", 1).strip()
+        return f"{base} {conectar_bluetooth(nome)}"
+
+    if comando.startswith("conecta bluetooth "):
+        nome = comando.replace("conecta bluetooth ", "", 1).strip()
+        return f"{base} {conectar_bluetooth(nome)}"
+
+    if comando in ["abrir som", "configurar som"]:
+        return f"{base} {abrir_som()}"
+
+    if comando in ["abrir wifi", "abrir wi fi", "configurar wifi"]:
+        return f"{base} {abrir_wifi()}"
 
 
     # -------------------------

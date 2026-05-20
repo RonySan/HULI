@@ -8204,3 +8204,40 @@ Se quiser, posso escrever as respostas de um jeito mais natural pra soar melhor 
 
 [2026-05-19 18:00:29] [COMANDO] status huli
 
+[2026-05-20 16:53:28] [COMANDO] sair
+[2026-05-20 16:53:28] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-20 16:53:48] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-20 16:53:52] [COMANDO] status huli
+[2026-05-20 16:55:00] [RESPOSTA] 🧠 STATUS GERAL DA H.U.L.I
+
+⚙️ Configurações:
+- Usuário: Rony
+- Empresa: Impulso Digital
+- Voz ativa: True
+- Personalidade: huli
+- Bluetooth padrão: mundial
+
+🖥️ Sistema:
+CPU: 16.9% | MEMÓRIA: 92.4% | DISCO: 55.0%
+
+🔔 Lembretes:
+Nenhum lembrete cadastrado.
+
+📜 Logs recentes:
+- [2026-05-19 17:52:52] [COMANDO] status huli
+- [2026-05-19 18:00:29] [COMANDO] status huli
+- [2026-05-20 16:53:28] [COMANDO] sair
+- [2026-05-20 16:53:28] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+- [2026-05-20 16:53:48] [SISTEMA] H.U.L.I iniciada com sucesso.
+- [2026-05-20 16:53:52] [COMANDO] status huli
+
+[2026-05-20 17:26:23] [COMANDO] sair
+[2026-05-20 17:26:23] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-20 17:28:49] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-20 17:28:53] [COMANDO] abrir bluetooth
+[2026-05-20 17:28:53] [RESPOSTA] Não encontrei o programa 'bluetooth'.
+[2026-05-20 17:28:57] [COMANDO] conectar bluetooth MUNDIAL
+[2026-05-20 17:30:01] [RESPOSTA] Missão aceita. Tentei conectar ao Bluetooth: mundial.
+[2026-05-20 17:30:14] [COMANDO] conectar caixa de som
+[2026-05-20 17:30:43] [RESPOSTA] Missão aceita. Tentei conectar ao Bluetooth: mundial.
+[2026-05-20 17:33:13] [COMANDO] adicione novo bluetooth

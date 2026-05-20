@@ -23,6 +23,13 @@ from modules.habits import listar_habitos, limpar_habitos
 from modules.intent_engine import interpretar_intencao, detectar_intencao
 from modules.status_center import status_geral
 
+from modules.vision_ai import (
+    encontrar_na_tela,
+    clicar_quando_aparecer,
+    ler_e_resumir_tela,
+    preencher_campo_por_texto,
+)
+
 from modules.windows_control import (
     abrir_bluetooth,
     conectar_bluetooth,
@@ -1111,6 +1118,26 @@ def processar_comando(comando: str):
 
     if comando in ["abrir wifi", "abrir wi fi", "configurar wifi"]:
         return f"{base} {abrir_wifi()}"
+
+    # -------------------------
+    # Vision AI
+    # -------------------------
+    if comando.startswith("encontrar na tela "):
+        alvo = comando.replace("encontrar na tela ", "", 1).strip()
+        ok, resposta = encontrar_na_tela(alvo)
+        return f"{base} {resposta}"
+
+    if comando.startswith("clicar quando aparecer "):
+        alvo = comando.replace("clicar quando aparecer ", "", 1).strip()
+        return f"{base} {clicar_quando_aparecer(alvo)}"
+
+    if comando in ["ler tela inteligente", "resumir tela", "o que tem na tela"]:
+        return ler_e_resumir_tela()
+
+    if comando.startswith("preencher " ) and " com " in comando:
+        texto = comando.replace("preencher ", "", 1)
+        campo, valor = texto.split(" com ", 1)
+        return f"{base} {preencher_campo_por_texto(campo.strip(), valor.strip())}"
 
 
     # -------------------------

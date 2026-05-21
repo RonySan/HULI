@@ -22,6 +22,7 @@ from modules.settings_manager import listar_config, definir, obter
 from modules.habits import listar_habitos, limpar_habitos
 from modules.intent_engine import interpretar_intencao, detectar_intencao
 from modules.status_center import status_geral
+from modules.multi_missions import executar_multi_missao
 
 from modules.vision_ai import (
     encontrar_na_tela,
@@ -1139,6 +1140,11 @@ def processar_comando(comando: str):
         campo, valor = texto.split(" com ", 1)
         return f"{base} {preencher_campo_por_texto(campo.strip(), valor.strip())}"
 
+    # -------------------------
+    # Multi Missões
+    # -------------------------
+    if any(x in comando for x in [" depois ", " e depois ", " em seguida ", " aí ", " ai "]):
+        return executar_multi_missao(comando, processar_comando)
 
     # -------------------------
     # Fallback IA com contexto

@@ -1,0 +1,15 @@
+{
+    "pessoas": {
+        "gisele": {
+            "nome": "Gisele",
+            "relacao": "minha namorada",
+            "observacao": "",
+            "registrado_em": "21/05/2026 10:11:11"
+        }
+    },
+    "preferencias": {
+        "bluetooth": "mundial"
+    },
+    "eventos": [],
+    "observacoes": []
+}

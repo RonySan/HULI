@@ -8339,3 +8339,25 @@ Se quiser, me diz qual aparelho você está usando que eu te guio passo a passo 
 [2026-05-21 10:03:58] [RESPOSTA] Não encontrei o programa 'vscode depois abrir github'.
 [2026-05-21 10:04:10] [COMANDO] abrir youtube depois pesquise lo fi
 [2026-05-21 10:04:10] [RESPOSTA] Não encontrei o programa 'youtube depois pesquise lo fi'.
+[2026-05-21 10:09:12] [COMANDO] sair
+[2026-05-21 10:09:12] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-21 10:09:45] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-21 10:09:55] [COMANDO] lembre que gisele é minha namorada
+[2026-05-21 10:11:11] [RESPOSTA] Entendido. Aprendi quem é Gisele.
+[2026-05-21 10:11:16] [COMANDO] quem é gisele
+[2026-05-21 10:12:19] [RESPOSTA] Já estou verificando. Gisele é minha namorada. 
+[2026-05-21 10:12:25] [COMANDO] listar pessoas
+[2026-05-21 10:13:25] [RESPOSTA] Pessoas que eu conheço:
+- Gisele (minha namorada)
+
+[2026-05-21 10:13:31] [COMANDO] lembre preferencia bluetooth como MUNDIAL
+[2026-05-21 10:14:05] [RESPOSTA] Entendido. Preferência salva: bluetooth = mundial
+[2026-05-21 10:14:11] [COMANDO] memoria inteligente
+[2026-05-21 10:14:47] [RESPOSTA] Memória inteligente:
+
+Pessoas:
+- Gisele (minha namorada)
+
+Preferências:
+- bluetooth: mundial
+

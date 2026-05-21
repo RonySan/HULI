@@ -24,6 +24,14 @@ from modules.intent_engine import interpretar_intencao, detectar_intencao
 from modules.status_center import status_geral
 from modules.multi_missions import executar_multi_missao
 
+from modules.smart_memory import (
+    lembrar_pessoa,
+    buscar_pessoa,
+    listar_pessoas,
+    lembrar_preferencia,
+    listar_memoria_inteligente,
+)
+
 from modules.vision_ai import (
     encontrar_na_tela,
     clicar_quando_aparecer,
@@ -1147,10 +1155,47 @@ def processar_comando(comando: str):
         return executar_multi_missao(comando, processar_comando)
 
     # -------------------------
+    # Memória inteligente
+    # -------------------------
+    if comando.startswith("lembre que ") and " é " in comando:
+        texto = comando.replace("lembre que ", "", 1)
+        nome, relacao = texto.split(" é ", 1)
+        return f"{base} {lembrar_pessoa(nome.strip(), relacao.strip())}"
+
+    if comando.startswith("quem é ") or comando.startswith("quem e "):
+        nome = (
+            comando.replace("quem é ", "", 1)
+            .replace("quem e ", "", 1)
+            .strip()
+        )
+
+        pessoa = buscar_pessoa(nome)
+
+        if pessoa:
+            return (
+                f"{base} {pessoa['nome']} é {pessoa['relacao']}. "
+                f"{pessoa.get('observacao', '')}"
+            )
+
+        return f"{base} Ainda não sei quem é {nome.title()}."
+
+    if comando in ["listar pessoas", "mostrar pessoas"]:
+        return listar_pessoas()
+
+    if comando.startswith("lembre preferencia " ) and " como " in comando:
+        texto = comando.replace("lembre preferencia ", "", 1)
+        chave, valor = texto.split(" como ", 1)
+        return f"{base} {lembrar_preferencia(chave.strip(), valor.strip())}"
+
+    if comando in ["memoria inteligente", "memória inteligente"]:
+        return listar_memoria_inteligente()
+
+
+    # -------------------------
     # Fallback IA com contexto
     # -------------------------
 
-        # -------------------------
+    # -------------------------
     # Modo social
     # -------------------------
     if comando.startswith("se apresenta para "):

@@ -24,6 +24,12 @@ from modules.intent_engine import interpretar_intencao, detectar_intencao
 from modules.status_center import status_geral
 from modules.multi_missions import executar_multi_missao
 
+from modules.jarvis_mode import (
+    ativar_modo_jarvis,
+    desativar_modo_jarvis,
+    status_jarvis,
+)
+
 from modules.smart_memory import (
     lembrar_pessoa,
     buscar_pessoa,
@@ -1189,6 +1195,18 @@ def processar_comando(comando: str):
 
     if comando in ["memoria inteligente", "memória inteligente"]:
         return listar_memoria_inteligente()
+
+    # -------------------------
+    # Modo Jarvis
+    # -------------------------
+    if comando in ["modo jarvis", "ativar jarvis", "ativar modo jarvis"]:
+        return f"{base} {ativar_modo_jarvis()}"
+
+    if comando in ["desativar jarvis", "parar jarvis", "desligar jarvis"]:
+        return f"{base} {desativar_modo_jarvis()}"
+
+    if comando in ["status jarvis", "jarvis status"]:
+        return f"{base} Modo Jarvis: {status_jarvis()}."
 
 
     # -------------------------

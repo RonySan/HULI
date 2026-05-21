@@ -4,11 +4,12 @@
     "assistente_nome": "H.U.L.I",
     "voz_ativa": true,
     "limite_fala": 100,
-    "escuta_continua": false,
+    "escuta_continua": true,
     "modo_conversa": false,
     "personalidade": "huli",
     "debug": true,
     "modo_protecao": false,
     "bluetooth_dispositivo_padrao": "mundial",
+    "modo_jarvis": true,
     "iniciar_com_windows": false
 }

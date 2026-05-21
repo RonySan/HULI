@@ -8361,3 +8361,13 @@ Pessoas:
 Preferências:
 - bluetooth: mundial
 
+[2026-05-21 10:24:39] [COMANDO] sair
+[2026-05-21 10:24:39] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-21 10:24:52] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-21 10:24:56] [COMANDO] status jarvis
+[2026-05-21 10:25:36] [RESPOSTA] Certo. Modo Jarvis: DESATIVADO.
+[2026-05-21 10:25:41] [COMANDO] modo jarvis
+[2026-05-21 10:26:12] [RESPOSTA] Perfeito. Modo Jarvis ativado.
+[2026-05-21 10:26:17] [COMANDO] status jarvis
+[2026-05-21 10:27:08] [RESPOSTA] Missão aceita. Modo Jarvis: ATIVO.
+[2026-05-21 10:27:16] [COMANDO] desativar jarvis

@@ -9,6 +9,7 @@ from modules.custom_commands import listar_comandos_personalizados
 from modules.missions import listar_missoes
 from modules.backup import listar_backups
 from modules.logger import ler_logs
+from modules.jarvis_mode import modo_jarvis_ativo
 from modules.status_center import status_geral
 
 
@@ -317,6 +318,19 @@ class HuliPanel:
             self.caixa_saida.insert("end", resposta)
         except Exception as e:
             self.caixa_saida.insert("end", f"\nErro ao carregar status geral: {e}")
+
+
+    if modo_jarvis_ativo():
+        escuta_continua_ativa = True
+
+        t_escuta = threading.Thread(
+            target=modo_escuta_continua,
+            args=(stop_event,),
+            daemon=True
+        )
+        t_escuta.start()
+
+        print("H.U.L.I: Modo Jarvis iniciado automaticamente.")
 
 
 if __name__ == "__main__":

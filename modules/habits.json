@@ -490,5 +490,11 @@
     },
     "lembre preferencia bluetooth como mundial": {
         "memoria inteligente": 1
+    },
+    "status jarvis": {
+        "modo jarvis": 1
+    },
+    "modo jarvis": {
+        "status jarvis": 1
     }
 }

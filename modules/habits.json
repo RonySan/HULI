@@ -441,7 +441,8 @@
         "ativa voz": 1
     },
     "ativa voz": {
-        "painel neural": 1
+        "painel neural": 1,
+        "status huli": 1
     },
     "painel neural": {
         "ativar voz": 1
@@ -453,10 +454,12 @@
         "status huli": 1
     },
     "status huli": {
-        "status huli": 1
+        "status huli": 1,
+        "quem é gisele": 1
     },
     "abrir bluetooth": {
-        "conectar bluetooth mundial": 1
+        "conectar bluetooth mundial": 1,
+        "abrir github depois pesquise python": 1
     },
     "conectar bluetooth mundial": {
         "conectar caixa de som": 1
@@ -474,7 +477,8 @@
         "clicar quando aparecer entrar": 1
     },
     "abrir github depois pesquise python": {
-        "abrir vscode depois abrir github": 1
+        "abrir vscode depois abrir github": 1,
+        "ativa voz": 1
     },
     "abrir vscode depois abrir github": {
         "abrir youtube depois pesquise lo fi": 1
@@ -483,7 +487,8 @@
         "quem é gisele": 1
     },
     "quem é gisele": {
-        "listar pessoas": 1
+        "listar pessoas": 1,
+        "modo jarvis": 1
     },
     "listar pessoas": {
         "lembre preferencia bluetooth como mundial": 1
@@ -492,9 +497,11 @@
         "memoria inteligente": 1
     },
     "status jarvis": {
-        "modo jarvis": 1
+        "modo jarvis": 1,
+        "desativar jarvis": 1
     },
     "modo jarvis": {
-        "status jarvis": 1
+        "status jarvis": 1,
+        "que dia e hoje ?": 1
     }
 }

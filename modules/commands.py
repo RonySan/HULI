@@ -250,12 +250,114 @@ def processar_comando(comando: str):
 
     base = personalidade.gerar_resposta_base()
 
+        # -------------------------
+    # Prioridade máxima: comandos locais antes da IA / Intent Engine
+    # -------------------------
+
+    # Multi Missões
+    if any(x in comando for x in [" depois ", " e depois ", " em seguida ", " aí ", " ai "]):
+        return executar_multi_missao(comando, processar_comando)
+
+    # Voz
+    if comando in ["ativar voz", "ativa voz", "voz on", "ligar voz", "modo falante"]:
+        return f"{base} {ativar_voz()}"
+
+    if comando in ["parar voz", "desativar voz", "desliga voz", "voz off", "desligar voz", "modo silencioso"]:
+        return f"{base} {desativar_voz()}"
+
+    if comando in ["status voz", "voz status"]:
+        status = "ATIVA" if voz_esta_ativa() else "DESATIVADA"
+        return f"{base} Voz: {status}."
+
+    # Status geral
+    if comando in ["status geral", "painel neural", "status huli", "diagnostico geral"]:
+        return status_geral()
+
+    # Windows / Bluetooth
+    if comando in ["abrir bluetooth", "bluetooth", "configurar bluetooth"]:
+        return f"{base} {abrir_bluetooth()}"
+
+    if comando in ["conectar bluetooth", "conectar caixa", "conectar caixa de som"]:
+        return f"{base} {conectar_bluetooth_padrao()}"
+
+    if comando.startswith("conectar bluetooth "):
+        nome = comando.replace("conectar bluetooth ", "", 1).strip()
+        return f"{base} {conectar_bluetooth(nome)}"
+
+    if comando.startswith("conecta bluetooth "):
+        nome = comando.replace("conecta bluetooth ", "", 1).strip()
+        return f"{base} {conectar_bluetooth(nome)}"
+
+    if comando in ["abrir som", "configurar som"]:
+        return f"{base} {abrir_som()}"
+
+    if comando in ["abrir wifi", "abrir wi fi", "configurar wifi"]:
+        return f"{base} {abrir_wifi()}"
+
+    # Vision AI
+    if comando.startswith("encontrar na tela "):
+        alvo = comando.replace("encontrar na tela ", "", 1).strip()
+        ok, resposta = encontrar_na_tela(alvo)
+        return f"{base} {resposta}"
+
+    if comando.startswith("clicar quando aparecer "):
+        alvo = comando.replace("clicar quando aparecer ", "", 1).strip()
+        return f"{base} {clicar_quando_aparecer(alvo)}"
+
+    if comando in ["ler tela inteligente", "resumir tela", "o que tem na tela"]:
+        return ler_e_resumir_tela()
+
+    if comando.startswith("preencher ") and " com " in comando:
+        texto = comando.replace("preencher ", "", 1)
+        campo, valor = texto.split(" com ", 1)
+        return f"{base} {preencher_campo_por_texto(campo.strip(), valor.strip())}"
+
+    # Memória inteligente
+    if comando.startswith("lembre que ") and " é " in comando:
+        texto = comando.replace("lembre que ", "", 1)
+        nome, relacao = texto.split(" é ", 1)
+        return f"{base} {lembrar_pessoa(nome.strip(), relacao.strip())}"
+
+    if comando.startswith("quem é ") or comando.startswith("quem e "):
+        nome = (
+            comando.replace("quem é ", "", 1)
+            .replace("quem e ", "", 1)
+            .strip()
+        )
+
+        pessoa = buscar_pessoa(nome)
+
+        if pessoa:
+            return f"{base} {pessoa['nome']} é {pessoa['relacao']}. {pessoa.get('observacao', '')}"
+
+        return f"{base} Ainda não sei quem é {nome.title()}."
+
+    if comando in ["listar pessoas", "mostrar pessoas"]:
+        return listar_pessoas()
+
+    if comando.startswith("lembre preferencia ") and " como " in comando:
+        texto = comando.replace("lembre preferencia ", "", 1)
+        chave, valor = texto.split(" como ", 1)
+        return f"{base} {lembrar_preferencia(chave.strip(), valor.strip())}"
+
+    if comando in ["memoria inteligente", "memória inteligente"]:
+        return listar_memoria_inteligente()
+
+    # Modo Jarvis
+    if comando in ["modo jarvis", "ativar jarvis", "ativar modo jarvis"]:
+        return f"{base} {ativar_modo_jarvis()}"
+
+    if comando in ["desativar jarvis", "parar jarvis", "desligar jarvis"]:
+        return f"{base} {desativar_modo_jarvis()}"
+
+    if comando in ["status jarvis", "jarvis status"]:
+        return f"{base} Modo Jarvis: {status_jarvis()}."
+
 
     # -------------------------
     # Intent Engine V1
     # -------------------------
     intencao_local = detectar_intencao(comando)
-
     if intencao_local:
         intent = intencao_local.get("intent")
 
@@ -1035,7 +1137,6 @@ def processar_comando(comando: str):
     if comando == "sair":
         return "ENCERRAR"
     
-    resposta_ia = responder_ia(comando, historico=historico_conversa, modo=MODO_RESPOSTA)
     
     # -------------------------
     # Cumprimentos para pessoas

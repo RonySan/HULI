@@ -8371,3 +8371,51 @@ Preferências:
 [2026-05-21 10:26:17] [COMANDO] status jarvis
 [2026-05-21 10:27:08] [RESPOSTA] Missão aceita. Modo Jarvis: ATIVO.
 [2026-05-21 10:27:16] [COMANDO] desativar jarvis
+[2026-05-21 10:28:03] [RESPOSTA] Deixa comigo, chefe 😎 Modo Jarvis desativado.
+[2026-05-22 17:49:19] [COMANDO] sair
+[2026-05-22 17:49:19] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-22 17:50:31] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-22 17:50:34] [COMANDO] abrir bluetooth
+[2026-05-22 17:50:37] [RESPOSTA] Deixa comigo, chefe 😎 Abrindo configurações de Bluetooth.
+[2026-05-22 17:50:46] [COMANDO] abrir github depois pesquise python
+[2026-05-22 17:50:46] [RESPOSTA] Multi missão executada:
+
+1. abrir github -> Abrindo github.
+2. pesquise python -> Pesquisando por: python
+
+[2026-05-22 17:50:46] [COMANDO] ativa voz
+[2026-05-22 17:50:46] [RESPOSTA] Certo. Voz ativada.
+[2026-05-22 17:50:50] [COMANDO] status huli
+[2026-05-22 17:50:51] [RESPOSTA] 🧠 STATUS GERAL DA H.U.L.I
+
+⚙️ Configurações:
+- Usuário: Rony
+- Empresa: Impulso Digital
+- Voz ativa: True
+- Personalidade: huli
+- Bluetooth padrão: mundial
+
+🖥️ Sistema:
+CPU: 45.6% | MEMÓRIA: 68.2% | DISCO: 54.4%
+
+🔔 Lembretes:
+Nenhum lembrete cadastrado.
+
+📜 Logs recentes:
+- [2026-05-21 10:25:41] [COMANDO] modo jarvis
+- [2026-05-21 10:26:17] [COMANDO] status jarvis
+- [2026-05-21 10:27:16] [COMANDO] desativar jarvis
+- [2026-05-22 17:49:19] [COMANDO] sair
+- [2026-05-22 17:49:19] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+- [2026-05-22 17:50:31] [SISTEMA] H.U.L.I iniciada com sucesso.
+- [2026-05-22 17:50:34] [COMANDO] abrir bluetooth
+- [2026-05-22 17:50:46] [COMANDO] abrir github depois pesquise python
+- [2026-05-22 17:50:46] [COMANDO] ativa voz
+- [2026-05-22 17:50:50] [COMANDO] status huli
+
+[2026-05-22 17:50:51] [COMANDO] quem é gisele
+[2026-05-22 17:50:51] [RESPOSTA] Já estou verificando. Gisele é minha namorada. 
+[2026-05-22 17:51:11] [COMANDO] modo jarvis
+[2026-05-22 17:51:11] [RESPOSTA] Deixa comigo, chefe 😎 Modo Jarvis ativado.
+[2026-05-22 17:51:33] [COMANDO] que dia e hoje ?
+[2026-05-22 17:51:33] [RESPOSTA] Já estou verificando. Hoje é 22/05/2026.

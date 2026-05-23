@@ -25,7 +25,8 @@
     },
     "status sistema": {
         "historico": 1,
-        "abrir trabalho": 1
+        "abrir trabalho": 1,
+        "clicar": 1
     },
     "abrir chrome": {
         "abrir vscode": 1,
@@ -48,7 +49,8 @@
     },
     "pesquise python": {
         "abra o google e pesquise laravel": 1,
-        "clicar": 1
+        "clicar": 1,
+        "abrir github": 1
     },
     "abra o google e pesquise laravel": {
         "listar rotinas": 1
@@ -141,7 +143,7 @@
     },
     "clicar": {
         "mostrar logs": 2,
-        "duplo clique": 1
+        "duplo clique": 2
     },
     "mostrar logs": {
         "listar autoexecucoes": 1,
@@ -426,7 +428,8 @@
         "remedio de 8 em 8 horas a partir das 6:30 por 3 dias": 1
     },
     "que horas sao": {
-        "que horas são ?": 1
+        "que horas são ?": 1,
+        "status sistema": 1
     },
     "que horas são ?": {
         "remedio de 8 em 8 horas a partir das 6:30 por 10 dias": 1
@@ -438,7 +441,8 @@
         "abrir github": 1
     },
     "abrir github": {
-        "pesquise python": 1
+        "pesquise python": 1,
+        "desativar voz": 1
     },
     "status geral": {
         "ajuda": 1,
@@ -562,6 +566,7 @@
         "ativar voz": 1
     },
     "duplo clique": {
-        "status sistema": 1
+        "status sistema": 1,
+        "pesquise python": 1
     }
 }

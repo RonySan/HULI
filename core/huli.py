@@ -15,18 +15,15 @@ from modules.habits import registrar_sequencia, prever_proximo
 from modules.autopilot import obter_autoexecucao, ativar_autoexecucao
 from modules.voice_mode import deve_falar
 from modules.reminder_engine import iniciar_engine
-from core.security import login, check_permission
 from core.security import login, check_permission, is_owner
 from modules.reminder_engine import iniciar_engine
 
-
-current_user = login()
+current_user = None
 encerrar_programa = False
 ultimo_comando = None
 sugestao_pendente = None
 escuta_continua_ativa = False
 modo_conversa_ativo = False
-current_user = None
 
 
 def monitor_agendamentos(stop_event: threading.Event):

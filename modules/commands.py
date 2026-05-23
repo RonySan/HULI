@@ -9,6 +9,7 @@ from services import memory_service
 from services import vision_service
 from services import automation_service
 from services import ai_service
+from core_system.router import rotear
 
 from modules.help_system import obter_ajuda
 from modules.nlp import normalizar_comando_natural
@@ -265,6 +266,14 @@ def processar_comando(comando: str):
         return ""
 
     base = personalidade.gerar_resposta_base()
+
+    # -------------------------
+    # H.U.L.I Core System Router
+    # -------------------------
+    resposta_core = rotear(comando, base)
+
+    if resposta_core:
+        return resposta_core
 
     # -------------------------
     # Modo íntimo

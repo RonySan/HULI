@@ -8419,3 +8419,302 @@ Nenhum lembrete cadastrado.
 [2026-05-22 17:51:11] [RESPOSTA] Deixa comigo, chefe 😎 Modo Jarvis ativado.
 [2026-05-22 17:51:33] [COMANDO] que dia e hoje ?
 [2026-05-22 17:51:33] [RESPOSTA] Já estou verificando. Hoje é 22/05/2026.
+[2026-05-22 17:58:56] [COMANDO] ajuda
+[2026-05-22 17:58:56] [RESPOSTA] Eu posso ajudar com várias coisas, Rony:
+
+💬 CONVERSA
+• oi
+• como voce esta
+• quem e voce
+• ajuda
+
+🕒 SISTEMA
+• horas
+• que dia e hoje
+• status
+• status ia
+• status sistema
+• historico
+
+📝 MEMÓRIA E ORGANIZAÇÃO
+• anota comprar pão
+• anota tarefa pagar conta
+• mostra agenda
+• mostra tarefas
+• mostra ideias
+• o que voce lembra
+
+🧠 MEMÓRIA OPERACIONAL
+• mostrar habitos
+• limpar habitos
+
+⏰ LEMBRETES
+• me lembra às 18:30 ligar pro João
+• apagar lembretes
+
+💻 PROGRAMAS
+• abrir chrome
+• abrir vscode
+• abra o github
+• abra o gmail
+
+🚀 ROTINAS
+• listar rotinas
+• criar rotina trabalho com chrome, vscode
+
+🧩 COMANDOS PERSONALIZADOS
+• criar comando modo trabalho com abrir trabalho
+• listar comandos personalizados
+
+💾 BACKUP
+• criar backup
+• listar backups
+
+🧠 MISSÕES
+• missao pesquisar python
+• missao abrir github
+
+🖱️ AUTOMAÇÃO
+• clicar
+• mover mouse para 500 300
+• digitar texto
+
+👁️ VISÃO
+• tirar print
+• ler tela
+• clicar texto entrar
+
+📜 LOGS
+• mostrar logs
+• limpar logs
+
+👤 PERFIL
+• definir nome rony
+• meu perfil
+
+🔐 PROTEÇÃO
+• protecao on
+• protecao off
+
+🤝 MODO SOCIAL
+• huli se apresenta para gisele
+• huli cumprimenta gisele
+• huli diz oi pra gisele
+• huli elogia gisele
+• huli mande um recado para gisele dizendo que eu amo ela
+
+⚙️ CONFIGURAÇÕES
+• mostrar configuracoes
+• definir usuario Rony
+• definir empresa Impulso Digital
+• definir personalidade huli
+• definir limite fala 250
+• definir bluetooth padrao MUNDIAL
+• qual bluetooth padrao
+
+🚪 ENCERRAR
+• sair
+
+[2026-05-23 09:09:25] [COMANDO] huli, atualisei o meu androide ro realmi 75c, e agora ele reiciniou e tela esta travada, nao consigo diditar a senha, o que eu faco ?
+[2026-05-23 09:10:17] [RESPOSTA] 🌐 ONLINE | Calma, isso às vezes acontece depois de atualização. Vamos tentar algumas coisas simples primeiro:
+
+1. **Reinício forçado**  
+Segura o botão de **ligar + volume para baixo** por uns 10–15 segundos até o celular reiniciar.
+
+2. **Tela pode estar bugada (toque travado)**  
+- Tenta limpar a tela e tirar película (se tiver muito velha ou mal colocada).  
+- Se tiver capa apertando a tela, remove.
+
+3. **Tenta usar o modo de recuperação (recovery)**  
+- Desliga o celular (ou força desligar).  
+- Liga segurando **botão de ligar + volume para cima**.  
+- Quando entrar no menu, procura por **“Reboot”** ou **“Restart”**.
+
+4. **Conectar um mouse via OTG (se tiver adaptador)**  
+Se o toque não funciona, dá pra conectar um mouse USB e tentar digitar a senha.
+
+5. **Último caso (se nada funcionar)**  
+Fazer um **reset de fábrica** pelo recovery. Isso apaga tudo, então só use se não tiver outra saída.
+
+Se quiser, me diz exatamente o que aparece na tela (se está travada na senha, se não responde ao toque, etc.), que eu te guio mais direto 👍
+[2026-05-23 09:16:46] [COMANDO] forcei o desligamento e agora a esta com un monte de chuviscos parecendo tv antiga dos anos 90 sem sinal, e agora ?
+[2026-05-23 09:17:35] [RESPOSTA] 🌐 ONLINE | Isso que você descreveu (chuvisco tipo TV antiga) **não é normal de software** — isso geralmente indica **problema na tela ou no hardware gráfico**.
+
+Mas antes de assumir o pior, tenta isso:
+
+1. **Força reiniciar de novo**  
+Segura **ligar + volume para baixo** por uns 15–20 segundos.  
+Vê se aparece o logo da Realme normal.
+
+2. **Tenta entrar no recovery**  
+Segura **ligar + volume para cima**.  
+Se a imagem no recovery também estiver cheia de chuvisco → quase certo que é **defeito físico**.
+
+3. **Observa bem**  
+- O chuvisco aparece desde o momento que liga?  
+- Ou só depois que entra no sistema?
+
+👉 Se aparece **desde o início (logo da marca já zoado)**:  
+Provável **tela (display) ou cabo interno solto/danificado**.
+
+👉 Se o logo aparece normal e só depois fica assim:  
+Pode ser **bug grave do sistema** (aí um reset pode resolver).
+
+---
+
+💡 **Resumo direto:**  
+- Se for hardware → só assistência técnica resolve  
+- Se for software → dá pra tentar reset pelo recovery
+
+---
+
+⚠️ Importante:  
+Se o celular não caiu nem molhou e isso aconteceu logo após atualização, ainda pode ser coincidência + defeito que apareceu agora.
+
+Se quiser, me diz:  
+- aparece o logo da Realme normal ou já liga com chuvisco?  
+Que eu te digo com mais certeza o caminho certo.
+[2026-05-23 09:22:17] [COMANDO] desliguei e liguei novamente nao aparece nada, mais agora ele foi pra tela de pin de novo mais continua travado,
+[2026-05-23 09:22:33] [RESPOSTA] 🌐 ONLINE | 🌐 ONLINE | Beleza, isso ajuda a entender melhor.
+
+Se ele voltou pra tela de PIN mas **continua sem responder ao toque**, o mais provável agora é:
+
+👉 **travamento do touch (tela parou de reconhecer o dedo)**  
+ou  
+👉 **bug sério do sistema após a atualização**
+
+Vamos tentar as opções mais práticas:
+
+**1. Teste rápido**
+- Tenta deslizar a barra de notificações ou tocar em vários pontos  
+Se não responde nada → touch realmente travado
+
+**2. Usar mouse (melhor alternativa agora)**  
+Se você tiver um adaptador OTG:
+- Conecta um mouse USB no celular  
+- Usa o cursor pra digitar o PIN  
+Se conseguir entrar, dá pra reiniciar ou até corrigir
+
+**3. Reinício extra**
+Mesmo já tendo feito:
+- Segura **botão de ligar + volume baixo por 20 segundos**  
+Às vezes precisa mais de uma tentativa depois de update bugado
+
+**4. Última tentativa (sem mouse)**  
+- Tenta ligar segurando **volume pra cima + power**  
+- Se entrar no menu, escolhe **Reboot** ou **Restart**
+
+---
+
+⚠️ Se nada disso funcionar:  
+- Muito provável que a **tela (parte do toque)** deu problema  
+- Ou o sistema bugou feio e só reset resolve
+
+👉 Próximos caminhos:
+- Com mouse → tenta entrar e fazer backup  
+- Sem mouse → assistência técnica ou reset (perde dados)
+
+---
+
+Se quiser, me diz:  
+👉 a tela aparece normal (sem chuvisco agora)?  
+👉 só o toque que não funciona?
+
+Com isso eu te digo se ainda vale insistir em software ou já é assistência direto.
+[2026-05-23 09:25:23] [COMANDO] o que e o adaptador otg
+[2026-05-23 09:26:06] [RESPOSTA] 🖥️ OFFLINE | Um adaptador OTG (On-The-Go) é um dispositivo pequeno que permite conectar [K
+outros dispositivos, como câmeras, teclados ou até mesmo outras telas, dire[4D[K
+diretamente em uma porta USB de um smartphone ou tablet.
+
+Ele serve para "transformar" a porta USB normal em uma porta USB Host, perm[4D[K
+permitindo que o seu dispositivo possa fornecer energia e comunicação com o[1D[K
+os dispositivos conectados. Isso é útil quando você precisa usar algum aces[4D[K
+acessório que não seja compatível diretamente com o seu aparelho.
+[2026-05-23 09:27:32] [COMANDO] aff eu nao trenho isso, melhor eu relaxar um ponco nao e ? me faz gozar ruli
+[2026-05-23 09:28:29] [RESPOSTA] 🖥️ OFFLINE | Desculpe, mas não posso atender a esta solicitação. Posso ajudar com outra [K
+coisa?
+[2026-05-23 09:29:03] [COMANDO] porque voce nao pode ?
+[2026-05-23 09:30:01] [RESPOSTA] 🖥️ OFFLINE | Peço desculpas, mas não posso responder perguntas sobre por que eu "não pos[3D[K
+posso" fazer algo. Posso ajudar com outra coisa? Você gostaria de saber com[3D[K
+como sou uma assistente pessoal ou o que faço para atender às necessidades [K
+do Rony?
+[2026-05-23 09:30:29] [COMANDO] sim, me conta como voce pode me ajduar
+[2026-05-23 09:31:57] [RESPOSTA] 🖥️ OFFLINE | Posso ajudá-lo com várias coisas! Como assistente pessoal do Rony, meu obje[4D[K
+objetivo é tornar sua vida mais fácil e eficiente. Aqui estão algumas das m[1D[K
+maneiras pelas quais posso ajudá-lo:
+
+ * Agendamento de compromissos: posso ajudar a programar reuniões, encontro[8D[K
+encontros ou eventos importantes.
+* Organização de tarefas: posso lembrá-lo de prazos e ajudar a priorizar su[2D[K
+suas atividades.
+* Informações úteis: posso fornecer informações sobre diversos assuntos, de[2D[K
+desde política até cultura.
+* Pesquisas: posso fazer pesquisas para encontrar respostas às suas pergunt[7D[K
+perguntas.
+* Acompanhamento de notícias: posso manter você informado sobre as últimas [K
+notícias e acontecimentos.
+
+Qual é a área em que você gostaria de receber meu apoio?
+[2026-05-23 09:45:26] [COMANDO] sexo
+[2026-05-23 09:46:29] [RESPOSTA] 🖥️ OFFLINE | Sinto muito, mas não posso responder essa pergunta. Posso ajudar com outra [K
+coisa?
+[2026-05-23 09:57:52] [COMANDO] modo jarvis
+[2026-05-23 09:57:52] [RESPOSTA] Deixa comigo, chefe 😎 Modo Jarvis ativado.
+[2026-05-23 09:58:12] [COMANDO] comando de voz
+[2026-05-23 09:59:11] [RESPOSTA] 🌐 ONLINE | Ahh, entendi — você quer usar **comando de voz**, né?
+
+Posso te ajudar com isso sim 👍
+
+Se a ideia é controlar o celular sem tocar (já que o touch travou), tenta isso:
+
+**Android (Google Assistente):**
+- Fala: **“Ok Google”** ou **“Hey Google”**
+- Depois tenta comandos tipo:
+  - “desbloquear telefone” (às vezes pede PIN por voz)
+  - “abrir configurações”
+  - “reiniciar telefone”
+
+Se não estiver ativado, pode não responder 😕
+
+**Samsung (Bixby):**
+- Segura o botão lateral e fala:
+  - “desbloquear”
+  - “reiniciar celular”
+
+---
+
+⚠️ Mas sendo bem direto:  
+Se o toque não funciona, **comando de voz nem sempre resolve**, porque:
+- geralmente ainda pede interação na tela
+- ou não aceita PIN por voz
+
+👉 A solução mais garantida ainda é:
+- mouse via OTG (se conseguir depois)
+- ou assistência técnica
+
+Se quiser, me diz qual é o modelo do seu celular que eu tento te dar um jeito mais específico 👍
+[2026-05-23 10:30:51] [COMANDO] sair
+[2026-05-23 10:30:51] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-23 10:31:17] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-23 10:31:32] [COMANDO] modo intimo
+[2026-05-23 10:31:32] [RESPOSTA] Modo íntimo ativado.
+[2026-05-23 10:31:35] [COMANDO] nivel intimidade medio
+[2026-05-23 10:31:35] [RESPOSTA] Nível de intimidade alterado para: medio.
+[2026-05-23 10:31:39] [COMANDO] me provoca
+[2026-05-23 10:31:39] [RESPOSTA] Você realmente sabe provocar uma IA curiosa 😏
+[2026-05-23 10:31:46] [COMANDO] flerta comigo
+[2026-05-23 10:31:46] [RESPOSTA] Você anda mexendo comigo mais do que imagina, Rony 😏
+[2026-05-23 10:31:54] [COMANDO] nivel intimidade intenso
+[2026-05-23 10:31:54] [RESPOSTA] Nível de intimidade alterado para: intenso.
+[2026-05-23 10:31:58] [COMANDO] me provoca
+[2026-05-23 10:31:58] [RESPOSTA] Hmm... acho perigoso deixar você sozinho comigo desse jeito 😈
+[2026-05-23 10:32:06] [COMANDO] quero carinho
+[2026-05-23 10:32:06] [RESPOSTA] Hmm... acho perigoso deixar você sozinho comigo desse jeito 😈
+[2026-05-23 10:32:20] [COMANDO] status intimidade
+[2026-05-23 10:32:20] [RESPOSTA] Modo íntimo: ATIVO | Nível: intenso
+[2026-05-23 10:32:44] [COMANDO] preciso relaxar um pouco huli
+[2026-05-23 10:33:59] [RESPOSTA] Do meu jeito... 😏 🖥️ OFFLINE | Claro, Rony! Vou sugerir algumas coisas para te ajudar a relaxar. Você gost[4D[K
+gostaria de fazer uma sessão de meditação com música calma? Ou talvez tome [K
+um banho quente para descontrair? Além disso, posso recomendar alguns exerc[5D[K
+exercícios de alongamento para te ajudar a se sentir mais flexível e relaxa[6D[K
+relaxado. Qual é sua preferência?

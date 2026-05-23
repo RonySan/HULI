@@ -11,5 +11,7 @@
     "modo_protecao": false,
     "bluetooth_dispositivo_padrao": "mundial",
     "modo_jarvis": true,
+    "modo_intimo": true,
+    "nivel_intimidade": "intenso",
     "iniciar_com_windows": false
 }

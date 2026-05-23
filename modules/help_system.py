@@ -92,6 +92,15 @@ def obter_ajuda():
         "• definir bluetooth padrao MUNDIAL\n"
         "• qual bluetooth padrao\n\n"
 
+        "💞 MODO ÍNTIMO / EMOCIONAL\n"
+        "• modo intimo\n"
+        "• status modo intimo\n"
+        "• desativar modo intimo\n"
+        "• me provoca\n"
+        "• flerta comigo\n"
+        "• estou carente\n"
+        "• estou triste\n\n"
+
 
         "🚪 ENCERRAR\n"
         "• sair\n"

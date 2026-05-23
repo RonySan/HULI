@@ -126,7 +126,8 @@
         "huli boa tarde, que horas sao ?": 1,
         "definir limite fala 100": 1,
         "me lembre as 06:30 dar remedio pro luan": 1,
-        "status geral": 1
+        "status geral": 1,
+        "huli, atualisei o meu androide ro realmi 75c, e agora ele reiciniou e tela esta travada, nao consigo diditar a senha, o que eu faco ?": 1
     },
     "anota teste": {
         "mostra tarefas": 1
@@ -448,7 +449,8 @@
         "ativar voz": 1
     },
     "que dia e hoje ?": {
-        "o que voce lembra ?": 1
+        "o que voce lembra ?": 1,
+        "ajuda": 1
     },
     "o que voce lembra ? pode falar em voz pra mim": {
         "status huli": 1
@@ -502,6 +504,53 @@
     },
     "modo jarvis": {
         "status jarvis": 1,
-        "que dia e hoje ?": 1
+        "que dia e hoje ?": 1,
+        "comando de voz": 1
+    },
+    "huli, atualisei o meu androide ro realmi 75c, e agora ele reiciniou e tela esta travada, nao consigo diditar a senha, o que eu faco ?": {
+        "forcei o desligamento e agora a esta com un monte de chuviscos parecendo tv antiga dos anos 90 sem sinal, e agora ?": 1
+    },
+    "forcei o desligamento e agora a esta com un monte de chuviscos parecendo tv antiga dos anos 90 sem sinal, e agora ?": {
+        "desliguei e liguei novamente nao aparece nada, mais agora ele foi pra tela de pin de novo mais continua travado,": 1
+    },
+    "desliguei e liguei novamente nao aparece nada, mais agora ele foi pra tela de pin de novo mais continua travado,": {
+        "o que e o adaptador otg": 1
+    },
+    "o que e o adaptador otg": {
+        "aff eu nao trenho isso, melhor eu relaxar um ponco nao e ? me faz gozar ruli": 1
+    },
+    "aff eu nao trenho isso, melhor eu relaxar um ponco nao e ? me faz gozar ruli": {
+        "porque voce nao pode ?": 1
+    },
+    "porque voce nao pode ?": {
+        "sim, me conta como voce pode me ajduar": 1
+    },
+    "sim, me conta como voce pode me ajduar": {
+        "sexo": 1
+    },
+    "sexo": {
+        "modo jarvis": 1
+    },
+    "modo intimo": {
+        "nivel intimidade medio": 1
+    },
+    "nivel intimidade medio": {
+        "me provoca": 1
+    },
+    "me provoca": {
+        "flerta comigo": 1,
+        "quero carinho": 1
+    },
+    "flerta comigo": {
+        "nivel intimidade intenso": 1
+    },
+    "nivel intimidade intenso": {
+        "me provoca": 1
+    },
+    "quero carinho": {
+        "status intimidade": 1
+    },
+    "status intimidade": {
+        "preciso relaxar um pouco huli": 1
     }
 }

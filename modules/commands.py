@@ -23,6 +23,15 @@ from modules.habits import listar_habitos, limpar_habitos
 from modules.intent_engine import interpretar_intencao, detectar_intencao
 from modules.status_center import status_geral
 from modules.multi_missions import executar_multi_missao
+from modules.intimate_mode import (
+    ativar_modo_intimo,
+    desativar_modo_intimo,
+    modo_intimo_ativo,
+    definir_nivel_intimidade,
+    obter_nivel_intimidade,
+    resposta_intima,
+    aplicar_tom_intimo,
+)
 
 from modules.jarvis_mode import (
     ativar_modo_jarvis,
@@ -250,7 +259,67 @@ def processar_comando(comando: str):
 
     base = personalidade.gerar_resposta_base()
 
-        # -------------------------
+    # -------------------------
+    # Modo íntimo
+    # -------------------------
+
+    if comando in [
+        "modo intimo",
+        "modo íntimo",
+        "ativar modo intimo",
+        "ativar modo íntimo",
+    ]:
+        return ativar_modo_intimo()
+
+    if comando in [
+        "desativar modo intimo",
+        "desativar modo íntimo",
+    ]:
+        return desativar_modo_intimo()
+
+    if comando.startswith("nivel intimidade "):
+
+        nivel = (
+            comando
+            .replace("nivel intimidade ", "", 1)
+            .strip()
+        )
+
+        return definir_nivel_intimidade(nivel)
+
+    if comando in [
+        "status intimidade",
+        "nivel intimidade",
+    ]:
+
+        return (
+            f"Modo íntimo: "
+            f"{'ATIVO' if modo_intimo_ativo() else 'DESATIVADO'} | "
+            f"Nível: {obter_nivel_intimidade()}"
+        )
+
+    resposta_privada = resposta_intima(comando)
+
+    if resposta_privada:
+        return resposta_privada
+
+    # -------------------------
+    # Modo íntimo / emocional privado
+    # -------------------------
+    if comando in ["modo intimo", "modo íntimo", "ativar modo intimo", "ativar modo íntimo"]:
+        return f"{base} {ativar_modo_intimo()}"
+
+    if comando in ["desativar modo intimo", "desativar modo íntimo", "parar modo intimo", "parar modo íntimo"]:
+        return f"{base} {desativar_modo_intimo()}"
+
+    if comando in ["status modo intimo", "status modo íntimo"]:
+        return f"{base} Modo íntimo: {status_modo_intimo()}."
+
+    resposta_privada = resposta_intima(comando)
+    if resposta_privada:
+        return resposta_privada
+
+    # -------------------------
     # Prioridade máxima: comandos locais antes da IA / Intent Engine
     # -------------------------
 
@@ -1380,4 +1449,4 @@ def processar_comando(comando: str):
     except Exception:
         pass
 
-    return resposta_ia
+    return aplicar_tom_intimo(resposta_ia)

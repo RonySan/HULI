@@ -3,6 +3,9 @@ import threading
 from datetime import datetime
 
 from core_system.context import obter_contexto
+from modules.intent_engine import detectar_intencao
+from core_system.kernel import obter_kernel
+
 
 from modules.identity import HULIIdentity
 from modules.commands import processar_comando
@@ -18,7 +21,7 @@ from modules.autopilot import obter_autoexecucao, ativar_autoexecucao
 from modules.voice_mode import deve_falar
 from modules.reminder_engine import iniciar_engine
 from core.security import login, check_permission, is_owner
-from modules.reminder_engine import iniciar_engine
+
 
 current_user = None
 encerrar_programa = False
@@ -49,20 +52,28 @@ def monitor_lembretes(stop_event: threading.Event):
 
             for lembrete in pendentes:
                 quando_str = lembrete.get("quando")
+
                 if not quando_str:
                     continue
 
                 try:
-                    quando_dt = datetime.strptime(quando_str, "%Y-%m-%d %H:%M:%S")
+                    quando_dt = datetime.strptime(
+                        quando_str,
+                        "%Y-%m-%d %H:%M:%S"
+                    )
                 except ValueError:
                     continue
 
                 if agora >= quando_dt and not lembrete.get("executado", False):
                     texto = f"Rony, lembrete: {lembrete['conteudo']}"
                     registrar_log("lembrete", texto)
+
                     print(f"\nH.U.L.I: 🔔 {texto}\n")
-                    falar(texto)
-                    memoria.marcar_lembrete_executado(lembrete.get("id"))
+                    falar_se_permitido(texto)
+
+                    memoria.marcar_lembrete_executado(
+                        lembrete.get("id")
+                    )
 
         except Exception as e:
             registrar_log("erro", f"monitor_lembretes: {e}")
@@ -72,12 +83,20 @@ def monitor_lembretes(stop_event: threading.Event):
 
 def executar_agendamento(tipo: str, valor: str):
     if tipo == "rotina":
-        registrar_log("agendamento", f"Executando rotina agendada: {valor}")
+        registrar_log(
+            "agendamento",
+            f"Executando rotina agendada: {valor}"
+        )
+
         print(f"\nH.U.L.I: ⏰ Executando rotina agendada: {valor}")
         executar_comando(f"abrir {valor}")
 
     elif tipo == "comando":
-        registrar_log("agendamento", f"Executando comando agendado: {valor}")
+        registrar_log(
+            "agendamento",
+            f"Executando comando agendado: {valor}"
+        )
+
         print(f"\nH.U.L.I: ⏰ Executando comando agendado: {valor}")
         executar_comando(valor)
 
@@ -87,8 +106,6 @@ def falar_se_permitido(texto):
         falar(texto)
 
 
-
-
 def executar_comando(comando: str):
     global encerrar_programa, ultimo_comando, sugestao_pendente
 
@@ -96,14 +113,21 @@ def executar_comando(comando: str):
         return
 
     comando_limpo = comando.strip().lower()
+
     registrar_log("comando", comando)
     registrar_historico(comando)
 
-    if sugestao_pendente and comando_limpo in ["sim", "s", "ok", "pode", "claro"]:
+    if sugestao_pendente and comando_limpo in [
+        "sim", "s", "ok", "pode", "claro"
+    ]:
         comando_base = sugestao_pendente["base"]
         proximo = sugestao_pendente["proximo"]
 
-        resposta_auto = ativar_autoexecucao(comando_base, proximo)
+        resposta_auto = ativar_autoexecucao(
+            comando_base,
+            proximo
+        )
+
         registrar_log("autopilot", resposta_auto)
 
         print(f"H.U.L.I: {resposta_auto}")
@@ -112,54 +136,111 @@ def executar_comando(comando: str):
         sugestao_pendente = None
         return
 
-    if sugestao_pendente and comando_limpo in ["nao", "não", "n", "deixa", "deixa pra la", "deixa pra lá"]:
+    if sugestao_pendente and comando_limpo in [
+        "nao", "não", "n", "deixa", "deixa pra la", "deixa pra lá"
+    ]:
         print("H.U.L.I: Entendido. Não vou automatizar isso.")
         falar_se_permitido("Entendido. Não vou automatizar isso.")
-        registrar_log("autopilot", "Usuário recusou sugestão de autoexecução.")
+
+        registrar_log(
+            "autopilot",
+            "Usuário recusou sugestão de autoexecução."
+        )
+
         sugestao_pendente = None
         return
 
     if comando_limpo in ["sair", "encerrar", "fechar huli"]:
-        registrar_log("sistema", "Encerrando H.U.L.I por comando do usuário.")
+        registrar_log(
+            "sistema",
+            "Encerrando H.U.L.I por comando do usuário."
+        )
+
         print("H.U.L.I: Encerrando operações. Até logo, Rony.")
         falar_se_permitido("Encerrando operações. Até logo, Rony.")
+
         encerrar_programa = True
         return
 
     resposta = processar_comando(comando)
 
+    kernel = obter_kernel()
+
+    kernel.registrar_interacao(
+        comando=comando,
+        resposta=resposta
+    )
+
+    try:
+        contexto = obter_contexto()
+        intencao = detectar_intencao(comando)
+
+        contexto.registrar_interacao(
+            comando=comando,
+            resposta=resposta,
+            intencao=intencao.get("intent") if intencao else None
+        )
+
+    except Exception as e:
+        registrar_log(
+            "erro",
+            f"contexto registrar_interacao: {e}"
+        )
+
     if resposta == "ENCERRAR":
-        registrar_log("sistema", "Encerrando H.U.L.I por retorno ENCERRAR.")
+        registrar_log(
+            "sistema",
+            "Encerrando H.U.L.I por retorno ENCERRAR."
+        )
+
         print("H.U.L.I: Encerrando operações. Até logo, Rony.")
         falar_se_permitido("Encerrando operações. Até logo, Rony.")
+
         encerrar_programa = True
         return
 
     if resposta:
         registrar_log("resposta", resposta)
+
         print(f"H.U.L.I: {resposta}")
         falar_se_permitido(resposta)
 
     registrar_sequencia(ultimo_comando, comando)
 
     sugestao = prever_proximo(comando)
+
     if sugestao:
         auto = obter_autoexecucao(comando)
 
         if auto:
-            registrar_log("autopilot", f"Executando automaticamente após '{comando}': '{auto}'")
+            registrar_log(
+                "autopilot",
+                f"Executando automaticamente após '{comando}': '{auto}'"
+            )
+
             print(f"H.U.L.I: ⚡ Executando automaticamente: {auto}")
-            falar("Executando automaticamente.")
+            falar_se_permitido("Executando automaticamente.")
+
             executar_comando(auto)
+
         else:
             sugestao_pendente = {
                 "base": comando,
                 "proximo": sugestao,
             }
-            print(f"H.U.L.I: 💡 Você costuma fazer isso depois: '{sugestao}'. Quer que eu execute automaticamente da próxima vez?")
-            falar_se_permitido("Você costuma fazer isso depois. Quer que eu execute automaticamente da próxima vez?")
+
+            print(
+                f"H.U.L.I: 💡 Você costuma fazer isso depois: "
+                f"'{sugestao}'. Quer que eu execute automaticamente da próxima vez?"
+            )
+
+            falar_se_permitido(
+                "Você costuma fazer isso depois. "
+                "Quer que eu execute automaticamente da próxima vez?"
+            )
 
     ultimo_comando = comando
+
 
 def modo_escuta_continua(stop_event: threading.Event):
     global escuta_continua_ativa
@@ -184,6 +265,7 @@ def modo_escuta_continua(stop_event: threading.Event):
 
     print("🎙️ Escuta contínua encerrada.")
 
+
 def modo_conversa_continua(stop_event: threading.Event):
     global modo_conversa_ativo
 
@@ -206,8 +288,13 @@ def modo_conversa_continua(stop_event: threading.Event):
 
             print(f"\n🎤 Você disse: {comando_voz}")
 
-            if comando_voz in ["sair conversa", "encerrar conversa", "parar conversa"]:
+            if comando_voz in [
+                "sair conversa",
+                "encerrar conversa",
+                "parar conversa"
+            ]:
                 modo_conversa_ativo = False
+
                 print("H.U.L.I: Modo conversa encerrado.")
                 falar_se_permitido("Modo conversa encerrado.")
                 break
@@ -221,26 +308,64 @@ def modo_conversa_continua(stop_event: threading.Event):
 
     print("🤖 Modo conversa contínua finalizado.")
 
-def iniciar():
-    global encerrar_programa, escuta_continua_ativa, modo_conversa_ativo, current_user
 
-    current_user = login()
+def registrar_usuario_no_contexto(usuario_logado):
     contexto = obter_contexto()
 
     try:
+        usuario = "desconhecido"
+        proprietario = False
+
+        if isinstance(usuario_logado, dict):
+            usuario = (
+                usuario_logado.get("usuario")
+                or usuario_logado.get("user")
+                or usuario_logado.get("nome")
+                or usuario_logado.get("name")
+                or "desconhecido"
+            )
+
+            proprietario = (
+                usuario_logado.get("owner")
+                or usuario_logado.get("is_owner")
+                or False
+            )
+
+        else:
+            usuario = str(usuario_logado)
+
         contexto.definir_usuario(
-            usuario=current_user.get("usuario", "desconhecido"),
-            proprietario=current_user.get("owner", False)
+            usuario=usuario,
+            proprietario=proprietario
         )
-    except Exception:
+
+    except Exception as e:
+        registrar_log(
+            "erro",
+            f"contexto definir_usuario: {e}"
+        )
+
         contexto.definir_usuario(
-            usuario=str(current_user),
+            usuario="desconhecido",
             proprietario=False
         )
+
+
+def iniciar():
+    global encerrar_programa
+    global escuta_continua_ativa
+    global modo_conversa_ativo
+    global current_user
+
+    current_user = login()
+    kernel = obter_kernel()
+
+    registrar_usuario_no_contexto(current_user)
 
     identidade = HULIIdentity()
 
     saudacao = identidade.apresentar()
+
     print(saudacao)
     falar_se_permitido(saudacao)
 
@@ -254,9 +379,17 @@ def iniciar():
     print(" - digite 'sair' para encerrar\n")
     print(" - digite 'modo conversa' para conversa contínua")
 
-    registrar_log("sistema", "H.U.L.I iniciada com sucesso.")
+    registrar_log(
+        "sistema",
+        "H.U.L.I iniciada com sucesso."
+    )
 
-    iniciar_engine(falar)
+    kernel.definir_usuario(
+    nome="Rony",
+    proprietario=True
+)
+
+    iniciar_engine(falar_se_permitido)
 
     stop_event = threading.Event()
 
@@ -281,10 +414,14 @@ def iniciar():
             if not comando:
                 continue
 
-            # -------------------------
-            # ESCUTA CONTÍNUA
-            # -------------------------
-            if comando.lower() in ["modo escuta", "ativar escuta", "escuta continua", "escuta contínua"]:
+            comando_lower = comando.lower()
+
+            if comando_lower in [
+                "modo escuta",
+                "ativar escuta",
+                "escuta continua",
+                "escuta contínua"
+            ]:
                 if escuta_continua_ativa:
                     print("H.U.L.I: A escuta contínua já está ativa.")
                     falar_se_permitido("A escuta contínua já está ativa.")
@@ -301,19 +438,27 @@ def iniciar():
                     daemon=True
                 )
                 t_escuta.start()
+
                 continue
 
-            if comando.lower() in ["parar escuta", "desativar escuta", "encerrar escuta"]:
+            if comando_lower in [
+                "parar escuta",
+                "desativar escuta",
+                "encerrar escuta"
+            ]:
                 escuta_continua_ativa = False
 
                 print("H.U.L.I: Escuta contínua desativada.")
                 falar_se_permitido("Escuta contínua desativada.")
+
                 continue
 
-            # -------------------------
-            # MODO CONVERSA CONTÍNUA
-            # -------------------------
-            if comando.lower() in ["modo conversa", "ativar conversa", "conversa continua", "conversa contínua"]:
+            if comando_lower in [
+                "modo conversa",
+                "ativar conversa",
+                "conversa continua",
+                "conversa contínua"
+            ]:
                 if modo_conversa_ativo:
                     print("H.U.L.I: O modo conversa já está ativo.")
                     falar_se_permitido("O modo conversa já está ativo.")
@@ -327,20 +472,24 @@ def iniciar():
                     daemon=True
                 )
                 t_conversa.start()
+
                 continue
 
-            if comando.lower() in ["parar conversa", "desativar conversa", "encerrar conversa"]:
+            if comando_lower in [
+                "parar conversa",
+                "desativar conversa",
+                "encerrar conversa"
+            ]:
                 modo_conversa_ativo = False
 
                 print("H.U.L.I: Modo conversa desativado.")
                 falar_se_permitido("Modo conversa desativado.")
+
                 continue
 
-            # -------------------------
-            # VOZ MANUAL
-            # -------------------------
-            if comando.lower() == "voz":
+            if comando_lower == "voz":
                 print("🎤 Fale agora...")
+
                 comando_voz = ouvir_um_comando()
 
                 if not comando_voz:
@@ -350,40 +499,49 @@ def iniciar():
 
                 print(f"Você disse: {comando_voz}")
                 executar_comando(comando_voz)
+
                 continue
 
-            if comando.lower() == "ouvir":
+            if comando_lower == "ouvir":
                 print("🎙️ Modo voz com ativação...")
+
                 comando_voz = ouvir_com_ativacao()
 
                 if not comando_voz:
                     print("H.U.L.I: Não ouvi nenhum comando válido com ativação.")
-                    falar_se_permitido("Não ouvi nenhum comando válido com ativação.")
+                    falar_se_permitido(
+                        "Não ouvi nenhum comando válido com ativação."
+                    )
                     continue
 
                 print(f"Você disse: {comando_voz}")
                 executar_comando(comando_voz)
+
                 continue
 
-            if comando.lower() == "ouvir natural":
+            if comando_lower == "ouvir natural":
                 comando_voz = ouvir_natural()
 
                 if not comando_voz:
                     print("H.U.L.I: Não consegui entender pela voz natural.")
-                    falar_se_permitido("Não consegui entender pela voz natural.")
+                    falar_se_permitido(
+                        "Não consegui entender pela voz natural."
+                    )
                     continue
 
                 print(f"Você disse: {comando_voz}")
                 executar_comando(comando_voz)
+
                 continue
 
-            # -------------------------
-            # EXECUÇÃO NORMAL
-            # -------------------------
             executar_comando(comando)
 
         except (KeyboardInterrupt, EOFError):
-            registrar_log("sistema", "Encerrando H.U.L.I por teclado.")
+            registrar_log(
+                "sistema",
+                "Encerrando H.U.L.I por teclado."
+            )
+
             print("\nH.U.L.I: Encerrando pelo teclado.")
             falar_se_permitido("Encerrando pelo teclado.")
             break
@@ -393,6 +551,7 @@ def iniciar():
             print(f"H.U.L.I: Ocorreu um erro: {e}")
 
     stop_event.set()
+
 
 if __name__ == "__main__":
     iniciar()

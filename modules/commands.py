@@ -11,6 +11,7 @@ from services import automation_service
 from services import ai_service
 from core_system.router import rotear
 from core_system.context import obter_contexto, resumo_contexto
+from core_system.kernel import obter_kernel
 
 
 from modules.help_system import obter_ajuda
@@ -1406,6 +1407,19 @@ def processar_comando(comando: str):
 
         resposta = "Contexto atual da H.U.L.I:\n"
         for chave, valor in ctx.items():
+            resposta += f"- {chave}: {valor}\n"
+
+        return resposta
+
+    # -------------------------
+    # Kernel / Núcleo operacional
+    # -------------------------
+    if comando in ["status kernel", "kernel", "status nucleo", "status núcleo"]:
+        kernel = obter_kernel()
+        dados = kernel.status()
+
+        resposta = "🧠 Kernel H.U.L.I:\n"
+        for chave, valor in dados.items():
             resposta += f"- {chave}: {valor}\n"
 
         return resposta

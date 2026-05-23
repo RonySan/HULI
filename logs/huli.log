@@ -8868,3 +8868,120 @@ precisar de ajuda. Como posso ajudá-lo?
 - ultima_intencao: None
 - iniciado_em: 23/05/2026 12:08:37
 
+[2026-05-23 12:32:27] [COMANDO] sair
+[2026-05-23 12:32:27] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-23 12:36:24] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-23 12:36:42] [COMANDO] que horas sao
+[2026-05-23 12:36:42] [RESPOSTA] Certo. Agora são 12:36:42.
+[2026-05-23 12:36:45] [COMANDO] contexto
+[2026-05-23 12:36:45] [RESPOSTA] Contexto atual da H.U.L.I:
+- usuario_atual: desconhecido
+- proprietario: False
+- visitante: True
+- empresa: Impulso Digital
+- assistente: H.U.L.I
+- voz_ativa: False
+- modo_jarvis: True
+- modo_protecao: INATIVO
+- personalidade: huli
+- bluetooth_padrao: mundial
+- ultimo_comando: que horas sao
+- ultima_intencao: hora
+- iniciado_em: 23/05/2026 12:32:42
+
+[2026-05-23 12:49:56] [COMANDO] sair
+[2026-05-23 12:49:56] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-23 12:50:10] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-23 12:50:13] [COMANDO] contexto
+[2026-05-23 12:50:13] [ERRO] contexto definir_usuario: name 'contexto' is not defined
+[2026-05-23 12:50:13] [ERRO] loop principal: name 'contexto' is not defined
+[2026-05-23 12:50:21] [COMANDO] contexto
+[2026-05-23 12:50:21] [ERRO] contexto definir_usuario: name 'contexto' is not defined
+[2026-05-23 12:50:21] [ERRO] loop principal: name 'contexto' is not defined
+[2026-05-23 13:10:45] [COMANDO] sair
+[2026-05-23 13:10:45] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-23 13:11:02] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-23 13:11:11] [COMANDO] contexto
+[2026-05-23 13:11:11] [RESPOSTA] Contexto atual da H.U.L.I:
+- usuario_atual: Rony
+- proprietario: False
+- visitante: True
+- empresa: Impulso Digital
+- assistente: H.U.L.I
+- voz_ativa: False
+- modo_jarvis: True
+- modo_protecao: INATIVO
+- personalidade: huli
+- bluetooth_padrao: mundial
+- ultimo_comando: None
+- ultima_intencao: None
+- iniciado_em: 23/05/2026 13:10:53
+
+[2026-05-23 13:11:11] [COMANDO] que horas sao
+[2026-05-23 13:11:11] [RESPOSTA] Já resolvo isso antes do café acabar. Agora são 13:11:11.
+[2026-05-23 13:11:11] [COMANDO] contexto
+[2026-05-23 13:11:11] [RESPOSTA] Contexto atual da H.U.L.I:
+- usuario_atual: Rony
+- proprietario: False
+- visitante: True
+- empresa: Impulso Digital
+- assistente: H.U.L.I
+- voz_ativa: False
+- modo_jarvis: True
+- modo_protecao: INATIVO
+- personalidade: huli
+- bluetooth_padrao: mundial
+- ultimo_comando: que horas sao
+- ultima_intencao: hora
+- iniciado_em: 23/05/2026 13:10:53
+
+[2026-05-23 14:09:24] [COMANDO] sair
+[2026-05-23 14:09:24] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-23 14:09:35] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-23 14:09:38] [COMANDO] que horas sao
+[2026-05-23 14:09:38] [RESPOSTA] Entendido. Agora são 14:09:38.
+[2026-05-23 14:09:42] [COMANDO] contexto
+[2026-05-23 14:09:42] [RESPOSTA] Contexto atual da H.U.L.I:
+- usuario_atual: Rony
+- proprietario: False
+- visitante: True
+- empresa: Impulso Digital
+- assistente: H.U.L.I
+- voz_ativa: False
+- modo_jarvis: True
+- modo_protecao: INATIVO
+- personalidade: huli
+- bluetooth_padrao: mundial
+- ultimo_comando: que horas sao
+- ultima_intencao: hora
+- iniciado_em: 23/05/2026 14:09:26
+
+[2026-05-23 14:14:36] [COMANDO] sair
+[2026-05-23 14:14:36] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-23 14:14:42] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-23 14:14:46] [COMANDO] status kernel
+[2026-05-23 14:14:46] [RESPOSTA] 🧠 Kernel H.U.L.I:
+- usuario: Rony
+- proprietario: True
+- modo_conversa: False
+- escuta_continua: False
+- jarvis: False
+- voz: False
+- ultimo_comando: None
+- threads: []
+- uptime: 0:00:07.763513
+
+[2026-05-23 14:14:46] [COMANDO] que horas sao
+[2026-05-23 14:14:46] [RESPOSTA] Entendido. Agora são 14:14:46.
+[2026-05-23 14:15:37] [COMANDO] status kernel
+[2026-05-23 14:15:37] [RESPOSTA] 🧠 Kernel H.U.L.I:
+- usuario: Rony
+- proprietario: True
+- modo_conversa: False
+- escuta_continua: False
+- jarvis: False
+- voz: False
+- ultimo_comando: que horas sao
+- threads: []
+- uptime: 0:00:58.554988
+

@@ -10,6 +10,8 @@ from services import vision_service
 from services import automation_service
 from services import ai_service
 from core_system.router import rotear
+from core_system.context import obter_contexto, resumo_contexto
+
 
 from modules.help_system import obter_ajuda
 from modules.nlp import normalizar_comando_natural
@@ -1394,6 +1396,19 @@ def processar_comando(comando: str):
 
     if comando in ["status jarvis", "jarvis status"]:
         return f"{base} Modo Jarvis: {status_jarvis()}."
+
+
+    # -------------------------
+    # Contexto da H.U.L.I
+    # -------------------------
+    if comando in ["contexto", "status contexto", "contexto huli"]:
+        ctx = resumo_contexto()
+
+        resposta = "Contexto atual da H.U.L.I:\n"
+        for chave, valor in ctx.items():
+            resposta += f"- {chave}: {valor}\n"
+
+        return resposta
 
 
     # -------------------------

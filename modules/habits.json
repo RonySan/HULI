@@ -568,5 +568,14 @@
     "duplo clique": {
         "status sistema": 1,
         "pesquise python": 1
+    },
+    "desativar voz": {
+        "saie": 1
+    },
+    "contexto": {
+        "status contexto": 1
+    },
+    "status contexto": {
+        "contexto huli": 1
     }
 }

@@ -2,6 +2,8 @@ import time
 import threading
 from datetime import datetime
 
+from core_system.context import obter_contexto
+
 from modules.identity import HULIIdentity
 from modules.commands import processar_comando
 from modules.memory import HULIMemory
@@ -223,6 +225,18 @@ def iniciar():
     global encerrar_programa, escuta_continua_ativa, modo_conversa_ativo, current_user
 
     current_user = login()
+    contexto = obter_contexto()
+
+    try:
+        contexto.definir_usuario(
+            usuario=current_user.get("usuario", "desconhecido"),
+            proprietario=current_user.get("owner", False)
+        )
+    except Exception:
+        contexto.definir_usuario(
+            usuario=str(current_user),
+            proprietario=False
+        )
 
     identidade = HULIIdentity()
 

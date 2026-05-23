@@ -3,6 +3,13 @@ import re
 import random
 from datetime import datetime, timedelta
 
+from services import system_service
+from services import voice_service
+from services import memory_service
+from services import vision_service
+from services import automation_service
+from services import ai_service
+
 from modules.help_system import obter_ajuda
 from modules.nlp import normalizar_comando_natural
 from modules.ai import responder_ia, tem_internet, extrair_conhecimento
@@ -329,13 +336,14 @@ def processar_comando(comando: str):
 
     # Voz
     if comando in ["ativar voz", "ativa voz", "voz on", "ligar voz", "modo falante"]:
-        return f"{base} {ativar_voz()}"
+       return f"{base} {voice_service.ativar()}" 
+
 
     if comando in ["parar voz", "desativar voz", "desliga voz", "voz off", "desligar voz", "modo silencioso"]:
-        return f"{base} {desativar_voz()}"
+        return f"{base} {voice_service.desativar()}"
 
     if comando in ["status voz", "voz status"]:
-        status = "ATIVA" if voz_esta_ativa() else "DESATIVADA"
+        status = voice_service.status()
         return f"{base} Voz: {status}."
 
     # Status geral
@@ -344,18 +352,18 @@ def processar_comando(comando: str):
 
     # Windows / Bluetooth
     if comando in ["abrir bluetooth", "bluetooth", "configurar bluetooth"]:
-        return f"{base} {abrir_bluetooth()}"
+        return f"{base} {system_service.bluetooth_abrir()}"
 
     if comando in ["conectar bluetooth", "conectar caixa", "conectar caixa de som"]:
-        return f"{base} {conectar_bluetooth_padrao()}"
+        return f"{base} {system_service.bluetooth_conectar()}"
 
     if comando.startswith("conectar bluetooth "):
         nome = comando.replace("conectar bluetooth ", "", 1).strip()
-        return f"{base} {conectar_bluetooth(nome)}"
+        return f"{base} {system_service.bluetooth_conectar(nome)}"
 
     if comando.startswith("conecta bluetooth "):
         nome = comando.replace("conecta bluetooth ", "", 1).strip()
-        return f"{base} {conectar_bluetooth(nome)}"
+        return f"{base} {system_service.bluetooth_conectar(nome)}"
 
     if comando in ["abrir som", "configurar som"]:
         return f"{base} {abrir_som()}"
@@ -371,10 +379,10 @@ def processar_comando(comando: str):
 
     if comando.startswith("clicar quando aparecer "):
         alvo = comando.replace("clicar quando aparecer ", "", 1).strip()
-        return f"{base} {clicar_quando_aparecer(alvo)}"
+        return f"{base} {vision_service.clicar_texto(alvo)}"
 
     if comando in ["ler tela inteligente", "resumir tela", "o que tem na tela"]:
-        return ler_e_resumir_tela()
+        return vision_service.ler_tela()
 
     if comando.startswith("preencher ") and " com " in comando:
         texto = comando.replace("preencher ", "", 1)
@@ -495,13 +503,13 @@ def processar_comando(comando: str):
             return resposta_web
 
         if intent == "clicar":
-            return clicar()
+            return automation_service.clique()
 
         if intent == "duplo_clique":
-            return duplo_clique()
+            return automation_service.clique_duplo()
 
         if intent == "clique_direito":
-            return clique_direito()
+            return automation_service.clique_direito_mouse()
 
         if intent == "mover_mouse":
             try:
@@ -572,13 +580,13 @@ def processar_comando(comando: str):
     # Controle da voz
     # -------------------------
     if comando in ["ativar voz", "voz on", "ligar voz", "modo falante"]:
-        return f"{base} {ativar_voz()}"
+        return f"{base} {voice_service.ativar()}"
 
     if comando in ["parar voz", "desativar voz", "voz off", "desligar voz", "modo silencioso"]:
-        return f"{base} {desativar_voz()}"
+        return f"{base} {voice_service.desativar()}"
 
     if comando in ["status voz", "voz status"]:
-        status = "ATIVA" if voz_esta_ativa() else "DESATIVADA"
+        status = voice_service.status()
         return f"{base} Voz: {status}."
 
     # -------------------------
@@ -1285,18 +1293,18 @@ def processar_comando(comando: str):
     # Windows / Bluetooth
     # -------------------------
     if comando in ["abrir bluetooth", "bluetooth"]:
-        return f"{base} {abrir_bluetooth()}"
+        return f"{base} {system_service.bluetooth_abrir()}"
 
     if comando in ["conectar bluetooth", "conectar caixa", "conectar caixa de som"]:
-        return f"{base} {conectar_bluetooth_padrao()}"
+        return f"{base} {system_service.bluetooth_conectar()}"
 
     if comando.startswith("conectar bluetooth "):
         nome = comando.replace("conectar bluetooth ", "", 1).strip()
-        return f"{base} {conectar_bluetooth(nome)}"
+        return f"{base} {system_service.bluetooth_conectar(nome)}"
 
     if comando.startswith("conecta bluetooth "):
         nome = comando.replace("conecta bluetooth ", "", 1).strip()
-        return f"{base} {conectar_bluetooth(nome)}"
+        return f"{base} {system_service.bluetooth_conectar(nome)}"
 
     if comando in ["abrir som", "configurar som"]:
         return f"{base} {abrir_som()}"
@@ -1314,10 +1322,10 @@ def processar_comando(comando: str):
 
     if comando.startswith("clicar quando aparecer "):
         alvo = comando.replace("clicar quando aparecer ", "", 1).strip()
-        return f"{base} {clicar_quando_aparecer(alvo)}"
+        return f"{base} {vision_service.clicar_texto(alvo)}"
 
     if comando in ["ler tela inteligente", "resumir tela", "o que tem na tela"]:
-        return ler_e_resumir_tela()
+        return vision_service.ler_tela()
 
     if comando.startswith("preencher " ) and " com " in comando:
         texto = comando.replace("preencher ", "", 1)

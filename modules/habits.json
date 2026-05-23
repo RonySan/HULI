@@ -140,7 +140,8 @@
         "missao pesquisar python": 1
     },
     "clicar": {
-        "mostrar logs": 2
+        "mostrar logs": 2,
+        "duplo clique": 1
     },
     "mostrar logs": {
         "listar autoexecucoes": 1,
@@ -236,7 +237,8 @@
         "huli cumprimenta minha namorada gisele": 1,
         "oi huli a sandra minha miga esta comigo aqui, se apresente pra ela": 1,
         "diz oi huli": 1,
-        "que dia e hoje ?": 1
+        "que dia e hoje ?": 1,
+        "status voz": 1
     },
     "obrigado huli": {
         "voce e otima huli": 1,
@@ -368,7 +370,8 @@
         "status voz": 1
     },
     "status voz": {
-        "parar voz": 1
+        "parar voz": 1,
+        "abrir bluetooth": 1
     },
     "parar voz": {
         "ajuda": 1
@@ -460,17 +463,19 @@
         "quem é gisele": 1
     },
     "abrir bluetooth": {
-        "conectar bluetooth mundial": 1,
+        "conectar bluetooth mundial": 2,
         "abrir github depois pesquise python": 1
     },
     "conectar bluetooth mundial": {
-        "conectar caixa de som": 1
+        "conectar caixa de som": 1,
+        "o que tem na tela": 1
     },
     "conectar caixa de som": {
         "adicione novo bluetooth": 1
     },
     "o que tem na tela": {
-        "encontrar na tela entrar": 1
+        "encontrar na tela entrar": 1,
+        "clicar": 1
     },
     "encontrar na tela entrar": {
         "clicar quando aparecer entrar": 1
@@ -552,5 +557,11 @@
     },
     "status intimidade": {
         "preciso relaxar um pouco huli": 1
+    },
+    "ativar jarvis": {
+        "ativar voz": 1
+    },
+    "duplo clique": {
+        "status sistema": 1
     }
 }

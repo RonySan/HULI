@@ -108,7 +108,7 @@ def falar_se_permitido(texto):
 
 def executar_comando(comando: str):
     global encerrar_programa, ultimo_comando, sugestao_pendente
-
+    kernel = obter_kernel()
     if not comando:
         return
 
@@ -159,6 +159,7 @@ def executar_comando(comando: str):
         print("H.U.L.I: Encerrando operações. Até logo, Rony.")
         falar_se_permitido("Encerrando operações. Até logo, Rony.")
 
+        kernel.desligar()
         encerrar_programa = True
         return
 
@@ -196,6 +197,7 @@ def executar_comando(comando: str):
         print("H.U.L.I: Encerrando operações. Até logo, Rony.")
         falar_se_permitido("Encerrando operações. Até logo, Rony.")
 
+        kernel.desligar()
         encerrar_programa = True
         return
 
@@ -247,7 +249,9 @@ def modo_escuta_continua(stop_event: threading.Event):
 
     print("🎙️ Escuta contínua ativada. Diga 'huli' + comando.")
 
-    while not stop_event.is_set() and escuta_continua_ativa:
+    kernel = obter_kernel()
+
+    while not stop_event.is_set() and kernel.escuta_continua:
         try:
             comando_voz = ouvir_com_ativacao(
                 timeout=6,
@@ -263,7 +267,7 @@ def modo_escuta_continua(stop_event: threading.Event):
 
         time.sleep(0.5)
 
-    print("🎙️ Escuta contínua encerrada.")
+        print("🎙️ Escuta contínua encerrada.")
 
 
 def modo_conversa_continua(stop_event: threading.Event):
@@ -274,7 +278,9 @@ def modo_conversa_continua(stop_event: threading.Event):
 
     falar_se_permitido("Modo conversa contínua ativado.")
 
-    while not stop_event.is_set() and modo_conversa_ativo:
+    kernel = obter_kernel()
+
+    while not stop_event.is_set() and kernel.modo_conversa:
         try:
             comando_voz = ouvir_natural(
                 timeout=8,
@@ -399,6 +405,8 @@ def iniciar():
         daemon=True
     )
     t_lembretes.start()
+    kernel.registrar_thread("agendamentos")
+    kernel.registrar_thread("lembretes")
 
     t_agendamentos = threading.Thread(
         target=monitor_agendamentos,
@@ -407,7 +415,7 @@ def iniciar():
     )
     t_agendamentos.start()
 
-    while not encerrar_programa:
+    while kernel.esta_ativo() and not encerrar_programa:
         try:
             comando = input("Você: ").strip()
 
@@ -428,6 +436,7 @@ def iniciar():
                     continue
 
                 escuta_continua_ativa = True
+                kernel.ativar_escuta()
 
                 print("H.U.L.I: Escuta contínua ativada.")
                 falar_se_permitido("Escuta contínua ativada.")
@@ -438,6 +447,7 @@ def iniciar():
                     daemon=True
                 )
                 t_escuta.start()
+                kernel.registrar_thread("escuta_continua")
 
                 continue
 
@@ -447,6 +457,7 @@ def iniciar():
                 "encerrar escuta"
             ]:
                 escuta_continua_ativa = False
+                kernel.desativar_escuta()
 
                 print("H.U.L.I: Escuta contínua desativada.")
                 falar_se_permitido("Escuta contínua desativada.")
@@ -465,6 +476,7 @@ def iniciar():
                     continue
 
                 modo_conversa_ativo = True
+                kernel.ativar_conversa()
 
                 t_conversa = threading.Thread(
                     target=modo_conversa_continua,
@@ -472,6 +484,7 @@ def iniciar():
                     daemon=True
                 )
                 t_conversa.start()
+                kernel.registrar_thread("modo_conversa")
 
                 continue
 
@@ -481,6 +494,7 @@ def iniciar():
                 "encerrar conversa"
             ]:
                 modo_conversa_ativo = False
+                kernel.desativar_conversa()
 
                 print("H.U.L.I: Modo conversa desativado.")
                 falar_se_permitido("Modo conversa desativado.")

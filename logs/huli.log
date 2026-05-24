@@ -8985,3 +8985,71 @@ precisar de ajuda. Como posso ajudá-lo?
 - threads: []
 - uptime: 0:00:58.554988
 
+[2026-05-24 07:14:06] [COMANDO] sair
+[2026-05-24 07:14:06] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-24 07:18:42] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-24 07:18:48] [COMANDO] que horas sao
+[2026-05-24 07:18:48] [RESPOSTA] Perfeito. Agora são 07:18:48.
+[2026-05-24 07:18:48] [COMANDO] status kernel
+[2026-05-24 07:18:48] [RESPOSTA] 🧠 Kernel H.U.L.I:
+- usuario: Rony
+- proprietario: True
+- modo_conversa: False
+- escuta_continua: False
+- jarvis: False
+- voz: False
+- ultimo_comando: que horas sao
+- threads: ['agendamentos', 'lembretes']
+- uptime: 0:00:14.301054
+
+[2026-05-24 07:18:52] [COMANDO] sair
+[2026-05-24 07:18:52] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-24 09:35:59] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-24 09:36:03] [COMANDO] status kernel
+[2026-05-24 09:36:03] [RESPOSTA] 🧠 Kernel H.U.L.I:
+- usuario: Rony
+- proprietario: True
+- modo_conversa: False
+- escuta_continua: False
+- jarvis: False
+- voz: False
+- ultimo_comando: None
+- threads: ['agendamentos', 'lembretes']
+- uptime: 0:00:09.289887
+
+[2026-05-24 09:36:03] [COMANDO] status kernel
+[2026-05-24 09:36:03] [RESPOSTA] 🧠 Kernel H.U.L.I:
+- usuario: Rony
+- proprietario: True
+- modo_conversa: False
+- escuta_continua: True
+- jarvis: False
+- voz: False
+- ultimo_comando: status kernel
+- threads: ['agendamentos', 'lembretes', 'escuta_continua']
+- uptime: 0:00:09.295425
+
+[2026-05-24 09:36:03] [COMANDO] status kernel
+[2026-05-24 09:36:03] [RESPOSTA] 🧠 Kernel H.U.L.I:
+- usuario: Rony
+- proprietario: True
+- modo_conversa: False
+- escuta_continua: False
+- jarvis: False
+- voz: False
+- ultimo_comando: status kernel
+- threads: ['agendamentos', 'lembretes', 'escuta_continua']
+- uptime: 0:00:09.303711
+
+[2026-05-24 09:36:03] [COMANDO] status kernel
+[2026-05-24 09:36:03] [RESPOSTA] 🧠 Kernel H.U.L.I:
+- usuario: Rony
+- proprietario: True
+- modo_conversa: True
+- escuta_continua: False
+- jarvis: False
+- voz: False
+- ultimo_comando: status kernel
+- threads: ['agendamentos', 'lembretes', 'escuta_continua', 'modo_conversa']
+- uptime: 0:00:09.316347
+

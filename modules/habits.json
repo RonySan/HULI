@@ -431,7 +431,7 @@
         "que horas são ?": 1,
         "status sistema": 1,
         "contexto": 3,
-        "status kernel": 1
+        "status kernel": 2
     },
     "que horas são ?": {
         "remedio de 8 em 8 horas a partir das 6:30 por 10 dias": 1
@@ -582,6 +582,7 @@
         "contexto huli": 1
     },
     "status kernel": {
-        "que horas sao": 1
+        "que horas sao": 1,
+        "status kernel": 3
     }
 }

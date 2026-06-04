@@ -12,6 +12,8 @@ from services import ai_service
 from core_system.router import rotear
 from core_system.context import obter_contexto, resumo_contexto
 from core_system.kernel import obter_kernel
+from core_system.event_bus import emitir_evento, listar_eventos
+
 
 
 from modules.help_system import obter_ajuda
@@ -348,10 +350,22 @@ def processar_comando(comando: str):
 
     # Voz
     if comando in ["ativar voz", "ativa voz", "voz on", "ligar voz", "modo falante"]:
-       return f"{base} {voice_service.ativar()}" 
+        kernel = obter_kernel()
+        kernel.ativar_voz()
+        emitir_evento(
+            "voz_ativada",
+            origem="voice_service"
+        )
+        return f"{base} {voice_service.ativar()}"
 
 
     if comando in ["parar voz", "desativar voz", "desliga voz", "voz off", "desligar voz", "modo silencioso"]:
+        kernel = obter_kernel()
+        kernel.desativar_voz()
+        emitir_evento(
+            "voz_desativada",
+            origem="voice_service"
+        )
         return f"{base} {voice_service.desativar()}"
 
     if comando in ["status voz", "voz status"]:
@@ -434,9 +448,21 @@ def processar_comando(comando: str):
 
     # Modo Jarvis
     if comando in ["modo jarvis", "ativar jarvis", "ativar modo jarvis"]:
+        kernel = obter_kernel()
+        kernel.ativar_jarvis()
+        emitir_evento(
+            "jarvis_ativado",
+            origem="jarvis_mode"
+        )
         return f"{base} {ativar_modo_jarvis()}"
 
     if comando in ["desativar jarvis", "parar jarvis", "desligar jarvis"]:
+        kernel = obter_kernel()
+        kernel.desativar_jarvis()
+        emitir_evento(
+            "jarvis_desativado",
+            origem="jarvis_mode"
+        )
         return f"{base} {desativar_modo_jarvis()}"
 
     if comando in ["status jarvis", "jarvis status"]:
@@ -1421,6 +1447,29 @@ def processar_comando(comando: str):
         resposta = "🧠 Kernel H.U.L.I:\n"
         for chave, valor in dados.items():
             resposta += f"- {chave}: {valor}\n"
+
+        return resposta
+    
+    if comando in [
+    "eventos",
+    "mostrar eventos",
+    "ultimos eventos"
+]:
+
+        eventos = listar_eventos()
+
+        if not eventos:
+            return "Nenhum evento registrado."
+
+        resposta = "📡 Eventos recentes:\n\n"
+
+        for item in eventos:
+
+            resposta += (
+                f"[{item['hora']}] "
+                f"{item['evento']} "
+                f"({item['origem']})\n"
+            )
 
         return resposta
 

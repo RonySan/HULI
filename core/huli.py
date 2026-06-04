@@ -316,7 +316,7 @@ def modo_conversa_continua(stop_event: threading.Event):
 
 
 def registrar_usuario_no_contexto(usuario_logado):
-    contexto = obter_contexto()
+    kernel = obter_kernel()
 
     try:
         usuario = "desconhecido"
@@ -331,28 +331,27 @@ def registrar_usuario_no_contexto(usuario_logado):
                 or "desconhecido"
             )
 
-            proprietario = (
+            proprietario = bool(
                 usuario_logado.get("owner")
                 or usuario_logado.get("is_owner")
+                or usuario_logado.get("proprietario")
+                or usuario_logado.get("proprietário")
+                or usuario_logado.get("admin")
                 or False
             )
-
         else:
             usuario = str(usuario_logado)
 
-        contexto.definir_usuario(
-            usuario=usuario,
+        kernel.definir_usuario(
+            nome=usuario,
             proprietario=proprietario
         )
 
     except Exception as e:
-        registrar_log(
-            "erro",
-            f"contexto definir_usuario: {e}"
-        )
+        registrar_log("erro", f"kernel definir_usuario: {e}")
 
-        contexto.definir_usuario(
-            usuario="desconhecido",
+        kernel.definir_usuario(
+            nome="desconhecido",
             proprietario=False
         )
 

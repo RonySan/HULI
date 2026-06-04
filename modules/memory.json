@@ -12,5 +12,12 @@
         "categoria": "geral",
         "data": "19/05/2026",
         "hora": "16:36:05"
+    },
+    {
+        "id": 3,
+        "conteudo": "00 ir trabalhar",
+        "categoria": "lembretes",
+        "quando": "2026-05-27 06:00:00",
+        "executado": true
     }
 ]

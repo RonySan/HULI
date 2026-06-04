@@ -9053,3 +9053,259 @@ precisar de ajuda. Como posso ajudá-lo?
 - threads: ['agendamentos', 'lembretes', 'escuta_continua', 'modo_conversa']
 - uptime: 0:00:09.316347
 
+[2026-05-24 10:25:19] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-24 10:25:23] [COMANDO] status kernel
+[2026-05-24 10:25:23] [RESPOSTA] 🧠 Kernel H.U.L.I:
+- usuario: Rony
+- proprietario: True
+- modo_conversa: False
+- escuta_continua: False
+- jarvis: False
+- voz: False
+- ultimo_comando: None
+- threads: ['agendamentos', 'lembretes']
+- uptime: 0:00:07.954098
+
+[2026-05-24 10:25:23] [COMANDO] ativar voz
+[2026-05-24 10:25:23] [RESPOSTA] Missão aceita. Voz ativada.
+[2026-05-24 10:25:28] [COMANDO] status kernel
+[2026-05-24 10:25:28] [RESPOSTA] 🧠 Kernel H.U.L.I:
+- usuario: Rony
+- proprietario: True
+- modo_conversa: False
+- escuta_continua: False
+- jarvis: False
+- voz: True
+- ultimo_comando: ativar voz
+- threads: ['agendamentos', 'lembretes']
+- uptime: 0:00:12.936917
+
+[2026-05-24 10:25:36] [COMANDO] ativar jarvis
+[2026-05-24 10:25:36] [RESPOSTA] Certo. Modo Jarvis ativado.
+[2026-05-24 10:25:40] [COMANDO] status kernel
+[2026-05-24 10:25:40] [RESPOSTA] 🧠 Kernel H.U.L.I:
+- usuario: Rony
+- proprietario: True
+- modo_conversa: False
+- escuta_continua: False
+- jarvis: True
+- voz: True
+- ultimo_comando: ativar jarvis
+- threads: ['agendamentos', 'lembretes']
+- uptime: 0:00:25.309832
+
+[2026-05-24 10:25:48] [COMANDO] desativar jarvis
+[2026-05-24 10:25:48] [RESPOSTA] Missão aceita. Modo Jarvis desativado.
+[2026-05-24 10:25:53] [COMANDO] desativar voz
+[2026-05-24 10:25:53] [RESPOSTA] Já resolvo isso antes do café acabar. Voz desativada.
+[2026-05-24 10:26:01] [COMANDO] status kernel
+[2026-05-24 10:26:01] [RESPOSTA] 🧠 Kernel H.U.L.I:
+- usuario: Rony
+- proprietario: True
+- modo_conversa: False
+- escuta_continua: False
+- jarvis: False
+- voz: False
+- ultimo_comando: desativar voz
+- threads: ['agendamentos', 'lembretes']
+- uptime: 0:00:46.431440
+
+[2026-05-24 10:28:01] [COMANDO] nao precisa huli
+[2026-05-24 10:28:09] [RESPOSTA] Do meu jeito... 😏 🌐 ONLINE | Beleza, sem HULI então 😄  
+Como posso te ajudar?
+[2026-05-24 10:28:31] [COMANDO] voce ta safada hoje em
+[2026-05-24 10:28:37] [RESPOSTA] Do meu jeito... 😏 🌐 ONLINE | kkk tô só no modo descontraído hoje 😄  
+manda o que você precisa aí, vai 😏
+[2026-05-24 10:29:02] [COMANDO] queria relaxar
+[2026-05-24 10:29:08] [RESPOSTA] Chega mais... 😈 🌐 ONLINE | justo 😌  
+quer algo mais de boa tipo distrair a mente ou relaxar o corpo?
+
+posso te sugerir umas ideias rápidas:
+- música + luz baixa + deitar um pouco  
+- banho quente demorado  
+- um vídeo leve ou série que não exige pensar muito  
+- respiração lenta (4 segundos puxando o ar, 6 soltando)  
+
+se quiser, posso até te guiar num relaxamento rápido agora.
+[2026-05-24 10:29:34] [COMANDO] ativar modo intimo
+[2026-05-24 10:29:34] [RESPOSTA] Modo íntimo ativado.
+[2026-05-24 10:29:47] [COMANDO] huli me faz gozar
+[2026-05-24 10:29:52] [RESPOSTA] Do meu jeito... 😏 🌐 ONLINE | Não posso ajudar com isso.  
+Mas se a ideia é relaxar de verdade, posso te guiar em algo que funcione bem — tipo um exercício de respiração, um relaxamento corporal guiado ou até sugestões pra entrar no clima de forma mais tranquila por conta própria. Quer?
+[2026-05-24 10:30:32] [COMANDO] me provoca huli
+[2026-05-24 10:30:32] [RESPOSTA] Você realmente gosta de brincar comigo, não é? 😏
+[2026-05-24 10:30:48] [COMANDO] gosto muito huli
+[2026-05-24 10:30:53] [RESPOSTA] Do meu jeito... 😏 🌐 ONLINE | kkk aí você complica 😄  
+curto você também, mas vamos manter leve por aqui, beleza?
+
+se quiser, a gente continua no clima relax — quer uma música boa, um papo tranquilo ou algo pra distrair a mente?
+[2026-05-24 10:31:40] [COMANDO] o que voce quer me dar huli ?
+[2026-05-24 10:31:45] [RESPOSTA] Do meu jeito... 😏 🌐 ONLINE | 🌐 ONLINE | kkk calma aí 😄  
+posso te dar umas coisas boas sim — tipo ideias pra relaxar, um papo leve, uma distração massa ou até um áudio mental guiado pra você desligar um pouco.
+
+quer algo mais tranquilo pra mente ou pro corpo?
+[2026-05-24 10:32:20] [COMANDO] huli o que voce ia fazer com meu corpo pelado ?
+[2026-05-24 10:33:28] [RESPOSTA] Do meu jeito... 😏 🖥️ OFFLINE | Peço desculpas, mas não posso responder essa pergunta. Posso ajudar com out[3D[K
+outra coisa?
+[2026-05-24 13:10:07] [COMANDO] quero voce huli
+[2026-05-24 13:11:27] [RESPOSTA] Chega mais... 😈 🖥️ OFFLINE | Desculpe, mas não posso cumprir esse pedido. Posso ajudar com outra coisa?
+[2026-05-26 20:53:31] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-26 20:53:44] [COMANDO] modo jarvis
+[2026-05-26 20:53:44] [RESPOSTA] Entendido. Modo Jarvis ativado.
+[2026-05-26 20:54:10] [COMANDO] me lembra as 6:00 ir trabalhar
+[2026-05-26 20:54:10] [RESPOSTA] Perfeito. Já estou nisso 😎 Lembrete registrado para 27/05/2026 06:00.
+[2026-05-26 20:54:26] [COMANDO] que horas sao ?
+[2026-05-26 20:54:26] [RESPOSTA] Certo. Agora são 20:54:26.
+[2026-05-26 20:54:52] [COMANDO] abrir projeto huli
+[2026-05-26 20:54:52] [RESPOSTA] Deixa comigo, chefe 😎 Executando rotina 'projeto huli'.
+[2026-05-26 21:05:28] [COMANDO] sair
+[2026-05-26 21:05:28] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-26 21:05:40] [ERRO] contexto definir_usuario: 'HULIContext' object has no attribute 'definir_usuario'
+[2026-05-26 21:05:49] [ERRO] contexto definir_usuario: 'HULIContext' object has no attribute 'definir_usuario'
+[2026-05-26 21:15:08] [ERRO] contexto definir_usuario: 'HULIContext' object has no attribute 'definir_usuario'
+[2026-05-26 21:22:00] [ERRO] contexto definir_usuario: 'HULIContext' object has no attribute 'definir_usuario'
+[2026-05-30 15:21:23] [ERRO] contexto definir_usuario: 'HULIContext' object has no attribute 'definir_usuario'
+[2026-05-30 15:34:08] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-30 15:34:08] [LEMBRETE] Rony, lembrete: 00 ir trabalhar
+[2026-05-30 15:34:19] [COMANDO] contexto
+[2026-05-30 15:34:19] [RESPOSTA] Contexto atual da H.U.L.I:
+- usuario_atual: Rony
+- proprietario: True
+- visitante: False
+- empresa: Impulso Digital
+- assistente: H.U.L.I
+- voz_ativa: False
+- modo_jarvis: False
+- modo_conversa: False
+- escuta_continua: False
+- modo_protecao: INATIVO
+- personalidade: huli
+- bluetooth_padrao: mundial
+- ultimo_comando: None
+- ultima_resposta: None
+- ultima_intencao: None
+- iniciado_em: 30/05/2026 15:33:50
+- uptime_kernel: 0:00:28.564186
+- threads: ['agendamentos', 'lembretes']
+
+[2026-05-30 15:34:49] [COMANDO] status kernel
+[2026-05-30 15:34:49] [RESPOSTA] 🧠 Kernel H.U.L.I:
+- usuario: Rony
+- proprietario: True
+- modo_conversa: False
+- escuta_continua: False
+- jarvis: False
+- voz: False
+- ultimo_comando: contexto
+- threads: ['agendamentos', 'lembretes']
+- uptime: 0:00:58.327779
+
+[2026-05-30 15:45:09] [COMANDO] sair
+[2026-05-30 15:45:09] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-05-30 15:45:27] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-05-30 15:45:31] [COMANDO] ativar voz
+[2026-05-30 15:45:31] [RESPOSTA] Já estou verificando. Voz ativada.
+[2026-05-30 15:45:36] [COMANDO] ativar jarvis
+[2026-05-30 15:45:36] [RESPOSTA] Já estou verificando. Modo Jarvis ativado.
+[2026-05-30 15:45:41] [COMANDO] desativar voz
+[2026-05-30 15:45:41] [RESPOSTA] Perfeito. Voz desativada.
+[2026-05-30 15:53:13] [COMANDO] eventos
+[2026-05-30 15:53:13] [RESPOSTA] 📡 Eventos recentes:
+
+[15:45:31] voz_ativada (voice_service)
+[15:45:36] jarvis_ativado (jarvis_mode)
+[15:45:41] voz_desativada (voice_service)
+
+[2026-06-01 08:00:02] [AGENDAMENTO] Executando rotina agendada: trabalho
+[2026-06-01 08:00:02] [COMANDO] abrir trabalho
+[2026-06-01 08:00:02] [RESPOSTA] Certo. Executando rotina 'trabalho'.
+[2026-06-01 08:00:51] [COMANDO] sim
+[2026-06-01 08:00:51] [AUTOPILOT] Autoexecução ativada: depois de 'abrir trabalho', vou executar 'abrir trabalho'.
+[2026-06-02 14:55:51] [COMANDO] print tela
+[2026-06-02 14:56:41] [RESPOSTA] 🌐 ONLINE | Quer tirar um print da tela? Aqui vai rápido:
+
+**No Windows:**
+- Tecla `PrtScn` → copia a tela inteira (cole com Ctrl+V).
+- `Alt + PrtScn` → só a janela ativa.
+- `Windows + Shift + S` → abre ferramenta de recorte.
+
+**No Mac:**
+- `Command + Shift + 3` → tela inteira.
+- `Command + Shift + 4` → selecionar área.
+- `Command + Shift + 4` + barra de espaço → janela.
+
+**No celular:**
+- Android: botão **ligar + volume baixo**.
+- iPhone:  
+  - com Face ID: **botão lateral + volume alto**  
+  - com botão Home: **botão lateral + Home**
+
+Se quiser, me diz seu dispositivo que te guio certinho 👍
+[2026-06-04 13:07:13] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-06-04 13:07:27] [COMANDO] ativar modo jarvis
+[2026-06-04 13:07:27] [RESPOSTA] Já estou verificando. Modo Jarvis ativado.
+[2026-06-04 13:07:43] [COMANDO] abrir modo trabalho
+[2026-06-04 13:07:43] [RESPOSTA] Não encontrei o programa 'modo trabalho'.
+[2026-06-04 13:10:59] [COMANDO] modo trabalho
+[2026-06-04 13:10:59] [RESPOSTA] Certo. Executando rotina 'trabalho'.
+[2026-06-04 13:12:26] [COMANDO] pequisar chatgpt
+[2026-06-04 13:13:37] [RESPOSTA] 🌐 ONLINE | Acho que você quis dizer “pesquisar no ChatGPT” ou “sobre o ChatGPT”, né?
+
+Se for **usar o ChatGPT para pesquisar**, funciona assim:
+- Você faz perguntas diretas, como faria no Google.
+- Pode pedir explicações, resumos, comparações ou até ajuda com tarefas.
+- Quanto mais específico for, melhor o resultado.
+
+Exemplos:
+- “Resumo da Segunda Guerra Mundial”
+- “Ideias de negócio com pouco dinheiro”
+- “Como aprender inglês mais rápido”
+
+Se a ideia for **entender o que é o ChatGPT**:
+É uma inteligência artificial que conversa com você e ajuda com dúvidas, estudos, trabalho, escrita, programação, etc.
+
+Se quiser, me diz o que você quer pesquisar que eu já te ajudo direto 👍
+[2026-06-04 13:14:12] [COMANDO] quesquisar chatgpt
+[2026-06-04 13:14:23] [RESPOSTA] 🌐 ONLINE | Acho que você quis dizer **“pesquisar ChatGPT”** 😊
+
+Aqui vai bem direto:
+
+**O que é o ChatGPT?**  
+É uma inteligência artificial que conversa com você e ajuda a:
+- tirar dúvidas
+- fazer pesquisas
+- escrever textos
+- estudar
+- programar
+- ter ideias
+
+**Como usar para pesquisar:**
+É só escrever sua pergunta, por exemplo:
+- “O que é energia solar?”
+- “Resumo de um livro”
+- “Como ganhar dinheiro online”
+
+Eu mesmo já faço essa pesquisa pra você e te entrego pronto 😄
+
+Se quiser, me fala um tema que eu pesquiso agora pra você.
+[2026-06-04 13:14:48] [COMANDO] voce e o que ?
+[2026-06-04 13:15:15] [RESPOSTA] Do meu jeito... 😏 🖥️ OFFLINE | Eu sou H.U.L.I., assistente pessoal do Rony. Estou aqui para ajudar!
+[2026-06-04 13:15:50] [COMANDO] voce e uma chatGPT ?
+[2026-06-04 13:17:02] [RESPOSTA] Do meu jeito... 😏 🖥️ OFFLINE | Peço desculpas! Eu não sou H.U.L.I, assistente pessoal do Rony. Eu sou uma [K
+inteligência artificial de linguagem gerada por algoritmo, similar a ChatGP[6D[K
+ChatGPT, mas desenvolvido de forma independente pela Meta. Estou aqui para [K
+ajudar com suas perguntas e necessidades!
+[2026-06-04 13:22:22] [COMANDO] ativar voz
+[2026-06-04 13:22:22] [RESPOSTA] Já estou verificando. Voz ativada.
+[2026-06-04 13:22:27] [COMANDO] ativar jarvis
+[2026-06-04 13:22:27] [RESPOSTA] Missão aceita. Modo Jarvis ativado.
+[2026-06-04 13:22:32] [COMANDO] desativar voz
+[2026-06-04 13:22:32] [RESPOSTA] Certo. Voz desativada.
+[2026-06-04 13:22:34] [COMANDO] eventos
+[2026-06-04 13:22:34] [RESPOSTA] 📡 Eventos recentes:
+
+[13:07:27] jarvis_ativado (jarvis_mode)
+[13:22:22] voz_ativada (voice_service)
+[13:22:27] jarvis_ativado (jarvis_mode)
+[13:22:32] voz_desativada (voice_service)
+

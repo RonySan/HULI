@@ -38,6 +38,22 @@ class HULIKernel:
         return not self.encerrar_programa
 
     # =====================================================
+    # VOZ / JARVIS
+    # =====================================================
+
+    def ativar_voz(self):
+        self.voz_ativa = True
+
+    def desativar_voz(self):
+        self.voz_ativa = False
+
+    def ativar_jarvis(self):
+        self.jarvis_ativo = True
+
+    def desativar_jarvis(self):
+        self.jarvis_ativo = False
+
+    # =====================================================
     # MODOS
     # =====================================================
 

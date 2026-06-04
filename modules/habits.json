@@ -168,7 +168,8 @@
     "abrir trabalho": {
         "abrir trabalho": 2,
         "abrir estudo segunda sexta": 1,
-        "huli abrir email": 1
+        "huli abrir email": 1,
+        "print tela": 1
     },
     "abrir estudo segunda sexta": {
         "abrir trabalho": 1
@@ -240,7 +241,9 @@
         "oi huli a sandra minha miga esta comigo aqui, se apresente pra ela": 1,
         "diz oi huli": 1,
         "que dia e hoje ?": 1,
-        "status voz": 1
+        "status voz": 1,
+        "status kernel": 1,
+        "ativar jarvis": 2
     },
     "obrigado huli": {
         "voce e otima huli": 1,
@@ -516,7 +519,8 @@
     "modo jarvis": {
         "status jarvis": 1,
         "que dia e hoje ?": 1,
-        "comando de voz": 1
+        "comando de voz": 1,
+        "me lembra as 6:00 ir trabalhar": 1
     },
     "huli, atualisei o meu androide ro realmi 75c, e agora ele reiciniou e tela esta travada, nao consigo diditar a senha, o que eu faco ?": {
         "forcei o desligamento e agora a esta com un monte de chuviscos parecendo tv antiga dos anos 90 sem sinal, e agora ?": 1
@@ -565,24 +569,93 @@
         "preciso relaxar um pouco huli": 1
     },
     "ativar jarvis": {
-        "ativar voz": 1
+        "ativar voz": 1,
+        "status kernel": 1,
+        "desativar voz": 2
     },
     "duplo clique": {
         "status sistema": 1,
         "pesquise python": 1
     },
     "desativar voz": {
-        "saie": 1
+        "saie": 1,
+        "status kernel": 1,
+        "eventos": 2
     },
     "contexto": {
         "status contexto": 1,
-        "que horas sao": 1
+        "que horas sao": 1,
+        "status kernel": 1
     },
     "status contexto": {
         "contexto huli": 1
     },
     "status kernel": {
         "que horas sao": 1,
-        "status kernel": 3
+        "status kernel": 3,
+        "ativar voz": 1,
+        "ativar jarvis": 1,
+        "desativar jarvis": 1,
+        "nao precisa huli": 1
+    },
+    "desativar jarvis": {
+        "desativar voz": 1
+    },
+    "nao precisa huli": {
+        "voce ta safada hoje em": 1
+    },
+    "voce ta safada hoje em": {
+        "queria relaxar": 1
+    },
+    "queria relaxar": {
+        "ativar modo intimo": 1
+    },
+    "ativar modo intimo": {
+        "huli me faz gozar": 1
+    },
+    "huli me faz gozar": {
+        "me provoca huli": 1
+    },
+    "me provoca huli": {
+        "gosto muito huli": 1
+    },
+    "gosto muito huli": {
+        "o que voce quer me dar huli ?": 1
+    },
+    "o que voce quer me dar huli ?": {
+        "huli o que voce ia fazer com meu corpo pelado ?": 1
+    },
+    "huli o que voce ia fazer com meu corpo pelado ?": {
+        "quero voce huli": 1
+    },
+    "me lembra as 6:00 ir trabalhar": {
+        "que horas sao ?": 1
+    },
+    "que horas sao ?": {
+        "abrir projeto huli": 1
+    },
+    "eventos": {
+        "abrir trabalho": 1
+    },
+    "ativar modo jarvis": {
+        "abrir modo trabalho": 1
+    },
+    "abrir modo trabalho": {
+        "modo trabalho": 1
+    },
+    "modo trabalho": {
+        "pequisar chatgpt": 1
+    },
+    "pequisar chatgpt": {
+        "quesquisar chatgpt": 1
+    },
+    "quesquisar chatgpt": {
+        "voce e o que ?": 1
+    },
+    "voce e o que ?": {
+        "voce e uma chatgpt ?": 1
+    },
+    "voce e uma chatgpt ?": {
+        "ativar voz": 1
     }
 }

@@ -13,6 +13,7 @@ from core_system.router import rotear
 from core_system.context import obter_contexto, resumo_contexto
 from core_system.kernel import obter_kernel
 from core_system.event_bus import emitir_evento, listar_eventos
+from core_system.skill_manager import listar_skills, obter_skill
 
 
 
@@ -275,6 +276,49 @@ def processar_comando(comando: str):
     # -------------------------
     # H.U.L.I Core System Router
     # -------------------------
+
+    # Identidade fixa da H.U.L.I
+    if any(frase in comando for frase in [
+        "voce e o que",
+        "você é o que",
+        "quem e voce",
+        "quem é você",
+        "voce e uma chatgpt",
+        "você é uma chatgpt",
+        "voce e um chatgpt",
+        "você é um chatgpt",
+    ]):
+        return (
+            "Eu sou H.U.L.I, Humano Único Leal Inteligente. "
+            "Sou a assistente pessoal do Rony, criada para auxiliar, proteger "
+            "e evoluir junto com meu criador. Eu posso usar IA online ou offline "
+            "como apoio, mas minha identidade é H.U.L.I."
+        )
+
+    # Correção de digitação para pesquisa
+    if comando.startswith("pequisar "):
+        comando = comando.replace("pequisar ", "pesquisar ", 1)
+
+    if comando.startswith("quesquisar "):
+        comando = comando.replace("quesquisar ", "pesquisar ", 1)
+
+    # Rotina com “abrir modo”
+    if comando.startswith("abrir modo "):
+        nome_rotina = comando.replace("abrir modo ", "", 1).strip()
+
+        ok_rotina, resposta_rotina = executar_rotina(
+            nome_rotina,
+            abrir_programa,
+            abrir_site,
+            abrir_pasta,
+            executar_comando_terminal,
+            abrir_arquivo
+        )
+
+        if ok_rotina:
+            return f"{base} {resposta_rotina}"
+
+
     resposta_core = rotear(comando, base)
 
     if resposta_core:
@@ -1470,6 +1514,43 @@ def processar_comando(comando: str):
                 f"{item['evento']} "
                 f"({item['origem']})\n"
             )
+
+        return resposta
+
+
+    # -------------------------
+    # Skills
+    # -------------------------
+
+    if comando in ["listar skills", "skills", "mostrar skills"]:
+
+        skills = listar_skills()
+
+        resposta = "🧩 Skills da H.U.L.I:\n\n"
+
+        for skill in skills:
+            resposta += f"• {skill}\n"
+
+        return resposta
+
+
+    if comando.startswith("skill "):
+
+        nome = comando.replace("skill ", "", 1).strip()
+
+        skill = obter_skill(nome)
+
+        if not skill:
+            return "Não encontrei essa skill."
+
+        resposta = (
+            f"🧩 Skill: {nome}\n\n"
+            f"Descrição: {skill['descricao']}\n\n"
+            f"Módulos:\n"
+        )
+
+        for modulo in skill["modulos"]:
+            resposta += f"• {modulo}\n"
 
         return resposta
 

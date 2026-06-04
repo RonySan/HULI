@@ -635,27 +635,36 @@
         "abrir projeto huli": 1
     },
     "eventos": {
-        "abrir trabalho": 1
+        "abrir trabalho": 1,
+        "huli pesquise sobre compra de andaimes 1por1 na zona sul de sao paulo": 1
     },
     "ativar modo jarvis": {
         "abrir modo trabalho": 1
     },
     "abrir modo trabalho": {
-        "modo trabalho": 1
+        "modo trabalho": 1,
+        "pequisar chatgpt": 1
     },
     "modo trabalho": {
         "pequisar chatgpt": 1
     },
     "pequisar chatgpt": {
-        "quesquisar chatgpt": 1
+        "quesquisar chatgpt": 2
     },
     "quesquisar chatgpt": {
-        "voce e o que ?": 1
+        "voce e o que ?": 1,
+        "voce e uma chatgpt?": 1
     },
     "voce e o que ?": {
         "voce e uma chatgpt ?": 1
     },
     "voce e uma chatgpt ?": {
         "ativar voz": 1
+    },
+    "listar skills": {
+        "skill missoes": 1
+    },
+    "voce e uma chatgpt?": {
+        "voce e o que?": 1
     }
 }

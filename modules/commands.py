@@ -13,7 +13,8 @@ from core_system.router import rotear
 from core_system.context import obter_contexto, resumo_contexto
 from core_system.kernel import obter_kernel
 from core_system.event_bus import emitir_evento, listar_eventos
-from core_system.skill_manager import listar_skills, obter_skill
+
+from core_system.skill_manager import listar_skills, obter_skill, status_skills
 
 
 
@@ -1529,6 +1530,18 @@ def processar_comando(comando: str):
         resposta = "🧩 Skills da H.U.L.I:\n\n"
 
         for skill in skills:
+            resposta += f"• {skill}\n"
+
+        return resposta
+    
+    if comando in ["status skills", "status skill"]:
+        status = status_skills()
+
+        resposta = "🧩 Status das Skills:\n"
+        resposta += f"- Total: {status['total_skills']}\n\n"
+        resposta += "Skills registradas:\n"
+
+        for skill in status["skills"]:
             resposta += f"• {skill}\n"
 
         return resposta

@@ -1,10 +1,4 @@
 [
-    "abrir bluetooth",
-    "conectar bluetooth MUNDIAL",
-    "o que tem na tela",
-    "clicar",
-    "duplo clique",
-    "status sistema",
     "sair",
     "sair",
     "sair",
@@ -98,5 +92,11 @@
     "pequisar chatgpt",
     "quesquisar chatgpt",
     "voce e uma chatgpt?",
-    "voce e o que?"
+    "voce e o que?",
+    "sair",
+    "listar skills",
+    "status skills",
+    "skill jarvis",
+    "skill medicamentos",
+    "skill missoes"
 ]

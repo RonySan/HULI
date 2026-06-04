@@ -9346,3 +9346,79 @@ Módulos:
 [2026-06-04 14:54:05] [RESPOSTA] Eu sou H.U.L.I, Humano Único Leal Inteligente. Sou a assistente pessoal do Rony, criada para auxiliar, proteger e evoluir junto com meu criador. Eu posso usar IA online ou offline como apoio, mas minha identidade é H.U.L.I.
 [2026-06-04 14:54:24] [COMANDO] voce e o que?
 [2026-06-04 14:54:24] [RESPOSTA] Eu sou H.U.L.I, Humano Único Leal Inteligente. Sou a assistente pessoal do Rony, criada para auxiliar, proteger e evoluir junto com meu criador. Eu posso usar IA online ou offline como apoio, mas minha identidade é H.U.L.I.
+[2026-06-04 15:54:35] [COMANDO] sair
+[2026-06-04 15:54:35] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-06-04 15:54:41] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-06-04 15:54:44] [COMANDO] listar skills
+[2026-06-04 15:54:44] [RESPOSTA] 🧩 Skills da H.U.L.I:
+
+• core
+• voz
+• visao
+• automacao
+• sistema
+• ia
+• memoria
+• memoria_inteligente
+• lembretes
+• medicamentos
+• missoes
+• rotinas
+• habitos
+• seguranca
+• perfil
+• logs_backup
+• documentos
+• jarvis
+• social
+• emocional
+• painel
+
+[2026-06-04 15:54:44] [COMANDO] status skills
+[2026-06-04 15:54:44] [RESPOSTA] 🧩 Status das Skills:
+- Total: 21
+
+Skills registradas:
+• core
+• voz
+• visao
+• automacao
+• sistema
+• ia
+• memoria
+• memoria_inteligente
+• lembretes
+• medicamentos
+• missoes
+• rotinas
+• habitos
+• seguranca
+• perfil
+• logs_backup
+• documentos
+• jarvis
+• social
+• emocional
+• painel
+
+[2026-06-04 15:54:44] [COMANDO] skill jarvis
+[2026-06-04 15:54:44] [RESPOSTA] 🧩 Skill: jarvis
+
+Descrição: Modo operacional avançado com voz, contexto e comportamento mais ativo.
+
+Módulos:
+• jarvis_mode.py
+• core_system/kernel.py
+
+[2026-06-04 15:54:44] [COMANDO] skill medicamentos
+[2026-06-04 15:54:44] [RESPOSTA] Entendi que é sobre medicamento, mas não encontrei o intervalo.
+Exemplo: remédio de 8 em 8 horas começando às 06:30 por 10 dias.
+[2026-06-04 15:55:45] [COMANDO] skill missoes
+[2026-06-04 15:55:45] [RESPOSTA] 🧩 Skill: missoes
+
+Descrição: Execução de missões rápidas, salvas e multietapas.
+
+Módulos:
+• missions.py
+• multi_missions.py
+

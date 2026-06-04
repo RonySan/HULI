@@ -662,9 +662,19 @@
         "ativar voz": 1
     },
     "listar skills": {
-        "skill missoes": 1
+        "skill missoes": 1,
+        "status skills": 1
     },
     "voce e uma chatgpt?": {
         "voce e o que?": 1
+    },
+    "status skills": {
+        "skill jarvis": 1
+    },
+    "skill jarvis": {
+        "skill medicamentos": 1
+    },
+    "skill medicamentos": {
+        "skill missoes": 1
     }
 }

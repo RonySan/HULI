@@ -13,8 +13,10 @@ from core_system.router import rotear
 from core_system.context import obter_contexto, resumo_contexto
 from core_system.kernel import obter_kernel
 from core_system.event_bus import emitir_evento, listar_eventos
-
+from core_system.diagnostic import diagnosticar, diagnosticar_formatado
 from core_system.skill_manager import listar_skills, obter_skill, status_skills
+from core_system.session_memory import obter_memoria_sessao
+
 
 
 
@@ -273,6 +275,7 @@ def processar_comando(comando: str):
         return ""
 
     base = personalidade.gerar_resposta_base()
+    memoria_sessao = obter_memoria_sessao()
 
     # -------------------------
     # H.U.L.I Core System Router
@@ -384,6 +387,43 @@ def processar_comando(comando: str):
     resposta_privada = resposta_intima(comando)
     if resposta_privada:
         return resposta_privada
+    
+    # -------------------------
+    # diagnostico
+    # -------------------------
+
+
+    if comando in [
+        "diagnostico completo",
+        "diagnóstico completo",
+        "diagnostico huli completo",
+        "diagnóstico huli completo",
+        "testar huli",
+        "testar sistema",
+        "auto teste",
+        "autoteste",
+    ]:
+        resposta = diagnosticar_formatado()
+
+        memoria_sessao.registrar_interacao(
+            pergunta=comando,
+            resposta=resposta,
+            topico="diagnostico"
+        )
+
+        return resposta
+    
+    if comando in [
+        "diagnostico completo",
+        "diagnóstico completo",
+        "diagnostico huli completo",
+        "diagnóstico huli completo",
+        "testar huli",
+        "testar sistema",
+        "auto teste",
+        "autoteste",
+    ]:
+        return diagnosticar_formatado()
 
     # -------------------------
     # Prioridade máxima: comandos locais antes da IA / Intent Engine
@@ -1005,6 +1045,33 @@ def processar_comando(comando: str):
 
     if comando in ["limpar habitos", "limpar hábitos", "resetar habitos"]:
         return f"{base} {limpar_habitos()}"
+    
+
+    # -------------------------
+    # Autoexplicação pelas skills
+    # -------------------------
+    if comando in [
+        "o que voce sabe fazer",
+        "o que você sabe fazer",
+        "quais sao suas funcoes",
+        "quais são suas funções",
+        "me explique suas skills",
+        "explique suas skills",
+    ]:
+        skills = listar_skills()
+
+        resposta = "Eu sou a H.U.L.I e hoje tenho estas áreas principais:\n\n"
+
+        for nome in skills:
+            skill = obter_skill(nome)
+
+            if not skill:
+                continue
+
+            resposta += f"🧩 {nome.upper()}\n"
+            resposta += f"{skill['descricao']}\n\n"
+
+        return resposta
 
     # -------------------------
     # Ajuda
@@ -1518,13 +1585,11 @@ def processar_comando(comando: str):
 
         return resposta
 
-
     # -------------------------
     # Skills
     # -------------------------
 
     if comando in ["listar skills", "skills", "mostrar skills"]:
-
         skills = listar_skills()
 
         resposta = "🧩 Skills da H.U.L.I:\n\n"
@@ -1533,7 +1598,7 @@ def processar_comando(comando: str):
             resposta += f"• {skill}\n"
 
         return resposta
-    
+
     if comando in ["status skills", "status skill"]:
         status = status_skills()
 
@@ -1546,9 +1611,30 @@ def processar_comando(comando: str):
 
         return resposta
 
+    if comando in [
+        "o que voce sabe fazer",
+        "o que você sabe fazer",
+        "quais sao suas funcoes",
+        "quais são suas funções",
+        "me explique suas skills",
+        "explique suas skills",
+    ]:
+        skills = listar_skills()
+
+        resposta = "Eu sou a H.U.L.I e hoje tenho estas áreas principais:\n\n"
+
+        for nome in skills:
+            skill = obter_skill(nome)
+
+            if not skill:
+                continue
+
+            resposta += f"🧩 {nome.upper()}\n"
+            resposta += f"{skill['descricao']}\n\n"
+
+        return resposta
 
     if comando.startswith("skill "):
-
         nome = comando.replace("skill ", "", 1).strip()
 
         skill = obter_skill(nome)
@@ -1556,16 +1642,131 @@ def processar_comando(comando: str):
         if not skill:
             return "Não encontrei essa skill."
 
-        resposta = (
-            f"🧩 Skill: {nome}\n\n"
-            f"Descrição: {skill['descricao']}\n\n"
-            f"Módulos:\n"
-        )
+        resposta = f"🧩 Skill: {nome}\n\n"
+        resposta += f"Descrição: {skill['descricao']}\n\n"
 
+        resposta += "Módulos:\n"
         for modulo in skill["modulos"]:
             resposta += f"• {modulo}\n"
 
+        resposta += "\nComandos principais:\n"
+        for cmd in skill.get("comandos", []):
+            resposta += f"• {cmd}\n"
+
+
         return resposta
+    
+        # -------------------------
+    # Memória de sessão / conversa contextual
+    # -------------------------
+
+    if comando in [
+        "memoria da sessao",
+        "memória da sessão",
+        "status sessao",
+        "status sessão",
+    ]:
+        resumo = memoria_sessao.resumo()
+
+        resposta = "🧠 Memória de sessão:\n"
+        for chave, valor in resumo.items():
+            resposta += f"- {chave}: {valor}\n"
+
+        return resposta
+
+    if comando in [
+        "ultimas interacoes",
+        "últimas interações",
+        "ultimas conversas",
+        "últimas conversas",
+    ]:
+        interacoes = memoria_sessao.ultimas_interacoes()
+
+        if not interacoes:
+            return "Ainda não tenho interações registradas nesta sessão."
+
+        resposta = "Últimas interações desta sessão:\n\n"
+
+        for item in interacoes:
+            resposta += f"Você: {item['pergunta']}\n"
+            resposta += f"H.U.L.I: {item.get('resposta')}\n\n"
+
+        return resposta
+
+    if any(frase in comando for frase in [
+        "quais sao esses alertas",
+        "quais são esses alertas",
+        "quais foram os alertas",
+        "quais alertas",
+        "os dois alertas",
+        "esses dois alertas",
+        "esses alertas",
+        "alertas do diagnostico",
+        "alertas do diagnóstico",
+    ]):
+        diagnostico = memoria_sessao.obter_ultimo_diagnostico()
+
+        if not diagnostico:
+            return "Ainda não tenho um diagnóstico recente nesta sessão. Rode: diagnostico completo"
+
+        alertas = []
+
+        def procurar_alertas(obj, caminho=""):
+            if isinstance(obj, dict) and obj.get("status") == "ALERTA":
+                alertas.append((caminho, obj.get("detalhe")))
+                return
+
+            if isinstance(obj, dict):
+                for chave, valor in obj.items():
+                    novo_caminho = f"{caminho}.{chave}" if caminho else chave
+                    procurar_alertas(valor, novo_caminho)
+
+        procurar_alertas(diagnostico)
+
+        if not alertas:
+            return "No último diagnóstico não encontrei alertas."
+
+        resposta = "Os alertas do último diagnóstico foram:\n\n"
+
+        for i, (local, detalhe) in enumerate(alertas, 1):
+            resposta += f"{i}. {local}\n"
+            resposta += f"   Motivo: {detalhe}\n"
+
+        resposta += (
+            "\nPelo que vejo, esses alertas não parecem críticos. "
+            "Geralmente indicam arquivos que ainda não foram criados porque a função ainda não gerou dados."
+        )
+
+        return resposta
+
+    if any(frase in comando for frase in [
+        "repete a ultima resposta",
+        "repita a ultima resposta",
+        "repete o que voce falou",
+        "repita o que você falou",
+        "o que voce acabou de dizer",
+        "o que você acabou de dizer",
+    ]):
+        ultima = memoria_sessao.ultima_resposta
+
+        if not ultima:
+            return "Ainda não tenho uma resposta anterior registrada nesta sessão."
+
+        return ultima
+
+    if any(frase in comando for frase in [
+        "sobre o que estamos falando",
+        "qual era o assunto",
+        "qual foi o ultimo assunto",
+        "qual foi o último assunto",
+    ]):
+        resumo = memoria_sessao.resumo()
+        topico = resumo.get("ultimo_topico")
+
+        if not topico:
+            return "Ainda não identifiquei um assunto principal nesta sessão."
+
+        return f"O último assunto registrado foi: {topico}."
 
 
     # -------------------------
@@ -1638,4 +1839,12 @@ def processar_comando(comando: str):
     except Exception:
         pass
 
-    return aplicar_tom_intimo(resposta_ia)
+    resposta_final = aplicar_tom_intimo(resposta_ia)
+
+    memoria_sessao.registrar_interacao(
+        pergunta=comando,
+        resposta=resposta_final,
+        topico="ia"
+    )
+
+    return resposta_final

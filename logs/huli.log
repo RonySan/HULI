@@ -9422,3 +9422,453 @@ Módulos:
 • missions.py
 • multi_missions.py
 
+[2026-06-05 17:28:04] [COMANDO] sair
+[2026-06-05 17:28:04] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-06-05 17:28:57] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-06-05 17:28:59] [COMANDO] diagnostico huli
+[2026-06-05 17:28:59] [RESPOSTA] 🩺 Diagnóstico da H.U.L.I
+
+• kernel: OK
+• context: OK
+• event_bus: OK
+• skill_manager: OK
+• memory: OK
+• missions: OK
+• logger: OK
+• voice: OK
+
+[2026-06-05 17:49:10] [COMANDO] sair
+[2026-06-05 17:49:10] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-06-05 17:49:17] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-06-05 17:49:19] [COMANDO] diagnostico completo
+[2026-06-05 17:49:19] [DIAGNOSTICO] Teste de log automático.
+[2026-06-05 17:49:22] [RESPOSTA] 🩺 DIAGNÓSTICO COMPLETO DA H.U.L.I
+
+Saúde geral: 96.23%
+Testes: 53
+OK: 51
+Alertas: 2
+Erros: 0
+
+📌 IMPORTS
+• kernel: OK - Importado com sucesso.
+• context: OK - Importado com sucesso.
+• event_bus: OK - Importado com sucesso.
+• skill_manager: OK - Importado com sucesso.
+• router: OK - Importado com sucesso.
+• brain: OK - Importado com sucesso.
+• commands: OK - Importado com sucesso.
+• memory: OK - Importado com sucesso.
+• smart_memory: OK - Importado com sucesso.
+• missions: OK - Importado com sucesso.
+• routines: OK - Importado com sucesso.
+• logger: OK - Importado com sucesso.
+• voice: OK - Importado com sucesso.
+• voice_mode: OK - Importado com sucesso.
+• automation: OK - Importado com sucesso.
+• vision: OK - Importado com sucesso.
+• vision_ai: OK - Importado com sucesso.
+• windows_control: OK - Importado com sucesso.
+• medication: OK - Importado com sucesso.
+• settings_manager: OK - Importado com sucesso.
+• jarvis_mode: OK - Importado com sucesso.
+• protection: OK - Importado com sucesso.
+• ai: OK - Importado com sucesso.
+• system_service: OK - Importado com sucesso.
+• voice_service: OK - Importado com sucesso.
+• vision_service: OK - Importado com sucesso.
+• automation_service: OK - Importado com sucesso.
+• memory_service: OK - Importado com sucesso.
+• ai_service: OK - Importado com sucesso.
+
+📌 JSONS
+• modules/missions.json: OK - JSON válido.
+• modules/routines.json: ALERTA - Arquivo não encontrado.
+• modules/habits.json: OK - JSON válido.
+• modules/smart_memory.json: OK - JSON válido.
+• modules/reminders.json: ALERTA - Arquivo não encontrado.
+• config/settings.json: OK - JSON válido.
+
+📌 KERNEL
+• OK: Kernel ativo. Threads: ['agendamentos', 'lembretes']
+
+📌 CONTEXTO
+• OK: Contexto sincronizado com kernel.
+
+📌 EVENT_BUS
+• OK: Event Bus funcionando. Eventos recentes: 1
+
+📌 SKILL_MANAGER
+• OK: 21 skills registradas.
+
+📌 MEMORIA
+• OK: Memória carregada com sucesso.
+
+📌 SMART_MEMORY
+• OK: Smart memory carregada.
+
+📌 MISSOES
+• OK: 2 missões registradas.
+
+📌 ROTINAS
+• OK: 3 rotinas registradas.
+
+📌 CONFIGURACOES
+• OK: Configurações carregadas.
+
+📌 LOGS
+• OK: Logger funcionando.
+
+📌 MEDICAMENTOS
+• OK: Módulo de medicamentos funcionando.
+
+📌 SERVICES
+• system_service: OK - Service carregado.
+• voice_service: OK - Service carregado.
+• vision_service: OK - Service carregado.
+• automation_service: OK - Service carregado.
+• memory_service: OK - Service carregado.
+• ai_service: OK - Service carregado.
+
+📌 IA
+• OK: Internet disponível para IA online.
+
+
+[2026-06-05 17:51:53] [COMANDO] quais sao esses dois alrtas ?
+[2026-06-05 17:52:59] [RESPOSTA] Do meu jeito... 😏 🌐 ONLINE | Pode me dizer quais alertas você está vendo? Se puder, manda o texto ou uma imagem.
+
+Enquanto isso, alguns exemplos comuns de “dois alertas” que aparecem juntos:
+- Segurança: algo como “ameaça detectada” + “ação necessária”
+- Sistema: “armazenamento cheio” + “desempenho reduzido”
+- Navegador: “site não seguro” + “certificado inválido”
+- App: “erro de conexão” + “tentar novamente”
+
+Se você me mostrar exatamente quais são, te explico direitinho e como resolver 👍
+[2026-06-05 17:54:43] [COMANDO] no diaginostico voce me mostro 2 alertas, gostaria de saber quais sao ? e grave ou nao e
+[2026-06-05 17:54:56] [RESPOSTA] 🌐 ONLINE | Entendi, mas eu não tenho como ver um diagnóstico anterior nem guardar alertas de outra conversa. Então esses “2 alertas” que você mencionou não aparecem pra mim aqui.
+
+Vamos resolver rápido: me manda um print ou escreve exatamente o nome dos alertas que apareceram no diagnóstico. Aí eu te explico se são graves ou não e o que fazer.
+
+Enquanto isso, regra geral:
+- “Crítico” ou “alto risco” → precisa resolver logo  
+- “Médio” → importante, mas não urgente  
+- “Baixo” ou “informativo” → geralmente não é grave  
+
+Se puder, manda os nomes que eu já te dou um veredito claro 👍
+[2026-06-05 18:09:41] [COMANDO] saire
+[2026-06-05 18:10:38] [RESPOSTA] Do meu jeito... 😏 🖥️ OFFLINE | Desculpe, não entendi a pergunta. Pode ser mais específica sobre o que você[4D[K
+você gostaria de saber? Estou aqui para ajudar com o Rony!
+[2026-06-05 18:25:08] [COMANDO] ativar voz
+[2026-06-05 18:25:08] [RESPOSTA] Entendido. Voz ativada.
+[2026-06-05 18:25:26] [COMANDO] modo jarvis
+[2026-06-05 18:25:26] [RESPOSTA] Já estou verificando. Modo Jarvis ativado.
+[2026-06-05 18:25:48] [COMANDO] diga oi pra taty
+[2026-06-05 18:26:37] [RESPOSTA] Chega mais... 😈 🖥️ OFFLINE | Olá! Estou aqui para ajudar. Quem é a Taty? Posso chamar ela?
+[2026-06-05 18:29:06] [COMANDO] a taty e minha amiga, diz oi pra ela
+[2026-06-05 18:29:49] [RESPOSTA] Do meu jeito... 😏 🖥️ OFFLINE | Olha só! Eu posso passar recado para a Taty. Você quer que eu avise que voc[3D[K
+você está lá? Vou ligar logo!
+[2026-06-05 18:30:25] [COMANDO] nao precisa
+[2026-06-05 18:30:52] [RESPOSTA] Chega mais... 😈 🌐 ONLINE | 🖥️ OFFLINE | Beleza 😄  
+Então fica aqui: **Oi, Taty!** 👋
+[2026-06-05 18:40:38] [COMANDO] sair
+[2026-06-05 18:40:38] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-06-05 18:41:04] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-06-05 18:41:08] [COMANDO] diagnostico completo
+[2026-06-05 18:41:08] [DIAGNOSTICO] Teste de log automático.
+[2026-06-05 18:41:11] [RESPOSTA] 🩺 DIAGNÓSTICO COMPLETO DA H.U.L.I
+
+Saúde geral: 96.23%
+Testes: 53
+OK: 51
+Alertas: 2
+Erros: 0
+
+📌 IMPORTS
+• kernel: OK - Importado com sucesso.
+• context: OK - Importado com sucesso.
+• event_bus: OK - Importado com sucesso.
+• skill_manager: OK - Importado com sucesso.
+• router: OK - Importado com sucesso.
+• brain: OK - Importado com sucesso.
+• commands: OK - Importado com sucesso.
+• memory: OK - Importado com sucesso.
+• smart_memory: OK - Importado com sucesso.
+• missions: OK - Importado com sucesso.
+• routines: OK - Importado com sucesso.
+• logger: OK - Importado com sucesso.
+• voice: OK - Importado com sucesso.
+• voice_mode: OK - Importado com sucesso.
+• automation: OK - Importado com sucesso.
+• vision: OK - Importado com sucesso.
+• vision_ai: OK - Importado com sucesso.
+• windows_control: OK - Importado com sucesso.
+• medication: OK - Importado com sucesso.
+• settings_manager: OK - Importado com sucesso.
+• jarvis_mode: OK - Importado com sucesso.
+• protection: OK - Importado com sucesso.
+• ai: OK - Importado com sucesso.
+• system_service: OK - Importado com sucesso.
+• voice_service: OK - Importado com sucesso.
+• vision_service: OK - Importado com sucesso.
+• automation_service: OK - Importado com sucesso.
+• memory_service: OK - Importado com sucesso.
+• ai_service: OK - Importado com sucesso.
+
+📌 JSONS
+• modules/missions.json: OK - JSON válido.
+• modules/routines.json: ALERTA - Arquivo não encontrado.
+• modules/habits.json: OK - JSON válido.
+• modules/smart_memory.json: OK - JSON válido.
+• modules/reminders.json: ALERTA - Arquivo não encontrado.
+• config/settings.json: OK - JSON válido.
+
+📌 KERNEL
+• OK: Kernel ativo. Threads: ['agendamentos', 'lembretes']
+
+📌 CONTEXTO
+• OK: Contexto sincronizado com kernel.
+
+📌 EVENT_BUS
+• OK: Event Bus funcionando. Eventos recentes: 1
+
+📌 SKILL_MANAGER
+• OK: 21 skills registradas.
+
+📌 MEMORIA
+• OK: Memória carregada com sucesso.
+
+📌 SMART_MEMORY
+• OK: Smart memory carregada.
+
+📌 MISSOES
+• OK: 2 missões registradas.
+
+📌 ROTINAS
+• OK: 3 rotinas registradas.
+
+📌 CONFIGURACOES
+• OK: Configurações carregadas.
+
+📌 LOGS
+• OK: Logger funcionando.
+
+📌 MEDICAMENTOS
+• OK: Módulo de medicamentos funcionando.
+
+📌 SERVICES
+• system_service: OK - Service carregado.
+• voice_service: OK - Service carregado.
+• vision_service: OK - Service carregado.
+• automation_service: OK - Service carregado.
+• memory_service: OK - Service carregado.
+• ai_service: OK - Service carregado.
+
+📌 IA
+• OK: Internet disponível para IA online.
+
+
+[2026-06-05 18:41:11] [COMANDO] quais foram os alertas
+[2026-06-05 18:41:11] [RESPOSTA] Os alertas do último diagnóstico foram:
+
+1. jsons.modules/routines.json
+   Motivo: Arquivo não encontrado.
+2. jsons.modules/reminders.json
+   Motivo: Arquivo não encontrado.
+
+Pelo que vejo, esses alertas não parecem críticos. Geralmente indicam arquivos que ainda não foram criados porque a função ainda não gerou dados.
+[2026-06-05 18:41:11] [COMANDO] memoria da sessao
+[2026-06-05 18:41:11] [RESPOSTA] 🧠 Memória de sessão:
+- total_interacoes: 1
+- ultimo_topico: diagnostico
+- ultima_pergunta: diagnostico completo
+- ultima_resposta: 🩺 DIAGNÓSTICO COMPLETO DA H.U.L.I
+
+Saúde geral: 96.23%
+Testes: 53
+OK: 51
+Alertas: 2
+Erros: 0
+
+📌 IMPORTS
+• kernel: OK - Importado com sucesso.
+• context: OK - Importado com sucesso.
+• event_bus: OK - Importado com sucesso.
+• skill_manager: OK - Importado com sucesso.
+• router: OK - Importado com sucesso.
+• brain: OK - Importado com sucesso.
+• commands: OK - Importado com sucesso.
+• memory: OK - Importado com sucesso.
+• smart_memory: OK - Importado com sucesso.
+• missions: OK - Importado com sucesso.
+• routines: OK - Importado com sucesso.
+• logger: OK - Importado com sucesso.
+• voice: OK - Importado com sucesso.
+• voice_mode: OK - Importado com sucesso.
+• automation: OK - Importado com sucesso.
+• vision: OK - Importado com sucesso.
+• vision_ai: OK - Importado com sucesso.
+• windows_control: OK - Importado com sucesso.
+• medication: OK - Importado com sucesso.
+• settings_manager: OK - Importado com sucesso.
+• jarvis_mode: OK - Importado com sucesso.
+• protection: OK - Importado com sucesso.
+• ai: OK - Importado com sucesso.
+• system_service: OK - Importado com sucesso.
+• voice_service: OK - Importado com sucesso.
+• vision_service: OK - Importado com sucesso.
+• automation_service: OK - Importado com sucesso.
+• memory_service: OK - Importado com sucesso.
+• ai_service: OK - Importado com sucesso.
+
+📌 JSONS
+• modules/missions.json: OK - JSON válido.
+• modules/routines.json: ALERTA - Arquivo não encontrado.
+• modules/habits.json: OK - JSON válido.
+• modules/smart_memory.json: OK - JSON válido.
+• modules/reminders.json: ALERTA - Arquivo não encontrado.
+• config/settings.json: OK - JSON válido.
+
+📌 KERNEL
+• OK: Kernel ativo. Threads: ['agendamentos', 'lembretes']
+
+📌 CONTEXTO
+• OK: Contexto sincronizado com kernel.
+
+📌 EVENT_BUS
+• OK: Event Bus funcionando. Eventos recentes: 1
+
+📌 SKILL_MANAGER
+• OK: 21 skills registradas.
+
+📌 MEMORIA
+• OK: Memória carregada com sucesso.
+
+📌 SMART_MEMORY
+• OK: Smart memory carregada.
+
+📌 MISSOES
+• OK: 2 missões registradas.
+
+📌 ROTINAS
+• OK: 3 rotinas registradas.
+
+📌 CONFIGURACOES
+• OK: Configurações carregadas.
+
+📌 LOGS
+• OK: Logger funcionando.
+
+📌 MEDICAMENTOS
+• OK: Módulo de medicamentos funcionando.
+
+📌 SERVICES
+• system_service: OK - Service carregado.
+• voice_service: OK - Service carregado.
+• vision_service: OK - Service carregado.
+• automation_service: OK - Service carregado.
+• memory_service: OK - Service carregado.
+• ai_service: OK - Service carregado.
+
+📌 IA
+• OK: Internet disponível para IA online.
+
+
+- tem_diagnostico: True
+
+[2026-06-05 18:41:11] [COMANDO] repete a ultima resposta
+[2026-06-05 18:41:11] [RESPOSTA] 🩺 DIAGNÓSTICO COMPLETO DA H.U.L.I
+
+Saúde geral: 96.23%
+Testes: 53
+OK: 51
+Alertas: 2
+Erros: 0
+
+📌 IMPORTS
+• kernel: OK - Importado com sucesso.
+• context: OK - Importado com sucesso.
+• event_bus: OK - Importado com sucesso.
+• skill_manager: OK - Importado com sucesso.
+• router: OK - Importado com sucesso.
+• brain: OK - Importado com sucesso.
+• commands: OK - Importado com sucesso.
+• memory: OK - Importado com sucesso.
+• smart_memory: OK - Importado com sucesso.
+• missions: OK - Importado com sucesso.
+• routines: OK - Importado com sucesso.
+• logger: OK - Importado com sucesso.
+• voice: OK - Importado com sucesso.
+• voice_mode: OK - Importado com sucesso.
+• automation: OK - Importado com sucesso.
+• vision: OK - Importado com sucesso.
+• vision_ai: OK - Importado com sucesso.
+• windows_control: OK - Importado com sucesso.
+• medication: OK - Importado com sucesso.
+• settings_manager: OK - Importado com sucesso.
+• jarvis_mode: OK - Importado com sucesso.
+• protection: OK - Importado com sucesso.
+• ai: OK - Importado com sucesso.
+• system_service: OK - Importado com sucesso.
+• voice_service: OK - Importado com sucesso.
+• vision_service: OK - Importado com sucesso.
+• automation_service: OK - Importado com sucesso.
+• memory_service: OK - Importado com sucesso.
+• ai_service: OK - Importado com sucesso.
+
+📌 JSONS
+• modules/missions.json: OK - JSON válido.
+• modules/routines.json: ALERTA - Arquivo não encontrado.
+• modules/habits.json: OK - JSON válido.
+• modules/smart_memory.json: OK - JSON válido.
+• modules/reminders.json: ALERTA - Arquivo não encontrado.
+• config/settings.json: OK - JSON válido.
+
+📌 KERNEL
+• OK: Kernel ativo. Threads: ['agendamentos', 'lembretes']
+
+📌 CONTEXTO
+• OK: Contexto sincronizado com kernel.
+
+📌 EVENT_BUS
+• OK: Event Bus funcionando. Eventos recentes: 1
+
+📌 SKILL_MANAGER
+• OK: 21 skills registradas.
+
+📌 MEMORIA
+• OK: Memória carregada com sucesso.
+
+📌 SMART_MEMORY
+• OK: Smart memory carregada.
+
+📌 MISSOES
+• OK: 2 missões registradas.
+
+📌 ROTINAS
+• OK: 3 rotinas registradas.
+
+📌 CONFIGURACOES
+• OK: Configurações carregadas.
+
+📌 LOGS
+• OK: Logger funcionando.
+
+📌 MEDICAMENTOS
+• OK: Módulo de medicamentos funcionando.
+
+📌 SERVICES
+• system_service: OK - Service carregado.
+• voice_service: OK - Service carregado.
+• vision_service: OK - Service carregado.
+• automation_service: OK - Service carregado.
+• memory_service: OK - Service carregado.
+• ai_service: OK - Service carregado.
+
+📌 IA
+• OK: Internet disponível para IA online.
+
+
+[2026-06-05 18:42:58] [COMANDO] sobre o que estamos falando
+[2026-06-05 18:42:58] [RESPOSTA] O último assunto registrado foi: diagnostico.
+[2026-06-05 18:43:12] [COMANDO] obrigado huli
+[2026-06-05 18:43:12] [RESPOSTA] Já resolvo isso antes do café acabar. Tamo junto, Rony.

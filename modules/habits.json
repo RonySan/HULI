@@ -766,5 +766,11 @@
     },
     "o que fizemos hoje": {
         "status personalidade": 1
+    },
+    "resumo da sessao": {
+        "como esta o projeto": 1
+    },
+    "como esta o projeto": {
+        "o que falta fazer": 1
     }
 }

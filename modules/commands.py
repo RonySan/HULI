@@ -22,7 +22,9 @@ from brain.conversational_brain import responder_conversa_local
 from core_system.personality_engine import (
     definir_modo_personalidade,
     status_personalidade,
+
 )
+from core_system.reflection_engine import refletir
 
 
 
@@ -283,7 +285,7 @@ def processar_comando(comando: str):
 
     base = personalidade.gerar_resposta_base()
     memoria_sessao = obter_memoria_sessao()
-    
+
     # -------------------------
     # Conversational Brain
     # -------------------------
@@ -298,6 +300,14 @@ def processar_comando(comando: str):
 
     if comando in ["status personalidade", "personalidade atual"]:
         return status_personalidade()
+
+    # -------------------------
+    # Reflection Engine
+    # -------------------------
+    resposta_reflexao = refletir(comando)
+
+    if resposta_reflexao:
+        return resposta_reflexao
 
     # -------------------------
     # H.U.L.I Core System Router

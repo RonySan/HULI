@@ -26,6 +26,7 @@ from core_system.personality_engine import (
 )
 from core_system.reflection_engine import refletir
 from core_system.help_engine import gerar_ajuda, gerar_novidades
+from core_system.auto_documentation import gerar_documentacao_md
 
 
 
@@ -1854,6 +1855,19 @@ def processar_comando(comando: str):
             return "Ainda não identifiquei um assunto principal nesta sessão."
 
         return f"O último assunto registrado foi: {topico}."
+
+
+    # -------------------------
+    # Auto Documentation
+    # -------------------------
+    if comando in [
+        "gerar documentacao",
+        "gerar documentação",
+        "documentar huli",
+        "documentar projeto",
+        "gerar docs",
+    ]:
+        return gerar_documentacao_md()
 
 
     # -------------------------

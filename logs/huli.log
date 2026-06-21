@@ -10459,3 +10459,8 @@ Modo emocional/íntimo leve, médio e intenso, com tom mais humano.
 Painel visual, status geral e painel neural da H.U.L.I.
 
 
+[2026-06-21 17:26:21] [COMANDO] sair
+[2026-06-21 17:26:21] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-06-21 17:26:33] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-06-21 17:26:36] [COMANDO] gerar documentacao
+[2026-06-21 17:26:36] [RESPOSTA] Documentação gerada com sucesso em: C:\HULI\docs\HULI_DOCUMENTACAO.md

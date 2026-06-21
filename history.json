@@ -1,6 +1,4 @@
 [
-    "contexto",
-    "status kernel",
     "sair",
     "ativar voz",
     "ativar jarvis",
@@ -98,5 +96,7 @@
     "ajuda",
     "novidades",
     "skill planejamento",
-    "o que voce sabe fazer"
+    "o que voce sabe fazer",
+    "sair",
+    "gerar documentacao"
 ]

@@ -25,6 +25,7 @@ from core_system.personality_engine import (
 
 )
 from core_system.reflection_engine import refletir
+from core_system.help_engine import gerar_ajuda, gerar_novidades
 
 
 
@@ -1148,6 +1149,16 @@ def processar_comando(comando: str):
             resposta += f"{skill['descricao']}\n\n"
 
         return resposta
+
+    # -------------------------
+    # Auto Help Engine
+    # -------------------------
+    if comando in ["ajuda", "help", "menu", "comandos"]:
+        return gerar_ajuda()
+
+    if comando in ["novidades", "o que tem de novo", "novas funcoes", "novas funções"]:
+        return gerar_novidades()
+
 
     # -------------------------
     # Ajuda

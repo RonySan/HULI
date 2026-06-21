@@ -10265,3 +10265,197 @@ Arquitetura principal já criada:
 4. Melhorar Neural Scanner para detectar duplicações.
 5. Criar Plugin Manager.
 
+[2026-06-21 17:06:11] [COMANDO] sair
+[2026-06-21 17:06:11] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-06-21 17:07:06] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-06-21 17:07:08] [COMANDO] ajuda
+[2026-06-21 17:07:08] [RESPOSTA] Eu posso ajudar com várias coisas, Rony:
+
+💬 CONVERSA
+• oi
+• como voce esta
+• quem e voce
+• ajuda
+
+🕒 SISTEMA
+• horas
+• que dia e hoje
+• status
+• status ia
+• status sistema
+• historico
+
+📝 MEMÓRIA E ORGANIZAÇÃO
+• anota comprar pão
+• anota tarefa pagar conta
+• mostra agenda
+• mostra tarefas
+• mostra ideias
+• o que voce lembra
+
+🧠 MEMÓRIA OPERACIONAL
+• mostrar habitos
+• limpar habitos
+
+⏰ LEMBRETES
+• me lembra às 18:30 ligar pro João
+• apagar lembretes
+
+💻 PROGRAMAS
+• abrir chrome
+• abrir vscode
+• abra o github
+• abra o gmail
+
+🚀 ROTINAS
+• listar rotinas
+• criar rotina trabalho com chrome, vscode
+
+🧩 COMANDOS PERSONALIZADOS
+• criar comando modo trabalho com abrir trabalho
+• listar comandos personalizados
+
+💾 BACKUP
+• criar backup
+• listar backups
+
+🧠 MISSÕES
+• missao pesquisar python
+• missao abrir github
+
+🖱️ AUTOMAÇÃO
+• clicar
+• mover mouse para 500 300
+• digitar texto
+
+👁️ VISÃO
+• tirar print
+• ler tela
+• clicar texto entrar
+
+📜 LOGS
+• mostrar logs
+• limpar logs
+
+👤 PERFIL
+• definir nome rony
+• meu perfil
+
+🔐 PROTEÇÃO
+• protecao on
+• protecao off
+
+🤝 MODO SOCIAL
+• huli se apresenta para gisele
+• huli cumprimenta gisele
+• huli diz oi pra gisele
+• huli elogia gisele
+• huli mande um recado para gisele dizendo que eu amo ela
+
+⚙️ CONFIGURAÇÕES
+• mostrar configuracoes
+• definir usuario Rony
+• definir empresa Impulso Digital
+• definir personalidade huli
+• definir limite fala 250
+• definir bluetooth padrao MUNDIAL
+• qual bluetooth padrao
+
+💞 MODO ÍNTIMO / EMOCIONAL
+• modo intimo
+• status modo intimo
+• desativar modo intimo
+• me provoca
+• flerta comigo
+• estou carente
+• estou triste
+
+🚪 ENCERRAR
+• sair
+
+[2026-06-21 17:07:08] [COMANDO] novidades
+[2026-06-21 17:07:08] [RESPOSTA] 🚀 Novidades recentes da H.U.L.I
+
+• Kernel central operacional
+• Contexto global sincronizado
+• Event Bus
+• Session Memory
+• Skill Manager expandido
+• Planner Service
+• Diagnóstico completo
+• Relatório Neural
+• Personality Engine
+• Conversational Brain
+• Reflection Engine
+• Auto Help Engine
+
+Digite 'ajuda' para ver tudo que a H.U.L.I sabe fazer.
+[2026-06-21 17:07:08] [COMANDO] skill planejamento
+[2026-06-21 17:07:08] [RESPOSTA] Não encontrei essa skill.
+[2026-06-21 17:07:42] [COMANDO] o que voce sabe fazer
+[2026-06-21 17:07:42] [RESPOSTA] Eu sou a H.U.L.I e hoje tenho estas áreas principais:
+
+🧩 CORE
+Núcleo principal da H.U.L.I. Controla inicialização, execução, loops e comandos.
+
+🧩 VOZ
+Controle de fala, escuta manual, escuta natural e voz da H.U.L.I.
+
+🧩 VISAO
+Leitura de tela, OCR, identificação de textos e clique por texto.
+
+🧩 AUTOMACAO
+Controle de mouse, teclado, atalhos, digitação e ações físicas no PC.
+
+🧩 SISTEMA
+Controle do Windows, programas, sites, som, Wi-Fi, Bluetooth e status do sistema.
+
+🧩 IA
+Camada de IA online/offline, fallback inteligente e respostas naturais.
+
+🧩 MEMORIA
+Memória simples, categorizada, tarefas, ideias, agenda e lembranças.
+
+🧩 MEMORIA_INTELIGENTE
+Memória de pessoas, preferências e contexto pessoal.
+
+🧩 LEMBRETES
+Lembretes reais com horário, monitoramento e alerta automático.
+
+🧩 MEDICAMENTOS
+Cálculo de horários de medicamentos, doses, dias, PDF e TXT.
+
+🧩 MISSOES
+Execução de missões rápidas, salvas e multietapas.
+
+🧩 ROTINAS
+Rotinas nomeadas para abrir vários recursos e executar sequências.
+
+🧩 HABITOS
+Aprendizado de padrões, sugestões e autoexecução baseada em comportamento.
+
+🧩 SEGURANCA
+Proteção, confirmação de comandos sensíveis e controle de permissões.
+
+🧩 PERFIL
+Perfil do usuário, preferências e configurações pessoais.
+
+🧩 LOGS_BACKUP
+Registro de logs, histórico, backups e rastreabilidade operacional.
+
+🧩 DOCUMENTOS
+Busca em documentos internos e base de conhecimento.
+
+🧩 JARVIS
+Modo operacional avançado com voz, contexto e comportamento mais ativo.
+
+🧩 SOCIAL
+Interações sociais, cumprimentos, apresentações e recados.
+
+🧩 EMOCIONAL
+Modo emocional/íntimo leve, médio e intenso, com tom mais humano.
+
+🧩 PAINEL
+Painel visual, status geral e painel neural da H.U.L.I.
+
+

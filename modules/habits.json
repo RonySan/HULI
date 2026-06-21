@@ -248,7 +248,8 @@
     },
     "obrigado huli": {
         "voce e otima huli": 1,
-        "que dia e hje": 1
+        "que dia e hje": 1,
+        "que dia e hoje ?": 1
     },
     "voce e otima huli": {
         "huli conecta a caixa de son no bluetooth por favor": 1
@@ -258,7 +259,8 @@
     },
     "huli status": {
         "porque voce nao consegui ligr direta mente o pc no bluetooth da caixa de som ?": 1,
-        "obrigado huli": 1
+        "obrigado huli": 1,
+        "help": 1
     },
     "porque voce nao consegui ligr direta mente o pc no bluetooth da caixa de som ?": {
         "]": 1
@@ -463,7 +465,8 @@
     },
     "que dia e hoje ?": {
         "o que voce lembra ?": 1,
-        "ajuda": 1
+        "ajuda": 1,
+        "o que temos pra fazer hoje ?": 1
     },
     "o que voce lembra ? pode falar em voz pra mim": {
         "status huli": 1
@@ -709,5 +712,29 @@
     },
     "sobre o que estamos falando": {
         "obrigado huli": 1
+    },
+    "o que temos pra fazer hoje ?": {
+        "olha minha agenda o que tem marcado pra hoje ?": 1
+    },
+    "olha minha agenda o que tem marcado pra hoje ?": {
+        "huli o que tem na minah agenda pra hoje ?": 1
+    },
+    "oi huli, como voce esta ?": {
+        "estou otimo huli, vamos comecar a trabalhar ?": 1
+    },
+    "estou otimo huli, vamos comecar a trabalhar ?": {
+        "sim, por favor": 1
+    },
+    "sim, por favor": {
+        "abrir projeto huli": 1
+    },
+    "huli diagnostico profundo": {
+        "huli status": 1
+    },
+    "help": {
+        "diagnostico": 1
+    },
+    "diagnostico": {
+        "diagnostico completo": 1
     }
 }

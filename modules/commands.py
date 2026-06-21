@@ -16,6 +16,8 @@ from core_system.event_bus import emitir_evento, listar_eventos
 from core_system.diagnostic import diagnosticar, diagnosticar_formatado
 from core_system.skill_manager import listar_skills, obter_skill, status_skills
 from core_system.session_memory import obter_memoria_sessao
+from services.planner_service import resumo_do_dia, resumo_pendencias
+from neural.health_engine import formatar_relatorio_neural
 
 
 
@@ -388,6 +390,21 @@ def processar_comando(comando: str):
     if resposta_privada:
         return resposta_privada
     
+
+    # -------------------------
+    # Neural Health
+    # -------------------------
+    if comando in [
+        "relatorio neural",
+        "relatório neural",
+        "saude neural",
+        "saúde neural",
+        "neural status",
+        "diagnostico neural",
+        "diagnóstico neural",
+    ]:
+        return formatar_relatorio_neural()
+
     # -------------------------
     # diagnostico
     # -------------------------
@@ -831,6 +848,35 @@ def processar_comando(comando: str):
 
     if any(frase in comando for frase in ["estou otimo", "to otimo", "to bem", "tudo certo", "tranquilo", "suave"]):
         return f"{base} Boa! Quer que eu organize suas prioridades de hoje?"
+
+
+    # -------------------------
+    # Planejamento / Agenda / Dia
+    # -------------------------
+    if comando in [
+        "o que temos pra fazer hoje",
+        "o que tem pra fazer hoje",
+        "o que temos hoje",
+        "minha agenda hoje",
+        "agenda de hoje",
+        "olha minha agenda hoje",
+        "olha minha agenda de hoje",
+        "o que tem na minha agenda hoje",
+        "o que tem na minha agenda pra hoje",
+    ]:
+        return resumo_do_dia()
+
+    if comando in [
+        "quais pendencias temos",
+        "quais pendências temos",
+        "minhas pendencias",
+        "minhas pendências",
+        "o que falta fazer",
+        "pendencias",
+        "pendências",
+    ]:
+        return resumo_pendencias()
+
 
     # -------------------------
     # Monitoramento / histórico

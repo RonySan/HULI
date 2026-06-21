@@ -1,60 +1,49 @@
 import importlib
+import inspect
 import json
 import os
 from datetime import datetime
+
 from core_system.session_memory import obter_memoria_sessao
 
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
+PASTAS_PY = [
+    "core_system",
+    "modules",
+    "services",
+]
 
-MODULOS_CRITICOS = {
-    "kernel": "core_system.kernel",
-    "context": "core_system.context",
-    "event_bus": "core_system.event_bus",
-    "skill_manager": "core_system.skill_manager",
-    "router": "core_system.router",
-    "brain": "core_system.brain",
+FUNCOES_SEGURAS = [
+    "status",
+    "listar",
+    "carregar",
+    "resumo",
+    "status_skills",
+    "listar_skills",
+    "listar_missoes",
+    "listar_rotinas",
+    "listar_config",
+    "resumo_contexto",
+    "diagnosticar",
+]
 
-    "commands": "modules.commands",
-    "memory": "modules.memory",
-    "smart_memory": "modules.smart_memory",
-    "missions": "modules.missions",
-    "routines": "modules.routines",
-    "logger": "modules.logger",
-    "voice": "modules.voice",
-    "voice_mode": "modules.voice_mode",
-    "automation": "modules.automation",
-    "vision": "modules.vision",
-    "vision_ai": "modules.vision_ai",
-    "windows_control": "modules.windows_control",
-    "medication": "modules.medication",
-    "settings_manager": "modules.settings_manager",
-    "jarvis_mode": "modules.jarvis_mode",
-    "protection": "modules.protection",
-    "ai": "modules.ai",
+IGNORAR_ARQUIVOS = [
+    "__init__.py",
+]
 
-    "system_service": "services.system_service",
-    "voice_service": "services.voice_service",
-    "vision_service": "services.vision_service",
-    "automation_service": "services.automation_service",
-    "memory_service": "services.memory_service",
-    "ai_service": "services.ai_service",
-}
-
-
-ARQUIVOS_JSON = [
-    "modules/missions.json",
-    "modules/routines.json",
-    "modules/habits.json",
-    "modules/smart_memory.json",
-    "modules/reminders.json",
-    "config/settings.json",
+IGNORAR_PASTAS = [
+    "__pycache__",
+    ".git",
+    "venv",
+    ".venv",
+    "env",
 ]
 
 
 def ok(msg="OK"):
-    return {"status": "OK", "detalhe": msg}
+    return {"status": "OK", "detalhe": str(msg)}
 
 
 def erro(msg):
@@ -65,37 +54,131 @@ def alerta(msg):
     return {"status": "ALERTA", "detalhe": str(msg)}
 
 
-def testar_imports():
+def caminho_para_modulo(caminho):
+    rel = os.path.relpath(caminho, BASE_DIR)
+    rel = rel.replace("\\", ".").replace("/", ".")
+
+    if rel.endswith(".py"):
+        rel = rel[:-3]
+
+    return rel
+
+
+def descobrir_arquivos_py():
+    arquivos = []
+
+    for pasta in PASTAS_PY:
+        raiz = os.path.join(BASE_DIR, pasta)
+
+        if not os.path.exists(raiz):
+            continue
+
+        for dirpath, dirnames, filenames in os.walk(raiz):
+            dirnames[:] = [d for d in dirnames if d not in IGNORAR_PASTAS]
+
+            for filename in filenames:
+                if filename in IGNORAR_ARQUIVOS:
+                    continue
+
+                if filename.endswith(".py"):
+                    arquivos.append(os.path.join(dirpath, filename))
+
+    return arquivos
+
+
+def descobrir_jsons():
+    arquivos = []
+
+    for dirpath, dirnames, filenames in os.walk(BASE_DIR):
+        dirnames[:] = [d for d in dirnames if d not in IGNORAR_PASTAS]
+
+        for filename in filenames:
+            if filename.endswith(".json"):
+                arquivos.append(os.path.join(dirpath, filename))
+
+    return arquivos
+
+
+def testar_imports_auto():
     resultado = {}
 
-    for nome, caminho in MODULOS_CRITICOS.items():
+    arquivos = descobrir_arquivos_py()
+
+    for caminho in arquivos:
+        modulo_nome = caminho_para_modulo(caminho)
+
         try:
-            importlib.import_module(caminho)
-            resultado[nome] = ok("Importado com sucesso.")
+            importlib.import_module(modulo_nome)
+            resultado[modulo_nome] = ok("Importado com sucesso.")
         except Exception as e:
-            resultado[nome] = erro(e)
+            resultado[modulo_nome] = erro(e)
 
     return resultado
 
 
-def testar_jsons():
+def testar_jsons_auto():
     resultado = {}
 
-    for arquivo in ARQUIVOS_JSON:
-        caminho = os.path.join(BASE_DIR, arquivo)
+    arquivos = descobrir_jsons()
 
-        if not os.path.exists(caminho):
-            resultado[arquivo] = alerta("Arquivo não encontrado.")
-            continue
+    for caminho in arquivos:
+        rel = os.path.relpath(caminho, BASE_DIR)
 
         try:
             with open(caminho, "r", encoding="utf-8") as f:
                 json.load(f)
 
-            resultado[arquivo] = ok("JSON válido.")
+            resultado[rel] = ok("JSON válido.")
 
         except Exception as e:
-            resultado[arquivo] = erro(e)
+            resultado[rel] = erro(e)
+
+    return resultado
+
+
+def testar_funcoes_seguras():
+    resultado = {}
+
+    arquivos = descobrir_arquivos_py()
+
+    for caminho in arquivos:
+        modulo_nome = caminho_para_modulo(caminho)
+
+        try:
+            modulo = importlib.import_module(modulo_nome)
+
+            funcoes_encontradas = []
+
+            for nome_funcao in FUNCOES_SEGURAS:
+                if hasattr(modulo, nome_funcao):
+                    func = getattr(modulo, nome_funcao)
+
+                    if not callable(func):
+                        continue
+
+                    try:
+                        assinatura = inspect.signature(func)
+
+                        if len(assinatura.parameters) == 0:
+                            retorno = func()
+                            funcoes_encontradas.append(
+                                f"{nome_funcao}(): OK"
+                            )
+                        else:
+                            funcoes_encontradas.append(
+                                f"{nome_funcao}(): ignorada, precisa parâmetros"
+                            )
+
+                    except Exception as e:
+                        funcoes_encontradas.append(
+                            f"{nome_funcao}(): ERRO - {e}"
+                        )
+
+            if funcoes_encontradas:
+                resultado[modulo_nome] = ok("; ".join(funcoes_encontradas))
+
+        except Exception as e:
+            resultado[modulo_nome] = erro(e)
 
     return resultado
 
@@ -163,7 +246,7 @@ def testar_event_bus():
         from core_system.event_bus import emitir_evento, listar_eventos
 
         emitir_evento(
-            "diagnostico_teste",
+            "diagnostico_auto_teste",
             origem="diagnostic",
             dados={"data": datetime.now().isoformat()}
         )
@@ -192,7 +275,15 @@ def testar_skill_manager():
         if status.get("total_skills", 0) != len(skills):
             return alerta("Quantidade de skills inconsistente.")
 
-        essenciais = ["core", "voz", "visao", "automacao", "sistema", "ia", "memoria"]
+        essenciais = [
+            "core",
+            "voz",
+            "visao",
+            "automacao",
+            "sistema",
+            "ia",
+            "memoria",
+        ]
 
         faltando = [s for s in essenciais if not obter_skill(s)]
 
@@ -210,24 +301,9 @@ def testar_memoria():
         from modules.memory import HULIMemory
 
         memoria = HULIMemory()
-        dados = memoria.carregar()
+        memoria.carregar()
 
         return ok("Memória carregada com sucesso.")
-
-    except Exception as e:
-        return erro(e)
-
-
-def testar_smart_memory():
-    try:
-        from modules.smart_memory import carregar
-
-        dados = carregar()
-
-        if not isinstance(dados, dict):
-            return erro("Smart memory não retornou dicionário.")
-
-        return ok("Smart memory carregada.")
 
     except Exception as e:
         return erro(e)
@@ -264,44 +340,6 @@ def testar_rotinas():
         return erro(e)
 
 
-def testar_configuracoes():
-    try:
-        from modules.settings_manager import listar_config
-
-        configs = listar_config()
-
-        if not isinstance(configs, dict):
-            return erro("Configurações não retornaram dicionário.")
-
-        essenciais = ["usuario", "empresa", "personalidade"]
-
-        faltando = [c for c in essenciais if c not in configs]
-
-        if faltando:
-            return alerta(f"Configurações ausentes: {faltando}")
-
-        return ok("Configurações carregadas.")
-
-    except Exception as e:
-        return erro(e)
-
-
-def testar_logs():
-    try:
-        from modules.logger import registrar_log, ler_logs
-
-        registrar_log("diagnostico", "Teste de log automático.")
-        logs = ler_logs(5)
-
-        if logs is None:
-            return erro("Logs não retornaram dados.")
-
-        return ok("Logger funcionando.")
-
-    except Exception as e:
-        return erro(e)
-
-
 def testar_medicamentos():
     try:
         from modules.medication import processar_pedido_medicamento
@@ -319,35 +357,6 @@ def testar_medicamentos():
         return erro(e)
 
 
-def testar_services():
-    resultado = {}
-
-    testes = {
-        "system_service": ("services.system_service", "status"),
-        "voice_service": ("services.voice_service", "status"),
-        "vision_service": ("services.vision_service", None),
-        "automation_service": ("services.automation_service", None),
-        "memory_service": ("services.memory_service", None),
-        "ai_service": ("services.ai_service", "online"),
-    }
-
-    for nome, dados in testes.items():
-        modulo_nome, funcao = dados
-
-        try:
-            modulo = importlib.import_module(modulo_nome)
-
-            if funcao:
-                getattr(modulo, funcao)()
-
-            resultado[nome] = ok("Service carregado.")
-
-        except Exception as e:
-            resultado[nome] = erro(e)
-
-    return resultado
-
-
 def testar_ia():
     try:
         from modules.ai import tem_internet
@@ -356,8 +365,8 @@ def testar_ia():
 
         if internet:
             return ok("Internet disponível para IA online.")
-        else:
-            return alerta("Internet indisponível ou IA online sem conexão.")
+
+        return alerta("Internet indisponível ou IA online sem conexão.")
 
     except Exception as e:
         return erro(e)
@@ -365,20 +374,17 @@ def testar_ia():
 
 def diagnostico_completo():
     relatorio = {
-        "imports": testar_imports(),
-        "jsons": testar_jsons(),
+        "imports_auto": testar_imports_auto(),
+        "jsons_auto": testar_jsons_auto(),
+        "funcoes_seguras": testar_funcoes_seguras(),
         "kernel": testar_kernel(),
         "contexto": testar_contexto(),
         "event_bus": testar_event_bus(),
         "skill_manager": testar_skill_manager(),
         "memoria": testar_memoria(),
-        "smart_memory": testar_smart_memory(),
         "missoes": testar_missoes(),
         "rotinas": testar_rotinas(),
-        "configuracoes": testar_configuracoes(),
-        "logs": testar_logs(),
         "medicamentos": testar_medicamentos(),
-        "services": testar_services(),
         "ia": testar_ia(),
     }
 
@@ -427,8 +433,7 @@ def calcular_saude(relatorio):
 def formatar_diagnostico(relatorio):
     saude = calcular_saude(relatorio)
 
-    resposta = "🩺 DIAGNÓSTICO COMPLETO DA H.U.L.I\n\n"
-
+    resposta = "🩺 AUTO DIAGNÓSTICO COMPLETO DA H.U.L.I\n\n"
     resposta += f"Saúde geral: {saude['saude']}%\n"
     resposta += f"Testes: {saude['total_testes']}\n"
     resposta += f"OK: {saude['ok']}\n"
@@ -439,9 +444,7 @@ def formatar_diagnostico(relatorio):
         resposta += f"📌 {categoria.upper()}\n"
 
         if isinstance(dados, dict) and "status" in dados:
-            status = dados["status"]
-            detalhe = dados["detalhe"]
-            resposta += f"• {status}: {detalhe}\n\n"
+            resposta += f"• {dados['status']}: {dados['detalhe']}\n\n"
             continue
 
         if isinstance(dados, dict):

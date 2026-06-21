@@ -249,7 +249,9 @@
     "obrigado huli": {
         "voce e otima huli": 1,
         "que dia e hje": 1,
-        "que dia e hoje ?": 1
+        "que dia e hoje ?": 1,
+        "boa noite": 1,
+        "modo personalidade petrus": 1
     },
     "voce e otima huli": {
         "huli conecta a caixa de son no bluetooth por favor": 1
@@ -312,7 +314,8 @@
     },
     "oi huli": {
         "ativar modo voz": 1,
-        "huli preciso dar remedio pro meu filho de 8 em 8 horas o primeiro horario do remeio e as 6:30 da manha quais os outros horarios ?": 1
+        "huli preciso dar remedio pro meu filho de 8 em 8 horas o primeiro horario do remeio e as 6:30 da manha quais os outros horarios ?": 1,
+        "sou eu rony": 1
     },
     "huli ativar voz": {
         "huli coprimena minha namorada gisele": 1
@@ -736,5 +739,32 @@
     },
     "diagnostico": {
         "diagnostico completo": 1
+    },
+    "relatorio neural": {
+        "oi huli": 1
+    },
+    "sou eu rony": {
+        "quais os compromissos tenho hoje ?": 1
+    },
+    "quais os compromissos tenho hoje ?": {
+        "eu gostumo colocar no google agenda, verifica pra mim o que tem la pra hoje": 1
+    },
+    "eu gostumo colocar no google agenda, verifica pra mim o que tem la pra hoje": {
+        "entao verifica o que tem na sua agenda": 1
+    },
+    "boa noite": {
+        "estou cansado": 1
+    },
+    "estou cansado": {
+        "modo personalidade jarvis": 1
+    },
+    "modo personalidade jarvis": {
+        "obrigado huli": 1
+    },
+    "modo personalidade petrus": {
+        "o que fizemos hoje": 1
+    },
+    "o que fizemos hoje": {
+        "status personalidade": 1
     }
 }

@@ -13,5 +13,6 @@
     "modo_jarvis": true,
     "modo_intimo": true,
     "nivel_intimidade": "intenso",
-    "iniciar_com_windows": false
+    "iniciar_com_windows": false,
+    "modo_personalidade": "petrus"
 }

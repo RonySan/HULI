@@ -18,6 +18,11 @@ from core_system.skill_manager import listar_skills, obter_skill, status_skills
 from core_system.session_memory import obter_memoria_sessao
 from services.planner_service import resumo_do_dia, resumo_pendencias
 from neural.health_engine import formatar_relatorio_neural
+from brain.conversational_brain import responder_conversa_local
+from core_system.personality_engine import (
+    definir_modo_personalidade,
+    status_personalidade,
+)
 
 
 
@@ -278,6 +283,21 @@ def processar_comando(comando: str):
 
     base = personalidade.gerar_resposta_base()
     memoria_sessao = obter_memoria_sessao()
+    
+    # -------------------------
+    # Conversational Brain
+    # -------------------------
+    resposta_conversa = responder_conversa_local(comando)
+
+    if resposta_conversa:
+        return resposta_conversa
+
+    if comando.startswith("modo personalidade "):
+        modo = comando.replace("modo personalidade ", "", 1).strip()
+        return definir_modo_personalidade(modo)
+
+    if comando in ["status personalidade", "personalidade atual"]:
+        return status_personalidade()
 
     # -------------------------
     # H.U.L.I Core System Router

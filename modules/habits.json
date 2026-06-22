@@ -775,7 +775,8 @@
         "como esta o projeto": 1
     },
     "como esta o projeto": {
-        "o que falta fazer": 1
+        "o que falta fazer": 1,
+        "o que temos hoje": 1
     },
     "novidades": {
         "skill planejamento": 1
@@ -809,5 +810,18 @@
     },
     "status plugins": {
         "relatorio neural": 1
+    },
+    "status orchestrator": {
+        "quero trabalhar": 1,
+        "skill orchestrator": 1
+    },
+    "quero trabalhar": {
+        "documentar projeto": 1
+    },
+    "documentar projeto": {
+        "como esta o projeto": 1
+    },
+    "o que temos hoje": {
+        "status orchestrator": 1
     }
 }

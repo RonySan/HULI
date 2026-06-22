@@ -2,7 +2,7 @@
 
 Humano Único Leal Inteligente
 
-Gerado em: 21/06/2026 17:26:36
+Gerado em: 22/06/2026 17:38:56
 
 ## 1. Status do Kernel
 
@@ -12,9 +12,9 @@ Gerado em: 21/06/2026 17:26:36
 - **escuta_continua**: False
 - **jarvis**: False
 - **voz**: False
-- **ultimo_comando**: None
+- **ultimo_comando**: quero trabalhar
 - **threads**: ['agendamentos', 'lembretes']
-- **uptime**: 0:00:08.714123
+- **uptime**: 0:00:25.554191
 
 ## 2. Contexto Atual
 
@@ -30,16 +30,42 @@ Gerado em: 21/06/2026 17:26:36
 - **modo_protecao**: INATIVO
 - **personalidade**: huli
 - **bluetooth_padrao**: mundial
-- **ultimo_comando**: None
-- **ultima_resposta**: None
+- **ultimo_comando**: quero trabalhar
+- **ultima_resposta**: 🧠 Orchestrator H.U.L.I
+
+Intenção detectada: trabalho
+Confiança: 95%
+
+✅ Task: Executar rotina de trabalho
+Resultado: Executando rotina 'trabalho'.
+
+
 - **ultima_intencao**: None
-- **iniciado_em**: 21/06/2026 17:26:28
-- **uptime_kernel**: 0:00:08.715704
+- **iniciado_em**: 22/06/2026 17:38:31
+- **uptime_kernel**: 0:00:25.556121
 - **threads**: ['agendamentos', 'lembretes']
 
 ## 3. Skills Registradas
 
-Total de skills: 21
+Total de skills: 23
+
+### ORCHESTRATOR
+
+Orquestrador cognitivo da H.U.L.I 5.0. Transforma intenções em tasks executáveis.
+
+**Módulos:**
+- core_system/intent_analyzer.py
+- core_system/task.py
+- core_system/task_queue.py
+- core_system/orchestrator.py
+
+**Comandos principais:**
+- `status orchestrator`
+- `quero trabalhar`
+- `começar a trabalhar`
+- `documentar projeto`
+- `como esta o projeto`
+- `o que temos hoje`
 
 ### CORE
 
@@ -356,6 +382,19 @@ Painel visual, status geral e painel neural da H.U.L.I.
 - `status geral`
 - `status huli`
 - `painel neural`
+
+### PLUGINS
+
+Sistema para descobrir, carregar e listar plugins externos da H.U.L.I.
+
+**Módulos:**
+- core_system/plugin_manager.py
+- plugins/
+
+**Comandos principais:**
+- `plugins`
+- `listar plugins`
+- `status plugins`
 
 
 ## 4. Arquitetura Atual

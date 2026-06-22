@@ -61,6 +61,9 @@ def gerar_novidades():
         "Conversational Brain",
         "Reflection Engine",
         "Auto Help Engine",
+        "H.U.L.I 5.0 Orchestrator",
+        "Task Queue",
+        "Intent Analyzer",
     ]
 
     for item in novidades:

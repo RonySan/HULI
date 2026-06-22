@@ -29,6 +29,7 @@ from core_system.help_engine import gerar_ajuda, gerar_novidades
 from core_system.auto_documentation import gerar_documentacao_md
 from core_system.auto_documentation_pdf import gerar_documentacao_pdf
 from core_system.plugin_manager import formatar_plugins, status_plugins
+from core_system.orchestrator import orquestrar, status_orchestrator
 
 
 
@@ -289,6 +290,19 @@ def processar_comando(comando: str):
 
     base = personalidade.gerar_resposta_base()
     memoria_sessao = obter_memoria_sessao()
+
+    # -------------------------
+    # H.U.L.I 5.0 Orchestrator
+    # -------------------------
+    if comando in ["status orchestrator", "status orquestrador", "orchestrator"]:
+        return status_orchestrator()
+
+    resposta_orquestrador = orquestrar(comando)
+
+    if resposta_orquestrador:
+        return resposta_orquestrador
+
+
 
     # -------------------------
     # Conversational Brain

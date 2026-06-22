@@ -2,6 +2,26 @@ class SkillManager:
 
     def __init__(self):
         self.skills = {
+            "orchestrator": {
+                "descricao": "Orquestrador cognitivo da H.U.L.I 5.0. Transforma intenções em tasks executáveis.",
+                "modulos": [
+                    "core_system/intent_analyzer.py",
+                    "core_system/task.py",
+                    "core_system/task_queue.py",
+                    "core_system/orchestrator.py",
+                ],
+                "comandos": [
+                    "status orchestrator",
+                    "quero trabalhar",
+                    "começar a trabalhar",
+                    "documentar projeto",
+                    "como esta o projeto",
+                    "o que temos hoje",
+                ]
+            },
+
+
+
             "core": {
                 "descricao": "Núcleo principal da H.U.L.I. Controla inicialização, execução, loops e comandos.",
                 "modulos": [

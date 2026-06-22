@@ -1,12 +1,4 @@
 [
-    "huli pesquise sobre compra de andaimes 1por1 na zona sul de sao paulo",
-    "sair",
-    "listar skills",
-    "skill missoes",
-    "sair",
-    "abrir modo trabalho",
-    "pequisar chatgpt",
-    "quesquisar chatgpt",
     "voce e uma chatgpt?",
     "voce e o que?",
     "sair",
@@ -98,5 +90,13 @@
     "plugins",
     "status plugins",
     "relatorio neural",
-    "skill plugins"
+    "skill plugins",
+    "sair",
+    "status orchestrator",
+    "quero trabalhar",
+    "documentar projeto",
+    "como esta o projeto",
+    "o que temos hoje",
+    "status orchestrator",
+    "skill orchestrator"
 ]

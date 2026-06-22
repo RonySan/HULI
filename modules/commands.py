@@ -27,6 +27,8 @@ from core_system.personality_engine import (
 from core_system.reflection_engine import refletir
 from core_system.help_engine import gerar_ajuda, gerar_novidades
 from core_system.auto_documentation import gerar_documentacao_md
+from core_system.auto_documentation_pdf import gerar_documentacao_pdf
+from core_system.plugin_manager import formatar_plugins, status_plugins
 
 
 
@@ -1868,6 +1870,32 @@ def processar_comando(comando: str):
         "gerar docs",
     ]:
         return gerar_documentacao_md()
+
+
+    # -------------------------
+    # Auto Documentation PDF
+    # -------------------------
+    if comando in [
+        "gerar pdf huli",
+        "gerar pdf documentação",
+        "gerar pdf documentacao",
+        "documentacao pdf",
+        "documentação pdf",
+    ]:
+        return gerar_documentacao_pdf()
+    
+
+
+    # -------------------------
+    # Plugin Manager
+    # -------------------------
+    if comando in [
+        "plugins",
+        "listar plugins",
+        "mostrar plugins",
+        "status plugins",
+    ]:
+        return formatar_plugins()
 
 
     # -------------------------

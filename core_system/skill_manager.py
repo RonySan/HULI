@@ -317,6 +317,20 @@ class SkillManager:
                     "painel neural",
                 ]
             },
+
+
+            "plugins": {
+                "descricao": "Sistema para descobrir, carregar e listar plugins externos da H.U.L.I.",
+                "modulos": [
+                    "core_system/plugin_manager.py",
+                    "plugins/",
+                ],
+                "comandos": [
+                    "plugins",
+                    "listar plugins",
+                    "status plugins",
+                ]
+            },
         }
 
     def listar(self):

@@ -10464,3 +10464,119 @@ Painel visual, status geral e painel neural da H.U.L.I.
 [2026-06-21 17:26:33] [SISTEMA] H.U.L.I iniciada com sucesso.
 [2026-06-21 17:26:36] [COMANDO] gerar documentacao
 [2026-06-21 17:26:36] [RESPOSTA] Documentação gerada com sucesso em: C:\HULI\docs\HULI_DOCUMENTACAO.md
+[2026-06-21 17:45:45] [COMANDO] sair
+[2026-06-21 17:45:45] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-06-21 17:46:15] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-06-21 17:46:17] [COMANDO] gerar pdf huli]
+[2026-06-21 17:46:17] [RESPOSTA] PDF gerado com sucesso em: C:\HULI\docs\HULI_DOCUMENTACAO.pdf
+[2026-06-21 23:25:03] [COMANDO] sair
+[2026-06-21 23:25:03] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-06-21 23:25:19] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-06-21 23:25:22] [COMANDO] gerar pdf huli
+[2026-06-21 23:25:22] [ERRO] loop principal: [Errno 13] Permission denied: 'C:\\HULI\\docs\\HULI_DOCUMENTACAO.pdf'
+[2026-06-22 09:47:54] [COMANDO] sair
+[2026-06-22 09:47:54] [SISTEMA] Encerrando H.U.L.I por comando do usuário.
+[2026-06-22 09:48:21] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-06-22 09:48:22] [COMANDO] gerar pdf huli
+[2026-06-22 09:48:23] [RESPOSTA] PDF gerado com sucesso em: C:\HULI\docs\HULI_DOCUMENTACAO_20260622_094822.pdf
+[2026-06-22 10:00:33] [COMANDO] como voce esta huli ?
+[2026-06-22 10:00:33] [RESPOSTA] Perfeito. Estou bem sim, Rony. Operando 100%. E você, como está?
+[2026-06-22 10:00:48] [COMANDO] estou otimo huli
+[2026-06-22 10:00:48] [RESPOSTA] Missão aceita. Boa! Quer que eu organize suas prioridades de hoje?
+[2026-06-22 10:00:59] [COMANDO] modo jarvis
+[2026-06-22 10:00:59] [RESPOSTA] Entendido. Modo Jarvis ativado.
+[2026-06-22 10:01:27] [COMANDO] quantos graus esta fazendo hoje ?
+[2026-06-22 10:02:07] [RESPOSTA] Do meu jeito... 😏 🌐 ONLINE | Não tenho acesso em tempo real ao clima da sua localização. Mas me diz sua cidade que eu te falo a temperatura de hoje rapidinho 👍
+[2026-06-22 10:02:08] [COMANDO] ooodd
+[2026-06-22 10:02:25] [RESPOSTA] Chega mais... 😈 🖥️ OFFLINE | Peço desculpas, mas não consegui entender sua mensagem. Posso ajudar com al[2D[K
+algo mais?
+[2026-06-22 10:02:41] [COMANDO] quantos graus está fazendo hoje no jardim ângela são paulo
+[2026-06-22 10:02:49] [RESPOSTA] Chega mais... 😈 🌐 ONLINE | 🌤️ Em Jardim Ângela (zona sul de São Paulo), hoje a temperatura costuma ficar por volta de:
+
+- Mínima: cerca de 12 °C  
+- Máxima: cerca de 21 °C  
+
+Agora, provavelmente está na faixa dos 17 °C a 20 °C, dependendo do horário.
+
+Se quiser, me fala o horário que eu tento estimar mais certinho 👍
+[2026-06-22 10:03:44] [COMANDO] encerrar eencerrar escuta
+[2026-06-22 10:04:02] [RESPOSTA] Chega mais... 😈 🖥️ OFFLINE | Peço desculpa, mas não entendi a pergunta. Você pode reforçar o que gostari[7D[K
+gostaria de saber sobre "encerrar" em relação à escuta? Estou aqui para aju[3D[K
+ajudar!
+[2026-06-22 10:07:13] [COMANDO] hulo encerrar escuta
+[2026-06-22 10:07:20] [RESPOSTA] Chega mais... 😈 🌐 ONLINE | 🖥️ OFFLINE | Escuta encerrada. Quando precisar, é só chamar 👍
+[2026-06-22 10:07:36] [COMANDO] h
+[2026-06-22 10:07:52] [RESPOSTA] Chega mais... 😈 🖥️ OFFLINE | Desculpe, mas não entendi muito bem. Você gostaria de perguntar algo? Posso[5D[K
+Posso ajudar com alguma coisa relacionada ao Rony?
+[2026-06-22 10:14:48] [SISTEMA] H.U.L.I iniciada com sucesso.
+[2026-06-22 10:14:50] [COMANDO] plugins
+[2026-06-22 10:14:50] [RESPOSTA] 🔌 Plugins da H.U.L.I
+
+Total: 1
+OK: 1
+Erros: 0
+
+• exemplo_plugin — OK
+  Descrição: Plugin inicial para testar o sistema de plugins da H.U.L.I.
+  Versão: 1.0.0
+
+[2026-06-22 10:14:50] [COMANDO] status plugins
+[2026-06-22 10:14:50] [RESPOSTA] 🔌 Plugins da H.U.L.I
+
+Total: 1
+OK: 1
+Erros: 0
+
+• exemplo_plugin — OK
+  Descrição: Plugin inicial para testar o sistema de plugins da H.U.L.I.
+  Versão: 1.0.0
+
+[2026-06-22 10:14:50] [COMANDO] relatorio neural
+[2026-06-22 10:14:51] [RESPOSTA] 🧠 RELATÓRIO NEURAL DA H.U.L.I
+
+Saúde neural: 97%
+
+📁 Projeto:
+• Arquivos Python: 84
+• Arquivos JSON: 24
+• Classes: 10
+• Funções: 403
+• Linhas de código: 9212
+• Erros de sintaxe: 0
+
+🔗 Dependências:
+• Arquivos mapeados: 84
+• Total de imports: 285
+• Imports suspeitos: 1
+
+🧩 Skills:
+• Total: 22
+
+🧬 Kernel:
+• Usuário: Rony
+• Proprietário: True
+• Threads: ['agendamentos', 'lembretes']
+• Uptime: 0:00:11.462764
+
+🧾 JSON:
+• Total: 24
+• Erros: 0
+
+💡 Sugestões:
+• Revisar possíveis imports circulares envolvendo commands.py.
+• Projeto grande detectado: manter services, kernel, context e skill manager atualizados.
+
+[2026-06-22 10:14:53] [COMANDO] skill plugins
+[2026-06-22 10:14:53] [RESPOSTA] 🧩 Skill: plugins
+
+Descrição: Sistema para descobrir, carregar e listar plugins externos da H.U.L.I.
+
+Módulos:
+• core_system/plugin_manager.py
+• plugins/
+
+Comandos principais:
+• plugins
+• listar plugins
+• status plugins
+

@@ -10,6 +10,8 @@ PASTAS_ANALISADAS = [
     "modules",
     "services",
     "neural",
+    "plugins",
+
 ]
 
 IGNORAR_PASTAS = [

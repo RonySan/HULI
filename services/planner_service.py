@@ -5,6 +5,7 @@ from modules.scheduler import listar_agendamentos
 from modules.routines import listar_rotinas
 from modules.missions import listar_missoes
 from core_system.session_memory import obter_memoria_sessao
+from services.calendar_service import agenda_hoje
 
 
 def _linha(titulo, itens):
@@ -69,6 +70,10 @@ def resumo_do_dia():
     sessao = memoria_sessao.resumo()
 
     resposta = f"📅 Resumo de hoje — {hoje}\n\n"
+    
+    resposta += "📌 Agenda interna H.U.L.I:\n"
+    resposta += agenda_hoje()
+    resposta += "\n\n"
 
     resposta += "🗓️ Agenda registrada:\n"
     if agenda:

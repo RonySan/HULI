@@ -24,6 +24,16 @@ from core_system.personality_engine import (
     status_personalidade,
 
 )
+from services.calendar_service import (
+    criar_evento_por_texto,
+    agenda_hoje,
+    agenda_amanha,
+    agenda_semana,
+    apagar_evento_por_titulo,
+    concluir_evento_por_titulo,
+    remarcar_evento_por_texto,
+    listar_eventos_pendentes,
+)
 from core_system.reflection_engine import refletir
 from core_system.help_engine import gerar_ajuda, gerar_novidades
 from core_system.auto_documentation import gerar_documentacao_md
@@ -1910,6 +1920,69 @@ def processar_comando(comando: str):
         "status plugins",
     ]:
         return formatar_plugins()
+
+    # -------------------------
+    # Agenda interna H.U.L.I
+    # -------------------------
+    if comando in [
+        "agenda hoje",
+        "agenda de hoje",
+        "minha agenda hoje",
+        "minha agenda de hoje",
+        "o que tenho hoje",
+        "o que tem hoje",
+        "compromissos de hoje",
+    ]:
+        return agenda_hoje()
+
+    if comando in [
+        "agenda amanha",
+        "agenda amanhã",
+        "agenda de amanha",
+        "agenda de amanhã",
+        "compromissos de amanha",
+        "compromissos de amanhã",
+    ]:
+        return agenda_amanha()
+
+    if comando in [
+        "agenda da semana",
+        "minha agenda da semana",
+        "compromissos da semana",
+        "proximos compromissos",
+        "próximos compromissos",
+    ]:
+        return agenda_semana()
+
+    if comando.startswith("apagar compromisso "):
+        titulo = comando.replace("apagar compromisso ", "", 1).strip()
+        ok, resposta = apagar_evento_por_titulo(titulo)
+        return resposta
+
+    if comando.startswith(("agendar ", "marcar ", "colocar na agenda ", "criar compromisso ")):
+        ok, resposta = criar_evento_por_texto(comando)
+        return resposta
+    
+    if comando in [
+        "compromissos pendentes",
+        "agenda pendente",
+        "eventos pendentes",
+    ]:
+        return listar_eventos_pendentes()
+
+    if comando.startswith("concluir compromisso "):
+        titulo = comando.replace("concluir compromisso ", "", 1).strip()
+        ok, resposta = concluir_evento_por_titulo(titulo)
+        return resposta
+
+    if comando.startswith(("remarcar ", "remarque ", "alterar compromisso ", "mudar compromisso ")):
+        ok, resposta = remarcar_evento_por_texto(comando)
+        return resposta
+
+
+
+
+
 
 
     # -------------------------

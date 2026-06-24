@@ -21,6 +21,25 @@ class SkillManager:
             },
 
 
+            "agenda": {
+                "descricao": "Agenda interna da H.U.L.I para compromissos, lembretes e planejamento do dia.",
+                "modulos": [
+                    "services/calendar_service.py",
+                    "data/calendar.json",
+                ],
+                "comandos": [
+                    "agendar reunião amanhã às 14:30",
+                    "agenda hoje",
+                    "agenda amanhã",
+                    "agenda da semana",
+                    "apagar compromisso reunião",
+                    "compromissos pendentes",
+                    "concluir compromisso reunião",
+                    "remarcar reunião amanhã às 15:00",
+                ]
+            },
+
+
 
             "core": {
                 "descricao": "Núcleo principal da H.U.L.I. Controla inicialização, execução, loops e comandos.",

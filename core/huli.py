@@ -5,6 +5,7 @@ from datetime import datetime
 from core_system.context import obter_contexto
 from modules.intent_engine import detectar_intencao
 from core_system.kernel import obter_kernel
+from services.calendar_service import verificar_eventos_para_notificar
 
 
 from modules.identity import HULIIdentity
@@ -39,6 +40,24 @@ def monitor_agendamentos(stop_event: threading.Event):
             registrar_log("erro", f"monitor_agendamentos: {e}")
 
         time.sleep(30)
+
+def monitor_agenda(stop_event: threading.Event):
+    while not stop_event.is_set():
+        try:
+            notificacoes = verificar_eventos_para_notificar()
+
+            for item in notificacoes:
+                texto = item.get("mensagem")
+
+                registrar_log("agenda", texto)
+                print(f"\nH.U.L.I: 📅 {texto}\n")
+                falar_se_permitido(texto)
+
+        except Exception as e:
+            registrar_log("erro", f"monitor_agenda: {e}")
+
+        time.sleep(20)
+
 
 
 def monitor_lembretes(stop_event: threading.Event):
@@ -412,6 +431,14 @@ def iniciar():
         args=(stop_event,),
         daemon=True
     )
+    t_agenda = threading.Thread(
+        target=monitor_agenda,
+        args=(stop_event,),
+        daemon=True
+    )
+    t_agenda.start()
+
+    kernel.registrar_thread("agenda")
     t_agendamentos.start()
 
     while kernel.esta_ativo() and not encerrar_programa:

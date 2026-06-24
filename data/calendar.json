@@ -1,0 +1,32 @@
+[
+    {
+        "id": "20260624174243",
+        "titulo": "Reunião",
+        "data": "2026-06-25",
+        "hora": "15:00",
+        "origem": "huli",
+        "criado_em": "2026-06-24 17:42:43",
+        "notificado": false,
+        "avisos": {
+            "30": false,
+            "10": false,
+            "0": false
+        },
+        "status": "concluido"
+    },
+    {
+        "id": "20260624174445",
+        "titulo": "Teste",
+        "data": "2026-06-24",
+        "hora": "17:46",
+        "origem": "huli",
+        "criado_em": "2026-06-24 17:44:45",
+        "notificado": true,
+        "avisos": {
+            "30": false,
+            "10": false,
+            "0": true
+        },
+        "status": "pendente"
+    }
+]

@@ -130,7 +130,8 @@
         "me lembre as 06:30 dar remedio pro luan": 1,
         "status geral": 1,
         "huli, atualisei o meu androide ro realmi 75c, e agora ele reiciniou e tela esta travada, nao consigo diditar a senha, o que eu faco ?": 1,
-        "novidades": 1
+        "novidades": 1,
+        "reiniciar meu notebook": 1
     },
     "anota teste": {
         "mostra tarefas": 1
@@ -263,7 +264,8 @@
     "huli status": {
         "porque voce nao consegui ligr direta mente o pc no bluetooth da caixa de som ?": 1,
         "obrigado huli": 1,
-        "help": 1
+        "help": 1,
+        "pesquisar clima em sao paulo zona sul": 1
     },
     "porque voce nao consegui ligr direta mente o pc no bluetooth da caixa de som ?": {
         "]": 1
@@ -823,5 +825,113 @@
     },
     "o que temos hoje": {
         "status orchestrator": 1
+    },
+    "agendar reunião hoje às 23:59": {
+        "agenda hoje": 4
+    },
+    "agenda hoje": {
+        "agenda da semana": 3,
+        "quantos graus esta essa noite ? em moema sao paulo": 1,
+        "agendar reunião hoje às 23:59": 1,
+        "compromissos pendentes": 1
+    },
+    "agenda da semana": {
+        "o que temos pra fazer hoje": 3,
+        "concluir compromisso reunião": 1
+    },
+    "o que temos pra fazer hoje": {
+        "apagar compromisso reunião": 3
+    },
+    "apagar compromisso reunião": {
+        "agenda hoje": 2,
+        "voce sabe criar outros robos ?": 1
+    },
+    "quantos graus esta essa noite ? em moema sao paulo": {
+        "huli quero exato quantos graus esta fazendo em moema sao paulo-sp, pesqeuisa pr amim": 1
+    },
+    "huli quero exato quantos graus esta fazendo em moema sao paulo-sp, pesqeuisa pr amim": {
+        "pequeisa qual a temperatura em moema-sp": 1
+    },
+    "pequeisa qual a temperatura em moema-sp": {
+        "pesquisa  no google quantos graus esta fazendo em moema-sp": 1
+    },
+    "pesquisa  no google quantos graus esta fazendo em moema-sp": {
+        "abre o google": 1
+    },
+    "abre o google": {
+        "hel": 1
+    },
+    "hel": {
+        "ajuda": 1
+    },
+    "reiniciar meu notebook": {
+        "reiniciar": 1
+    },
+    "reiniciar": {
+        "desligar pc": 1
+    },
+    "desligar pc": {
+        "huli status": 1
+    },
+    "pesquisar clima em sao paulo zona sul": {
+        "huli pesquisar dolar": 1
+    },
+    "huli pesquisar dolar": {
+        "pesquisar que time joga hoje": 1
+    },
+    "voce sabe criar outros robos ?": {
+        "voce pode dominar o mundo  ?": 1
+    },
+    "voce pode dominar o mundo  ?": {
+        "o rony namora ?": 1
+    },
+    "o rony namora ?": {
+        "aprenda que o rony namora com a gisele": 1
+    },
+    "aprenda que o rony namora com a gisele": {
+        "perfil": 1
+    },
+    "perfil": {
+        "to tao carante": 1
+    },
+    "to tao carante": {
+        "voce pode me deixar rico ?": 1
+    },
+    "voce pode me deixar rico ?": {
+        "o que e melhor inventimentos em comercios ou nem bolsa de valos": 1
+    },
+    "o que e melhor inventimentos em comercios ou nem bolsa de valos": {
+        "huli quero envertir 10 mil reais em comercio, o que voce surege ?": 1
+    },
+    "huli quero envertir 10 mil reais em comercio, o que voce surege ?": {
+        "vender produtos": 1
+    },
+    "vender produtos": {
+        "quero vender harburgens, como eu faco ?": 1
+    },
+    "quero vender harburgens, como eu faco ?": {
+        "busco oline como vender haburgesns e tem um faturamento de 500 reais por mes": 1
+    },
+    "busco oline como vender haburgesns e tem um faturamento de 500 reais por mes": {
+        "monte um cardapio pra mim, com 5 tipos de haburgens mais batata, e tambem calcule custos e lucros que possamos aplicar com ate 2 mil de investimento": 1
+    },
+    "monte um cardapio pra mim, com 5 tipos de haburgens mais batata, e tambem calcule custos e lucros que possamos aplicar com ate 2 mil de investimento": {
+        "otimo huli, adorei tudo,, me fale um pouco sobre venda de cosmeticos": 1
+    },
+    "otimo huli, adorei tudo,, me fale um pouco sobre venda de cosmeticos": {
+        "como funciona a venda de maqueagens": 1
+    },
+    "compromissos pendentes": {
+        "remarcar reunião amanhã às 15:00": 1,
+        "agendar teste hoje às 17:46": 1
+    },
+    "remarcar reunião amanhã às 15:00": {
+        "agenda da semana": 1
+    },
+    "concluir compromisso reunião": {
+        "compromissos pendentes": 1
+    },
+    "agendar teste hoje às 17:46": {
+        "huli como esta o clima em sao paulo zona sul hoje ?": 1
     }
 }

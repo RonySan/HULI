@@ -234,6 +234,21 @@ def executar_comando(comando: str):
         auto = obter_autoexecucao(comando)
 
         if auto:
+            auto_limpo = auto.strip().lower()
+            comando_atual = comando.strip().lower()
+
+            # Proteção contra loop infinito
+            if auto_limpo == comando_atual:
+                registrar_log(
+                    "autopilot",
+                    f"Autoexecução bloqueada para evitar loop: {comando} -> {auto}"
+                )
+
+                print("H.U.L.I: ⚠️ Autoexecução bloqueada para evitar loop infinito.")
+                falar_se_permitido("Autoexecução bloqueada para evitar loop infinito.")
+                ultimo_comando = comando
+                return
+
             registrar_log(
                 "autopilot",
                 f"Executando automaticamente após '{comando}': '{auto}'"

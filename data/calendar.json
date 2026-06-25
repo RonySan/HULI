@@ -27,6 +27,21 @@
             "10": false,
             "0": true
         },
+        "status": "concluido"
+    },
+    {
+        "id": "20260624175320",
+        "titulo": "Vistoria de vazamento no apatamento 1313",
+        "data": "2026-06-25",
+        "hora": "09:30",
+        "origem": "huli",
+        "criado_em": "2026-06-24 17:53:20",
+        "notificado": false,
+        "avisos": {
+            "30": false,
+            "10": false,
+            "0": false
+        },
         "status": "pendente"
     }
 ]
